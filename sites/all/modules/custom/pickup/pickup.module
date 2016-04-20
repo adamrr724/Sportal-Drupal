@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the pickup feature.
+ */
+
+include_once 'pickup.features.inc';
