@@ -121,6 +121,61 @@ function league_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-league-field_league_date'.
+  $field_instances['node-league-field_league_date'] = array(
+    'bundle' => 'league',
+    'deleted' => 0,
+    'description' => 'Please outline the dates of the league.',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'date',
+        'settings' => array(
+          'format_type' => 'long',
+          'fromto' => 'both',
+          'multiple_from' => '',
+          'multiple_number' => '',
+          'multiple_to' => '',
+          'show_remaining_days' => FALSE,
+        ),
+        'type' => 'date_default',
+        'weight' => 10,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_league_date',
+    'label' => 'Date',
+    'required' => 1,
+    'settings' => array(
+      'default_value' => 'now',
+      'default_value2' => 'same',
+      'default_value_code' => '',
+      'default_value_code2' => '',
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'date',
+      'settings' => array(
+        'increment' => 15,
+        'input_format' => 'm/d/Y - g:i:sa',
+        'input_format_custom' => '',
+        'label_position' => 'above',
+        'no_fieldset' => 0,
+        'text_parts' => array(),
+        'year_range' => '-3:+3',
+      ),
+      'type' => 'date_popup',
+      'weight' => 41,
+    ),
+  );
+
   // Exported field_instance: 'node-league-field_league_image'.
   $field_instances['node-league-field_league_image'] = array(
     'bundle' => 'league',
@@ -335,6 +390,7 @@ function league_field_default_field_instances() {
   // Included for use with string extractors like potx.
   t('Address');
   t('Age Group');
+  t('Date');
   t('Enter additional, relevant league info.');
   t('Feel free to include an image.');
   t('Fees');
@@ -345,6 +401,7 @@ function league_field_default_field_instances() {
   t('Please choose the sport of the league.');
   t('Please define an age group.');
   t('Please enter the league website.');
+  t('Please outline the dates of the league.');
   t('Please provide the league HQ address, or location where games will be played.');
   t('Skill Level');
   t('Sport');

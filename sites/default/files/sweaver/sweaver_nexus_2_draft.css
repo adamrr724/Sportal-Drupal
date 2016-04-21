@@ -1,0 +1,15 @@
+#page #preface-area {
+  background-color: #82a6cc;
+  padding-bottom: 0px;
+  padding-top: 33px;
+  border-bottom-width: 5px;
+  border-top-color: #608c5e;
+  border-right-color: #608c5e;
+  border-bottom-color: #608c5e;
+  border-left-color: #608c5e;
+}
+
+li a {
+  background-color: transparent;
+}
+
