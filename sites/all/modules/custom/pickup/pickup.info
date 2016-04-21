@@ -40,7 +40,6 @@ features[variable][] = menu_parent_pickup_game
 features[variable][] = node_options_pickup_game
 features[variable][] = node_preview_pickup_game
 features[variable][] = node_submitted_pickup_game
-features[views_view][] = main_pickup_map
 features[views_view][] = pickup_games
 features_exclude[dependencies][ctools] = ctools
 features_exclude[dependencies][options] = options
