@@ -26,7 +26,6 @@ features[field_instance][] = node-pickup_game-field_address
 features[field_instance][] = node-pickup_game-field_date
 features[field_instance][] = node-pickup_game-field_pickup_image
 features[field_instance][] = node-pickup_game-field_sport
-features[menu_custom][] = main-menu
 features[node][] = pickup_game
 features[variable][] = comment_anonymous_pickup_game
 features[variable][] = comment_default_mode_pickup_game
