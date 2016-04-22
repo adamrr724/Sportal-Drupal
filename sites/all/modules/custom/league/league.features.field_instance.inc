@@ -125,7 +125,7 @@ function league_field_default_field_instances() {
   $field_instances['node-league-field_league_date'] = array(
     'bundle' => 'league',
     'deleted' => 0,
-    'description' => 'Please outline the dates of the league.',
+    'description' => 'Please outline when participants must sign up.',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -150,7 +150,7 @@ function league_field_default_field_instances() {
     ),
     'entity_type' => 'node',
     'field_name' => 'field_league_date',
-    'label' => 'Date',
+    'label' => 'Sign Up Date',
     'required' => 1,
     'settings' => array(
       'default_value' => 'now',
@@ -390,7 +390,6 @@ function league_field_default_field_instances() {
   // Included for use with string extractors like potx.
   t('Address');
   t('Age Group');
-  t('Date');
   t('Enter additional, relevant league info.');
   t('Feel free to include an image.');
   t('Fees');
@@ -401,8 +400,9 @@ function league_field_default_field_instances() {
   t('Please choose the sport of the league.');
   t('Please define an age group.');
   t('Please enter the league website.');
-  t('Please outline the dates of the league.');
+  t('Please outline when participants must sign up.');
   t('Please provide the league HQ address, or location where games will be played.');
+  t('Sign Up Date');
   t('Skill Level');
   t('Sport');
   t('Website');

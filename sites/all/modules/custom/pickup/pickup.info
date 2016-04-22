@@ -1,4 +1,4 @@
-name = pickup
+name = Pickup
 description = This is a feature that includes pickup game content type and it's view
 core = 7.x
 package = Features

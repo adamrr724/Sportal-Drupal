@@ -15,7 +15,7 @@ function pickup_views_default_views() {
   $view->description = '';
   $view->tag = 'Calendar';
   $view->base_table = 'node';
-  $view->human_name = 'Game Calendar';
+  $view->human_name = 'Pickup Calendar';
   $view->core = 7;
   $view->api_version = '3.0';
   $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
@@ -293,6 +293,7 @@ function pickup_views_default_views() {
   $handler->display->display_options['arguments']['date_argument']['date_fields'] = array(
     'field_data_field_date.field_date_value' => 'field_data_field_date.field_date_value',
   );
+  $handler->display->display_options['block_description'] = 'Pickup Calendar';
 
   /* Display: Upcoming */
   $handler = $view->new_display('block', 'Upcoming', 'block_2');
