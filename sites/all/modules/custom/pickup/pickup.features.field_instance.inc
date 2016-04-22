@@ -22,7 +22,7 @@ function pickup_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 0,
+        'weight' => 4,
       ),
       'teaser' => array(
         'label' => 'hidden',
@@ -36,7 +36,7 @@ function pickup_field_default_field_instances() {
     ),
     'entity_type' => 'node',
     'field_name' => 'body',
-    'label' => 'Description',
+    'label' => 'Notes',
     'required' => 1,
     'settings' => array(
       'display_summary' => 1,
@@ -51,7 +51,7 @@ function pickup_field_default_field_instances() {
         'summary_rows' => 5,
       ),
       'type' => 'text_textarea_with_summary',
-      'weight' => -4,
+      'weight' => 6,
     ),
   );
 
@@ -67,7 +67,7 @@ function pickup_field_default_field_instances() {
         'module' => 'location_cck',
         'settings' => array(),
         'type' => 'location_all',
-        'weight' => 4,
+        'weight' => 5,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -78,8 +78,8 @@ function pickup_field_default_field_instances() {
     ),
     'entity_type' => 'node',
     'field_name' => 'field_address',
-    'label' => 'address',
-    'required' => 0,
+    'label' => 'Address',
+    'required' => 1,
     'settings' => array(
       'user_register_form' => FALSE,
     ),
@@ -88,7 +88,7 @@ function pickup_field_default_field_instances() {
       'module' => 'location_cck',
       'settings' => array(),
       'type' => 'location',
-      'weight' => 32,
+      'weight' => 4,
     ),
   );
 
@@ -110,7 +110,7 @@ function pickup_field_default_field_instances() {
           'show_remaining_days' => FALSE,
         ),
         'type' => 'date_default',
-        'weight' => 3,
+        'weight' => 1,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -143,7 +143,7 @@ function pickup_field_default_field_instances() {
         'year_range' => '-3:+3',
       ),
       'type' => 'date_popup',
-      'weight' => 31,
+      'weight' => 3,
     ),
   );
 
@@ -161,7 +161,7 @@ function pickup_field_default_field_instances() {
           'image_style' => '',
         ),
         'type' => 'image',
-        'weight' => 2,
+        'weight' => 3,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -193,7 +193,44 @@ function pickup_field_default_field_instances() {
         'progress_indicator' => 'throbber',
       ),
       'type' => 'image_image',
-      'weight' => -2,
+      'weight' => 7,
+    ),
+  );
+
+  // Exported field_instance: 'node-pickup_game-field_pickup_skill_level'.
+  $field_instances['node-pickup_game-field_pickup_skill_level'] = array(
+    'bundle' => 'pickup_game',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 2,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_pickup_skill_level',
+    'label' => 'Skill Level',
+    'required' => 1,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 2,
     ),
   );
 
@@ -209,7 +246,7 @@ function pickup_field_default_field_instances() {
         'module' => 'list',
         'settings' => array(),
         'type' => 'list_default',
-        'weight' => 1,
+        'weight' => 0,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -230,21 +267,22 @@ function pickup_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => -3,
+      'weight' => 1,
     ),
   );
 
   // Translatables
   // Included for use with string extractors like potx.
+  t('Address');
   t('Choose an image for your game.');
   t('Date');
-  t('Description');
   t('Image');
+  t('Notes');
   t('Please enter a sate for your game.');
   t('Please input the sport.');
   t('Please write a brief description about your game.');
+  t('Skill Level');
   t('Sport');
-  t('address');
 
   return $field_instances;
 }

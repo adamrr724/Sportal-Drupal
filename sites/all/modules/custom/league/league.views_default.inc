@@ -22,7 +22,6 @@ function league_views_default_views() {
 
   /* Display: Master */
   $handler = $view->new_display('default', 'Master', 'default');
-  $handler->display->display_options['title'] = 'Leagues';
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['cache']['type'] = 'none';
@@ -31,8 +30,8 @@ function league_views_default_views() {
   $handler->display->display_options['pager']['type'] = 'full';
   $handler->display->display_options['pager']['options']['items_per_page'] = '100';
   $handler->display->display_options['style_plugin'] = 'gmap';
-  $handler->display->display_options['style_options']['macro'] = '[gmap zoom=12 |center=45.5231,-122.6765| width=800px | height=500px | type=Map]';
-  $handler->display->display_options['style_options']['markertype'] = 'lblue';
+  $handler->display->display_options['style_options']['macro'] = '[gmap zoom=12 |center=45.5231,-122.6765| width=100% | height=600px | type=Map]';
+  $handler->display->display_options['style_options']['markertype'] = 'blue';
   $handler->display->display_options['style_options']['latfield'] = 'title';
   $handler->display->display_options['style_options']['lonfield'] = 'title';
   $handler->display->display_options['style_options']['markerfield'] = 'title';
@@ -44,6 +43,18 @@ function league_views_default_views() {
   $handler->display->display_options['style_options']['tooltipfield'] = 'title';
   $handler->display->display_options['style_options']['bubbletextfield'] = 'title';
   $handler->display->display_options['row_plugin'] = 'fields';
+  $handler->display->display_options['row_options']['inline'] = array(
+    'title' => 'title',
+    'field_league_sport' => 'field_league_sport',
+    'field_league_date' => 'field_league_date',
+    'field_notes' => 'field_notes',
+    'field_skill_level' => 'field_skill_level',
+    'field_fees' => 'field_fees',
+    'field_league_image' => 'field_league_image',
+    'field_league_address' => 'field_league_address',
+  );
+  $handler->display->display_options['row_options']['separator'] = '<hr>';
+  $handler->display->display_options['row_options']['hide_empty'] = TRUE;
   /* Field: Content: Title */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
@@ -51,18 +62,22 @@ function league_views_default_views() {
   $handler->display->display_options['fields']['title']['label'] = '';
   $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
   $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
-  /* Field: Content: Address */
-  $handler->display->display_options['fields']['field_league_address']['id'] = 'field_league_address';
-  $handler->display->display_options['fields']['field_league_address']['table'] = 'field_data_field_league_address';
-  $handler->display->display_options['fields']['field_league_address']['field'] = 'field_league_address';
-  /* Field: Content: Notes */
-  $handler->display->display_options['fields']['field_notes']['id'] = 'field_notes';
-  $handler->display->display_options['fields']['field_notes']['table'] = 'field_data_field_notes';
-  $handler->display->display_options['fields']['field_notes']['field'] = 'field_notes';
   /* Field: Content: Sport */
   $handler->display->display_options['fields']['field_league_sport']['id'] = 'field_league_sport';
   $handler->display->display_options['fields']['field_league_sport']['table'] = 'field_data_field_league_sport';
   $handler->display->display_options['fields']['field_league_sport']['field'] = 'field_league_sport';
+  /* Field: Content: Date */
+  $handler->display->display_options['fields']['field_league_date']['id'] = 'field_league_date';
+  $handler->display->display_options['fields']['field_league_date']['table'] = 'field_data_field_league_date';
+  $handler->display->display_options['fields']['field_league_date']['field'] = 'field_league_date';
+  $handler->display->display_options['fields']['field_league_date']['settings'] = array(
+    'format_type' => 'long',
+    'fromto' => 'both',
+    'multiple_number' => '',
+    'multiple_from' => '',
+    'multiple_to' => '',
+    'show_remaining_days' => 0,
+  );
   /* Field: Content: Skill Level */
   $handler->display->display_options['fields']['field_skill_level']['id'] = 'field_skill_level';
   $handler->display->display_options['fields']['field_skill_level']['table'] = 'field_data_field_skill_level';
@@ -71,6 +86,23 @@ function league_views_default_views() {
   $handler->display->display_options['fields']['field_fees']['id'] = 'field_fees';
   $handler->display->display_options['fields']['field_fees']['table'] = 'field_data_field_fees';
   $handler->display->display_options['fields']['field_fees']['field'] = 'field_fees';
+  /* Field: Content: Image */
+  $handler->display->display_options['fields']['field_league_image']['id'] = 'field_league_image';
+  $handler->display->display_options['fields']['field_league_image']['table'] = 'field_data_field_league_image';
+  $handler->display->display_options['fields']['field_league_image']['field'] = 'field_league_image';
+  $handler->display->display_options['fields']['field_league_image']['label'] = '';
+  $handler->display->display_options['fields']['field_league_image']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_league_image']['click_sort_column'] = 'fid';
+  $handler->display->display_options['fields']['field_league_image']['settings'] = array(
+    'image_style' => 'thumbnail',
+    'image_link' => 'content',
+  );
+  /* Field: Content: Address */
+  $handler->display->display_options['fields']['field_league_address']['id'] = 'field_league_address';
+  $handler->display->display_options['fields']['field_league_address']['table'] = 'field_data_field_league_address';
+  $handler->display->display_options['fields']['field_league_address']['field'] = 'field_league_address';
+  $handler->display->display_options['fields']['field_league_address']['label'] = '';
+  $handler->display->display_options['fields']['field_league_address']['element_label_colon'] = FALSE;
   /* Sort criterion: Content: Title */
   $handler->display->display_options['sorts']['title']['id'] = 'title';
   $handler->display->display_options['sorts']['title']['table'] = 'node';
@@ -96,7 +128,7 @@ function league_views_default_views() {
   $handler->display->display_options['filters']['field_league_sport_value']['field'] = 'field_league_sport_value';
   $handler->display->display_options['filters']['field_league_sport_value']['exposed'] = TRUE;
   $handler->display->display_options['filters']['field_league_sport_value']['expose']['operator_id'] = 'field_league_sport_value_op';
-  $handler->display->display_options['filters']['field_league_sport_value']['expose']['label'] = 'Sport (field_league_sport)';
+  $handler->display->display_options['filters']['field_league_sport_value']['expose']['label'] = 'Sport ';
   $handler->display->display_options['filters']['field_league_sport_value']['expose']['operator'] = 'field_league_sport_value_op';
   $handler->display->display_options['filters']['field_league_sport_value']['expose']['identifier'] = 'field_league_sport_value';
   $handler->display->display_options['filters']['field_league_sport_value']['expose']['remember_roles'] = array(
@@ -108,6 +140,8 @@ function league_views_default_views() {
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'page');
+  $handler->display->display_options['defaults']['title'] = FALSE;
+  $handler->display->display_options['title'] = 'Leagues';
   $handler->display->display_options['path'] = 'leagues';
   $handler->display->display_options['menu']['type'] = 'normal';
   $handler->display->display_options['menu']['title'] = 'Leagues';

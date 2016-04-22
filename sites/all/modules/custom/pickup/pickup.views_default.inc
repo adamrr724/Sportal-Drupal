@@ -94,6 +94,12 @@ function pickup_views_default_views() {
   $handler->display->display_options['defaults']['row_plugin'] = FALSE;
   $handler->display->display_options['row_plugin'] = 'calendar_entity';
   $handler->display->display_options['row_options']['colors']['legend'] = 'type';
+  $handler->display->display_options['row_options']['colors']['calendar_colors_type'] = array(
+    'article' => '#ffffff',
+    'page' => '#ffffff',
+    'league' => '#ffffff',
+    'pickup_game' => '#ffffff',
+  );
   $handler->display->display_options['defaults']['row_options'] = FALSE;
   $handler->display->display_options['defaults']['arguments'] = FALSE;
   /* Contextual filter: Date: Date (node) */
@@ -336,7 +342,6 @@ function pickup_views_default_views() {
 
   /* Display: Master */
   $handler = $view->new_display('default', 'Master', 'default');
-  $handler->display->display_options['title'] = 'Pickup Games';
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['cache']['type'] = 'none';
@@ -344,20 +349,11 @@ function pickup_views_default_views() {
   $handler->display->display_options['exposed_form']['type'] = 'basic';
   $handler->display->display_options['pager']['type'] = 'full';
   $handler->display->display_options['pager']['options']['items_per_page'] = '10';
-  $handler->display->display_options['style_plugin'] = 'gmap';
-  $handler->display->display_options['style_options']['macro'] = '[gmap zoom=12 |center=45.5231,-122.6765| width=800px | height=500px | type=Map]';
-  $handler->display->display_options['style_options']['markertype'] = 'small red';
-  $handler->display->display_options['style_options']['latfield'] = 'title';
-  $handler->display->display_options['style_options']['lonfield'] = 'title';
-  $handler->display->display_options['style_options']['markerfield'] = 'title';
-  $handler->display->display_options['style_options']['geofield'] = 'title';
-  $handler->display->display_options['style_options']['enablermt'] = 0;
-  $handler->display->display_options['style_options']['rmtfield'] = 'title';
-  $handler->display->display_options['style_options']['rmtfieldraw'] = 1;
-  $handler->display->display_options['style_options']['animation'] = '2';
-  $handler->display->display_options['style_options']['tooltipfield'] = 'title';
-  $handler->display->display_options['style_options']['bubbletextfield'] = 'title';
+  $handler->display->display_options['style_plugin'] = 'default';
   $handler->display->display_options['row_plugin'] = 'fields';
+  $handler->display->display_options['row_options']['inline'] = array(
+    'title' => 'title',
+  );
   /* Field: Content: Title */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
@@ -365,15 +361,10 @@ function pickup_views_default_views() {
   $handler->display->display_options['fields']['title']['label'] = '';
   $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
   $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
-  /* Field: Content: address */
-  $handler->display->display_options['fields']['field_address']['id'] = 'field_address';
-  $handler->display->display_options['fields']['field_address']['table'] = 'field_data_field_address';
-  $handler->display->display_options['fields']['field_address']['field'] = 'field_address';
   /* Field: Content: Date */
   $handler->display->display_options['fields']['field_date']['id'] = 'field_date';
   $handler->display->display_options['fields']['field_date']['table'] = 'field_data_field_date';
   $handler->display->display_options['fields']['field_date']['field'] = 'field_date';
-  $handler->display->display_options['fields']['field_date']['type'] = 'date_plain';
   $handler->display->display_options['fields']['field_date']['settings'] = array(
     'format_type' => 'long',
     'fromto' => 'both',
@@ -386,6 +377,23 @@ function pickup_views_default_views() {
   $handler->display->display_options['fields']['field_sport']['id'] = 'field_sport';
   $handler->display->display_options['fields']['field_sport']['table'] = 'field_data_field_sport';
   $handler->display->display_options['fields']['field_sport']['field'] = 'field_sport';
+  /* Field: Content: Image */
+  $handler->display->display_options['fields']['field_pickup_image']['id'] = 'field_pickup_image';
+  $handler->display->display_options['fields']['field_pickup_image']['table'] = 'field_data_field_pickup_image';
+  $handler->display->display_options['fields']['field_pickup_image']['field'] = 'field_pickup_image';
+  $handler->display->display_options['fields']['field_pickup_image']['label'] = '';
+  $handler->display->display_options['fields']['field_pickup_image']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_pickup_image']['click_sort_column'] = 'fid';
+  $handler->display->display_options['fields']['field_pickup_image']['settings'] = array(
+    'image_style' => 'thumbnail',
+    'image_link' => 'content',
+  );
+  /* Field: Content: Address */
+  $handler->display->display_options['fields']['field_address']['id'] = 'field_address';
+  $handler->display->display_options['fields']['field_address']['table'] = 'field_data_field_address';
+  $handler->display->display_options['fields']['field_address']['field'] = 'field_address';
+  $handler->display->display_options['fields']['field_address']['label'] = '';
+  $handler->display->display_options['fields']['field_address']['element_label_colon'] = FALSE;
   /* Sort criterion: Content: Post date */
   $handler->display->display_options['sorts']['created']['id'] = 'created';
   $handler->display->display_options['sorts']['created']['table'] = 'node';
@@ -411,18 +419,47 @@ function pickup_views_default_views() {
   $handler->display->display_options['filters']['field_sport_value']['field'] = 'field_sport_value';
   $handler->display->display_options['filters']['field_sport_value']['exposed'] = TRUE;
   $handler->display->display_options['filters']['field_sport_value']['expose']['operator_id'] = 'field_sport_value_op';
-  $handler->display->display_options['filters']['field_sport_value']['expose']['label'] = 'Sport (field_sport)';
+  $handler->display->display_options['filters']['field_sport_value']['expose']['label'] = 'Sport';
   $handler->display->display_options['filters']['field_sport_value']['expose']['description'] = 'Sort by sport';
   $handler->display->display_options['filters']['field_sport_value']['expose']['operator'] = 'field_sport_value_op';
   $handler->display->display_options['filters']['field_sport_value']['expose']['identifier'] = 'field_sport_value';
   $handler->display->display_options['filters']['field_sport_value']['expose']['remember_roles'] = array(
     2 => '2',
     1 => 0,
+    4 => 0,
     3 => 0,
   );
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'page');
+  $handler->display->display_options['defaults']['title'] = FALSE;
+  $handler->display->display_options['title'] = 'Pickup Games';
+  $handler->display->display_options['defaults']['style_plugin'] = FALSE;
+  $handler->display->display_options['style_plugin'] = 'gmap';
+  $handler->display->display_options['style_options']['macro'] = '[gmap zoom=12 |center=45.5231,-122.6765| width=100% | height=600px | type=Map]';
+  $handler->display->display_options['style_options']['markertype'] = '';
+  $handler->display->display_options['style_options']['latfield'] = 'title';
+  $handler->display->display_options['style_options']['lonfield'] = 'title';
+  $handler->display->display_options['style_options']['markerfield'] = 'title';
+  $handler->display->display_options['style_options']['geofield'] = 'title';
+  $handler->display->display_options['style_options']['enablermt'] = 0;
+  $handler->display->display_options['style_options']['rmtfield'] = 'title';
+  $handler->display->display_options['style_options']['rmtfieldraw'] = 1;
+  $handler->display->display_options['style_options']['animation'] = '2';
+  $handler->display->display_options['style_options']['tooltipfield'] = 'title';
+  $handler->display->display_options['style_options']['bubbletextfield'] = 'title';
+  $handler->display->display_options['defaults']['style_options'] = FALSE;
+  $handler->display->display_options['defaults']['row_plugin'] = FALSE;
+  $handler->display->display_options['row_plugin'] = 'fields';
+  $handler->display->display_options['row_options']['inline'] = array(
+    'title' => 'title',
+    'field_date' => 'field_date',
+    'field_sport' => 'field_sport',
+    'field_pickup_image' => 'field_pickup_image',
+    'field_address' => 'field_address',
+  );
+  $handler->display->display_options['row_options']['separator'] = '<hr>';
+  $handler->display->display_options['defaults']['row_options'] = FALSE;
   $handler->display->display_options['path'] = 'pickup';
   $handler->display->display_options['menu']['type'] = 'normal';
   $handler->display->display_options['menu']['title'] = 'Pickup Games';
