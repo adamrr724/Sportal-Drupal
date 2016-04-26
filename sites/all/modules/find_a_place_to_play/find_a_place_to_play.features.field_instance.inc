@@ -66,7 +66,7 @@ function find_a_place_to_play_field_default_field_instances() {
         'label' => 'above',
         'module' => 'location_cck',
         'settings' => array(),
-        'type' => 'location_default',
+        'type' => 'location_all',
         'weight' => 1,
       ),
       'teaser' => array(

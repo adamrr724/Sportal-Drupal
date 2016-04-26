@@ -467,6 +467,22 @@ function pickup_views_default_views() {
     'default' => FALSE,
   );
   $handler->display->display_options['filters']['distance']['origin'] = 'postal_default';
+  /* Filter criterion: Content: Skill Level (field_pickup_skill_level) */
+  $handler->display->display_options['filters']['field_pickup_skill_level_value']['id'] = 'field_pickup_skill_level_value';
+  $handler->display->display_options['filters']['field_pickup_skill_level_value']['table'] = 'field_data_field_pickup_skill_level';
+  $handler->display->display_options['filters']['field_pickup_skill_level_value']['field'] = 'field_pickup_skill_level_value';
+  $handler->display->display_options['filters']['field_pickup_skill_level_value']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_pickup_skill_level_value']['expose']['operator_id'] = 'field_pickup_skill_level_value_op';
+  $handler->display->display_options['filters']['field_pickup_skill_level_value']['expose']['label'] = 'Skill Level ';
+  $handler->display->display_options['filters']['field_pickup_skill_level_value']['expose']['operator'] = 'field_pickup_skill_level_value_op';
+  $handler->display->display_options['filters']['field_pickup_skill_level_value']['expose']['identifier'] = 'field_pickup_skill_level_value';
+  $handler->display->display_options['filters']['field_pickup_skill_level_value']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    5 => 0,
+    4 => 0,
+    3 => 0,
+  );
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'page');
@@ -475,7 +491,7 @@ function pickup_views_default_views() {
   $handler->display->display_options['defaults']['style_plugin'] = FALSE;
   $handler->display->display_options['style_plugin'] = 'gmap';
   $handler->display->display_options['style_options']['macro'] = '[gmap zoom=12 |center=45.5231,-122.6765| width=100% | height=600px | type=Map]';
-  $handler->display->display_options['style_options']['markertype'] = '';
+  $handler->display->display_options['style_options']['markertype'] = 'gray';
   $handler->display->display_options['style_options']['latfield'] = 'title';
   $handler->display->display_options['style_options']['lonfield'] = 'title';
   $handler->display->display_options['style_options']['markerfield'] = 'title';

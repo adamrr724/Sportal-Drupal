@@ -51,9 +51,9 @@ function pickup_field_default_field_bases() {
       'location_settings' => array(
         'display' => array(
           'hide' => array(
-            'additional' => 0,
+            'additional' => 'additional',
             'city' => 0,
-            'coords' => 0,
+            'coords' => 'coords',
             'country' => 0,
             'country_name' => 0,
             'locpick' => 0,
@@ -73,17 +73,17 @@ function pickup_field_default_field_bases() {
               'weight' => 6,
             ),
             'city' => array(
-              'collect' => 1,
+              'collect' => 2,
               'default' => '',
               'weight' => 8,
             ),
             'country' => array(
-              'collect' => 1,
+              'collect' => 2,
               'default' => 'us',
               'weight' => 14,
             ),
             'locpick' => array(
-              'collect' => 0,
+              'collect' => 1,
               'weight' => 20,
             ),
             'name' => array(
@@ -92,18 +92,18 @@ function pickup_field_default_field_bases() {
               'weight' => 2,
             ),
             'postal_code' => array(
-              'collect' => 1,
+              'collect' => 2,
               'default' => '',
               'weight' => 12,
             ),
             'province' => array(
-              'collect' => 1,
+              'collect' => 2,
               'default' => '',
               'weight' => 10,
               'widget' => 'autocomplete',
             ),
             'street' => array(
-              'collect' => 1,
+              'collect' => 2,
               'default' => '',
               'weight' => 4,
             ),

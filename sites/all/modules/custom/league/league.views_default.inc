@@ -503,6 +503,22 @@ function league_views_default_views() {
     'default' => FALSE,
   );
   $handler->display->display_options['filters']['distance']['origin'] = 'postal_default';
+  /* Filter criterion: Content: Age Group (field_age_group) */
+  $handler->display->display_options['filters']['field_age_group_value']['id'] = 'field_age_group_value';
+  $handler->display->display_options['filters']['field_age_group_value']['table'] = 'field_data_field_age_group';
+  $handler->display->display_options['filters']['field_age_group_value']['field'] = 'field_age_group_value';
+  $handler->display->display_options['filters']['field_age_group_value']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_age_group_value']['expose']['operator_id'] = 'field_age_group_value_op';
+  $handler->display->display_options['filters']['field_age_group_value']['expose']['label'] = 'Age Group';
+  $handler->display->display_options['filters']['field_age_group_value']['expose']['operator'] = 'field_age_group_value_op';
+  $handler->display->display_options['filters']['field_age_group_value']['expose']['identifier'] = 'field_age_group_value';
+  $handler->display->display_options['filters']['field_age_group_value']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    5 => 0,
+    4 => 0,
+    3 => 0,
+  );
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'page');
