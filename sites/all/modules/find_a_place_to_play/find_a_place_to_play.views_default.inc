@@ -164,6 +164,42 @@ function find_a_place_to_play_views_default_views() {
     2 => array(),
     3 => array(),
   );
+  /* Filter criterion: Location: Distance / Proximity */
+  $handler->display->display_options['filters']['distance']['id'] = 'distance';
+  $handler->display->display_options['filters']['distance']['table'] = 'location';
+  $handler->display->display_options['filters']['distance']['field'] = 'distance';
+  $handler->display->display_options['filters']['distance']['operator'] = 'dist';
+  $handler->display->display_options['filters']['distance']['value'] = array(
+    'latitude' => '',
+    'longitude' => '',
+    'postal_code' => '',
+    'country' => '',
+    'php_code' => '',
+    'nid_arg' => '',
+    'nid_loc_field' => 'node',
+    'uid_arg' => '',
+    'search_distance' => '50',
+    'search_units' => 'mile',
+  );
+  $handler->display->display_options['filters']['distance']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['distance']['expose']['operator_id'] = 'distance_op';
+  $handler->display->display_options['filters']['distance']['expose']['label'] = 'Distance / Proximity';
+  $handler->display->display_options['filters']['distance']['expose']['operator'] = 'distance_op';
+  $handler->display->display_options['filters']['distance']['expose']['identifier'] = 'distance';
+  $handler->display->display_options['filters']['distance']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    5 => 0,
+    4 => 0,
+    3 => 0,
+  );
+  $handler->display->display_options['filters']['distance']['expose']['gmap_macro'] = array(
+    'default' => '[gmap ]',
+  );
+  $handler->display->display_options['filters']['distance']['expose']['user_location_choose'] = array(
+    'default' => FALSE,
+  );
+  $handler->display->display_options['filters']['distance']['origin'] = 'postal_default';
   $handler->display->display_options['path'] = 'find-a-place-to-play';
   $handler->display->display_options['menu']['type'] = 'normal';
   $handler->display->display_options['menu']['title'] = 'Find a Place to Play';
