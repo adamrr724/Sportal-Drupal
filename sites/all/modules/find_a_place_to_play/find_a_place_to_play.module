@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Find a Place to Play feature.
+ */
+
+include_once 'find_a_place_to_play.features.inc';
