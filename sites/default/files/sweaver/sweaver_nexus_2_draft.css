@@ -16,6 +16,7 @@
 .field .field-label {
   font-size: 16px;
   color: #00aad4;
+  padding-left: 0px;
 }
 
 #node-8 .content {
@@ -126,5 +127,33 @@ div div {
   padding-left: 20px;
   margin-top: 10px;
   margin-right: 010px;
+}
+
+.views-row #node-12 {
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 15px;
+  padding-left: 20px;
+  padding-right: 10px;
+  border-right-width: 1px;
+  border-top-width: 1px;
+  border-left-width: 1px;
+  border-top-color: #e8e1e8;
+  border-right-color: #e8e1e8;
+  border-bottom-color: #e8e1e8;
+  border-left-color: #e8e1e8;
+  border-top-style: outset;
+  border-right-style: outset;
+  border-bottom-style: outset;
+  border-left-style: outset;
+}
+
+#node-12 .content {
+  padding-left: 10px;
+}
+
+a .a2a_svg {
+  padding-bottom: 0px;
+  margin-bottom: 25px;
 }
 
