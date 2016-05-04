@@ -4,7 +4,8 @@ core = 7.x
 engine = phptemplate
 stylesheets[all][] = css/bootstrap.min.css
 stylesheets[all][] = css/flexslider.css
-stylesheets[all][] = style.css
+stylesheets[all][] = css/style.css
+stylesheets[all][] = default_style.css
 scripts[] = js/bootstrap.min.js
 scripts[] = js/superfish.js
 scripts[] = js/mobilemenu.js
@@ -47,4 +48,3 @@ version = "7.x-1.3"
 core = "7.x"
 project = "nexus"
 datestamp = "1378634197"
-
