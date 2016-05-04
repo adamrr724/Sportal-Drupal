@@ -27,6 +27,7 @@ function runs_and_races_views_default_views() {
   $handler->display->display_options['cache']['type'] = 'none';
   $handler->display->display_options['query']['type'] = 'views_query';
   $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['exposed_form']['options']['autosubmit'] = TRUE;
   $handler->display->display_options['pager']['type'] = 'full';
   $handler->display->display_options['pager']['options']['items_per_page'] = '50';
   $handler->display->display_options['style_plugin'] = 'gmap';
@@ -104,7 +105,7 @@ function runs_and_races_views_default_views() {
   $handler->display->display_options['filters']['field_event_type_value']['field'] = 'field_event_type_value';
   $handler->display->display_options['filters']['field_event_type_value']['exposed'] = TRUE;
   $handler->display->display_options['filters']['field_event_type_value']['expose']['operator_id'] = 'field_event_type_value_op';
-  $handler->display->display_options['filters']['field_event_type_value']['expose']['label'] = 'Event Type (field_event_type)';
+  $handler->display->display_options['filters']['field_event_type_value']['expose']['label'] = 'Event Type ';
   $handler->display->display_options['filters']['field_event_type_value']['expose']['operator'] = 'field_event_type_value_op';
   $handler->display->display_options['filters']['field_event_type_value']['expose']['identifier'] = 'field_event_type_value';
   $handler->display->display_options['filters']['field_event_type_value']['expose']['multiple'] = TRUE;

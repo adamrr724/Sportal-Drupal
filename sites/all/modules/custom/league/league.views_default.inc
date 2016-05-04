@@ -356,6 +356,7 @@ function league_views_default_views() {
   $handler->display->display_options['cache']['type'] = 'none';
   $handler->display->display_options['query']['type'] = 'views_query';
   $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['exposed_form']['options']['autosubmit'] = TRUE;
   $handler->display->display_options['pager']['type'] = 'full';
   $handler->display->display_options['pager']['options']['items_per_page'] = '100';
   $handler->display->display_options['style_plugin'] = 'gmap';
@@ -460,10 +461,11 @@ function league_views_default_views() {
   $handler->display->display_options['filters']['field_league_sport_value']['expose']['operator_id'] = 'field_league_sport_value_op';
   $handler->display->display_options['filters']['field_league_sport_value']['expose']['label'] = 'Sport ';
   $handler->display->display_options['filters']['field_league_sport_value']['expose']['operator'] = 'field_league_sport_value_op';
-  $handler->display->display_options['filters']['field_league_sport_value']['expose']['identifier'] = 'field_league_sport_value';
+  $handler->display->display_options['filters']['field_league_sport_value']['expose']['identifier'] = 'field_league_sport';
   $handler->display->display_options['filters']['field_league_sport_value']['expose']['remember_roles'] = array(
     2 => '2',
     1 => 0,
+    5 => 0,
     4 => 0,
     3 => 0,
   );
