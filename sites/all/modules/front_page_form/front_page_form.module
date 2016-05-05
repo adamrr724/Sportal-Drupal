@@ -1,0 +1,11 @@
+<?php
+
+function front_page_form() {
+    $form = array();
+    $form =['content_type'] = array(
+        '#title' => 'Activity Type',
+        '#type' => 'textarea',
+        '#description' => t('Please choose the recreational sports activity you are trying to find.<br> Examples: <br> Pickups = 5 v 5 pickup in the park on saturday. <br> Leagues = Find a local basketball team to play on. <br> Runs and Races = Find a 5k run, or a bike race! <br> Find a Place to Play = Find a local park with a basketball court.'),
+    );
+    return $form;
+}
