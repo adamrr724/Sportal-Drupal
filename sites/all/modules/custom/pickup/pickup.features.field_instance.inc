@@ -93,7 +93,7 @@ function pickup_field_default_field_instances() {
   $field_instances['node-pickup_game-field_date'] = array(
     'bundle' => 'pickup_game',
     'deleted' => 0,
-    'description' => 'Please enter a sate for your game.',
+    'description' => 'Please enter a date for your game.',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -285,7 +285,7 @@ function pickup_field_default_field_instances() {
   t('Date');
   t('Image');
   t('Notes');
-  t('Please enter a sate for your game.');
+  t('Please enter a date for your game.');
   t('Please input the sport.');
   t('Please write a brief description about your game.');
   t('Skill Level');
