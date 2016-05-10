@@ -1,0 +1,34 @@
+<?php
+
+/**
+ * @file
+ * Requirements function for the addressfield autcomplete module.
+ */
+
+/**
+ * Implements hook_requirements().
+ */
+function addressfield_autocomplete_requirements($phase) {
+  $requirements = array();
+  $t = get_t();
+  // Check on the installation status of the geocomplete library. Note that
+  // we do not do this check during the 'install' phase as the libraries API
+  // functions will not always be available then (if installing Drupal via an
+  // install profile, etc.).
+  if ($phase == 'runtime') {
+    $library = libraries_detect('geocomplete');
+    $requirements['geocomplete'] = array(
+      'title' => $t('Geocomplete Javascript Library'),
+    );
+    if ($library['installed']) {
+      $requirements['geocomplete']['value'] = $library['version'];
+      $requirements['geocomplete']['severity'] = REQUIREMENT_OK;
+    }
+    else {
+      $requirements['geocomplete']['value'] = $library['error'];
+      $requirements['geocomplete']['description'] = $t('Geocomplete Javascript Library is required by Addressfield Autocomplete. <a href="@geocomplete">Download the geocomplete library</a>', array('@geocomplete' => url($library['download url'])));
+      $requirements['geocomplete']['severity'] = REQUIREMENT_ERROR;
+    }
+  }
+  return $requirements;
+}

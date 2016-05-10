@@ -72,81 +72,12 @@ function league_field_default_field_bases() {
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_league_address',
-    'indexes' => array(
-      'lid' => array(
-        0 => 'lid',
-      ),
-    ),
+    'indexes' => array(),
     'locked' => 0,
-    'module' => 'location_cck',
-    'settings' => array(
-      'gmap_macro' => '[gmap zoom=12 ]',
-      'gmap_marker' => 'small bred',
-      'location_settings' => array(
-        'display' => array(
-          'hide' => array(
-            'additional' => 'additional',
-            'city' => 0,
-            'coords' => 'coords',
-            'country' => 0,
-            'country_name' => 0,
-            'locpick' => 0,
-            'map_link' => 0,
-            'name' => 0,
-            'postal_code' => 0,
-            'province' => 0,
-            'province_name' => 0,
-            'street' => 0,
-          ),
-        ),
-        'form' => array(
-          'fields' => array(
-            'additional' => array(
-              'collect' => 0,
-              'default' => '',
-              'weight' => 6,
-            ),
-            'city' => array(
-              'collect' => 2,
-              'default' => '',
-              'weight' => 8,
-            ),
-            'country' => array(
-              'collect' => 2,
-              'default' => 'us',
-              'weight' => 14,
-            ),
-            'locpick' => array(
-              'collect' => 1,
-              'weight' => 20,
-            ),
-            'name' => array(
-              'collect' => 1,
-              'default' => '',
-              'weight' => 2,
-            ),
-            'postal_code' => array(
-              'collect' => 2,
-              'default' => '',
-              'weight' => 12,
-            ),
-            'province' => array(
-              'collect' => 2,
-              'default' => '',
-              'weight' => 10,
-              'widget' => 'autocomplete',
-            ),
-            'street' => array(
-              'collect' => 2,
-              'default' => '',
-              'weight' => 4,
-            ),
-          ),
-        ),
-      ),
-    ),
+    'module' => 'addressfield',
+    'settings' => array(),
     'translatable' => 0,
-    'type' => 'location',
+    'type' => 'addressfield',
   );
 
   // Exported field_base: 'field_league_date'.
@@ -227,6 +158,90 @@ function league_field_default_field_bases() {
     ),
     'translatable' => 0,
     'type' => 'list_text',
+  );
+
+  // Exported field_base: 'field_locationleague'.
+  $field_bases['field_locationleague'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_locationleague',
+    'indexes' => array(
+      'lid' => array(
+        0 => 'lid',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'location_cck',
+    'settings' => array(
+      'gmap_macro' => '[gmap ]',
+      'gmap_marker' => 'drupal',
+      'location_settings' => array(
+        'display' => array(
+          'hide' => array(
+            'additional' => 'additional',
+            'city' => 'city',
+            'coords' => 'coords',
+            'country' => 'country',
+            'country_name' => 'country_name',
+            'locpick' => 'locpick',
+            'map_link' => 'map_link',
+            'name' => 'name',
+            'postal_code' => 'postal_code',
+            'province' => 'province',
+            'province_name' => 'province_name',
+            'street' => 'street',
+          ),
+        ),
+        'form' => array(
+          'fields' => array(
+            'additional' => array(
+              'collect' => 0,
+              'default' => '',
+              'weight' => 6,
+            ),
+            'city' => array(
+              'collect' => 0,
+              'default' => '',
+              'weight' => 8,
+            ),
+            'country' => array(
+              'collect' => 1,
+              'default' => 'us',
+              'weight' => 14,
+            ),
+            'locpick' => array(
+              'collect' => 0,
+              'weight' => 20,
+            ),
+            'name' => array(
+              'collect' => 0,
+              'default' => '',
+              'weight' => 2,
+            ),
+            'postal_code' => array(
+              'collect' => 0,
+              'default' => '',
+              'weight' => 12,
+            ),
+            'province' => array(
+              'collect' => 0,
+              'default' => '',
+              'weight' => 10,
+              'widget' => 'autocomplete',
+            ),
+            'street' => array(
+              'collect' => 0,
+              'default' => '',
+              'weight' => 4,
+            ),
+          ),
+        ),
+      ),
+    ),
+    'translatable' => 0,
+    'type' => 'location',
   );
 
   // Exported field_base: 'field_notes'.

@@ -361,11 +361,12 @@ function league_views_default_views() {
   $handler->display->display_options['pager']['options']['items_per_page'] = '100';
   $handler->display->display_options['style_plugin'] = 'gmap';
   $handler->display->display_options['style_options']['macro'] = '[gmap zoom=12 |center=45.5231,-122.6765| width=100% | height=600px | type=Map]';
+  $handler->display->display_options['style_options']['datasource'] = 'geofield';
   $handler->display->display_options['style_options']['markertype'] = 'blue';
   $handler->display->display_options['style_options']['latfield'] = 'title';
   $handler->display->display_options['style_options']['lonfield'] = 'title';
   $handler->display->display_options['style_options']['markerfield'] = 'title';
-  $handler->display->display_options['style_options']['geofield'] = 'title';
+  $handler->display->display_options['style_options']['geofield'] = 'field_league_address';
   $handler->display->display_options['style_options']['enablermt'] = 0;
   $handler->display->display_options['style_options']['rmtfield'] = 'title';
   $handler->display->display_options['style_options']['rmtfieldraw'] = 1;
@@ -434,6 +435,9 @@ function league_views_default_views() {
   $handler->display->display_options['fields']['field_league_address']['field'] = 'field_league_address';
   $handler->display->display_options['fields']['field_league_address']['label'] = '';
   $handler->display->display_options['fields']['field_league_address']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_league_address']['click_sort_column'] = 'lid';
+  $handler->display->display_options['fields']['field_league_address']['type'] = 'location_default';
+  $handler->display->display_options['fields']['field_league_address']['group_column'] = 'lid';
   /* Sort criterion: Content: Title */
   $handler->display->display_options['sorts']['title']['id'] = 'title';
   $handler->display->display_options['sorts']['title']['table'] = 'node';

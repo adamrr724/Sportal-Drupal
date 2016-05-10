@@ -90,35 +90,63 @@ function league_field_default_field_instances() {
     'bundle' => 'league',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'Please provide the league HQ address, or location where games will be played.',
+    'description' => '',
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'location_cck',
-        'settings' => array(),
-        'type' => 'location_all',
+        'module' => 'addressfield',
+        'settings' => array(
+          'format_handlers' => array(
+            0 => 'address',
+          ),
+          'use_widget_handlers' => 1,
+        ),
+        'type' => 'addressfield_default',
         'weight' => 8,
       ),
       'teaser' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 4,
+        'weight' => 0,
       ),
     ),
     'entity_type' => 'node',
     'field_name' => 'field_league_address',
     'label' => 'Address',
-    'required' => 1,
+    'required' => 0,
     'settings' => array(
       'user_register_form' => FALSE,
     ),
     'widget' => array(
-      'active' => 0,
-      'module' => 'location_cck',
-      'settings' => array(),
-      'type' => 'location',
-      'weight' => 7,
+      'active' => 1,
+      'module' => 'addressfield_autocomplete',
+      'settings' => array(
+        'available_countries' => array(),
+        'default_country' => 'US',
+        'draggable' => 1,
+        'format_handlers' => array(
+          'address' => 'address',
+          'address-hide-postal-code' => 0,
+          'address-hide-street' => 0,
+          'address-hide-country' => 0,
+          'organisation' => 0,
+          'name-full' => 0,
+          'name-oneline' => 0,
+          'address-optional' => 0,
+        ),
+        'geolocation' => TRUE,
+        'html5_geocode' => 1,
+        'manual_text' => '',
+        'map' => 1,
+        'restrict_country' => array(),
+        'reveal' => 1,
+        'reverse_geocode' => 1,
+        'types' => 'geocode',
+        'visible_markers' => 1,
+      ),
+      'type' => 'addressfield_autocomplete',
+      'weight' => 11,
     ),
   );
 
@@ -265,6 +293,42 @@ function league_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-league-field_locationleague'.
+  $field_instances['node-league-field_locationleague'] = array(
+    'bundle' => 'league',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'location_cck',
+        'settings' => array(),
+        'type' => 'location_default',
+        'weight' => 9,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_locationleague',
+    'label' => 'location',
+    'required' => FALSE,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'module' => 'location_cck',
+      'settings' => array(),
+      'type' => 'location',
+      'weight' => 12,
+    ),
+  );
+
   // Exported field_instance: 'node-league-field_notes'.
   $field_instances['node-league-field_notes'] = array(
     'bundle' => 'league',
@@ -404,11 +468,11 @@ function league_field_default_field_instances() {
   t('Please define an age group.');
   t('Please enter the league website.');
   t('Please outline when participants must sign up.');
-  t('Please provide the league HQ address, or location where games will be played.');
   t('Sign Up Date');
   t('Skill Level');
   t('Sport');
   t('Website');
+  t('location');
 
   return $field_instances;
 }
