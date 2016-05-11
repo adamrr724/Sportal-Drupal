@@ -1,0 +1,14 @@
+
+.links li .unflag-action {
+    background-color: #e57373 ;
+    padding: 8px;
+    margin-left: 40px;
+    font-size: 20px;
+}
+
+.links li .flag-action {
+    background-color: #81c784 ;
+    padding: 8px;
+    margin-left: 40px;
+    font-size: 20px;
+}
