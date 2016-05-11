@@ -89,6 +89,71 @@ function pickup_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-pickup_game-field_address_pickup'.
+  $field_instances['node-pickup_game-field_address_pickup'] = array(
+    'bundle' => 'pickup_game',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'addressfield',
+        'settings' => array(
+          'format_handlers' => array(
+            0 => 'address',
+          ),
+          'use_widget_handlers' => 1,
+        ),
+        'type' => 'addressfield_default',
+        'weight' => 5,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_address_pickup',
+    'label' => 'Address',
+    'required' => 1,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'addressfield_autocomplete',
+      'settings' => array(
+        'available_countries' => array(),
+        'default_country' => 'US',
+        'draggable' => 1,
+        'format_handlers' => array(
+          'address' => 'address',
+          'address-hide-postal-code' => 0,
+          'address-hide-street' => 0,
+          'address-hide-country' => 0,
+          'organisation' => 0,
+          'name-full' => 0,
+          'name-oneline' => 0,
+          'address-optional' => 0,
+        ),
+        'geolocation' => TRUE,
+        'html5_geocode' => 1,
+        'manual_text' => '',
+        'map' => 1,
+        'restrict_country' => array(),
+        'reveal' => 1,
+        'reverse_geocode' => 0,
+        'types' => 'geocode',
+        'visible_markers' => 1,
+      ),
+      'type' => 'addressfield_autocomplete',
+      'weight' => 8,
+    ),
+  );
+
   // Exported field_instance: 'node-pickup_game-field_date'.
   $field_instances['node-pickup_game-field_date'] = array(
     'bundle' => 'pickup_game',
@@ -240,6 +305,69 @@ function pickup_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-pickup_game-field_position_pickup'.
+  $field_instances['node-pickup_game-field_position_pickup'] = array(
+    'bundle' => 'pickup_game',
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'geofield_map',
+        'settings' => array(
+          'geofield_map_baselayers_hybrid' => 1,
+          'geofield_map_baselayers_map' => 1,
+          'geofield_map_baselayers_physical' => 0,
+          'geofield_map_baselayers_satellite' => 1,
+          'geofield_map_center' => array(
+            'lat' => 0,
+            'lon' => 0,
+          ),
+          'geofield_map_controltype' => 'default',
+          'geofield_map_draggable' => 0,
+          'geofield_map_height' => '300px',
+          'geofield_map_maptype' => 'map',
+          'geofield_map_max_zoom' => 0,
+          'geofield_map_min_zoom' => 0,
+          'geofield_map_mtc' => 'standard',
+          'geofield_map_overview' => 0,
+          'geofield_map_overview_opened' => 0,
+          'geofield_map_pancontrol' => 1,
+          'geofield_map_scale' => 0,
+          'geofield_map_scrollwheel' => 0,
+          'geofield_map_streetview_show' => 0,
+          'geofield_map_width' => '100%',
+          'geofield_map_zoom' => 8,
+        ),
+        'type' => 'geofield_map_map',
+        'weight' => 6,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_position_pickup',
+    'label' => 'Position',
+    'required' => 1,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'addressfield_autocomplete',
+      'settings' => array(
+        'addressfield_autocomplete_field' => 'field_address_pickup',
+        'delta_handling' => 'default',
+      ),
+      'type' => 'addressfield_autocomplete_latlng',
+      'weight' => 9,
+    ),
+  );
+
   // Exported field_instance: 'node-pickup_game-field_sport'.
   $field_instances['node-pickup_game-field_sport'] = array(
     'bundle' => 'pickup_game',
@@ -288,6 +416,7 @@ function pickup_field_default_field_instances() {
   t('Please enter a date for your game.');
   t('Please input the sport.');
   t('Please write a brief description about your game.');
+  t('Position');
   t('Skill Level');
   t('Sport');
 
