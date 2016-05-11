@@ -355,8 +355,190 @@ function league_views_default_views() {
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['cache']['type'] = 'none';
   $handler->display->display_options['query']['type'] = 'views_query';
-  $handler->display->display_options['exposed_form']['type'] = 'basic';
-  $handler->display->display_options['exposed_form']['options']['autosubmit'] = TRUE;
+  $handler->display->display_options['exposed_form']['type'] = 'better_exposed_filters';
+  $handler->display->display_options['exposed_form']['options']['bef'] = array(
+    'general' => array(
+      'allow_secondary' => 0,
+      'secondary_label' => 'Advanced options',
+      'collapsible_label' => NULL,
+      'combine_rewrite' => NULL,
+      'reset_label' => NULL,
+      'bef_filter_description' => NULL,
+      'any_label' => NULL,
+      'filter_rewrite_values' => NULL,
+    ),
+    'field_league_sport_value' => array(
+      'bef_format' => 'default',
+      'more_options' => array(
+        'bef_select_all_none' => FALSE,
+        'bef_collapsible' => 0,
+        'is_secondary' => 0,
+        'any_label' => '',
+        'bef_filter_description' => '',
+        'tokens' => array(
+          'available' => array(
+            0 => 'global_types',
+            'secondary_label' => NULL,
+            'collapsible_label' => NULL,
+            'combine_rewrite' => NULL,
+            'reset_label' => NULL,
+            'bef_filter_description' => NULL,
+            'any_label' => NULL,
+            'filter_rewrite_values' => NULL,
+          ),
+          'secondary_label' => NULL,
+          'collapsible_label' => NULL,
+          'combine_rewrite' => NULL,
+          'reset_label' => NULL,
+          'bef_filter_description' => NULL,
+          'any_label' => NULL,
+          'filter_rewrite_values' => NULL,
+        ),
+        'rewrite' => array(
+          'filter_rewrite_values' => '',
+          'secondary_label' => NULL,
+          'collapsible_label' => NULL,
+          'combine_rewrite' => NULL,
+          'reset_label' => NULL,
+          'bef_filter_description' => NULL,
+          'any_label' => NULL,
+        ),
+        'secondary_label' => NULL,
+        'collapsible_label' => NULL,
+        'combine_rewrite' => NULL,
+        'reset_label' => NULL,
+        'filter_rewrite_values' => NULL,
+      ),
+      'secondary_label' => NULL,
+      'collapsible_label' => NULL,
+      'combine_rewrite' => NULL,
+      'reset_label' => NULL,
+      'bef_filter_description' => NULL,
+      'any_label' => NULL,
+      'filter_rewrite_values' => NULL,
+    ),
+    'field_age_group_value' => array(
+      'bef_format' => 'default',
+      'more_options' => array(
+        'bef_select_all_none' => FALSE,
+        'bef_collapsible' => 0,
+        'is_secondary' => 0,
+        'any_label' => '',
+        'bef_filter_description' => '',
+        'tokens' => array(
+          'available' => array(
+            0 => 'global_types',
+            'secondary_label' => NULL,
+            'collapsible_label' => NULL,
+            'combine_rewrite' => NULL,
+            'reset_label' => NULL,
+            'bef_filter_description' => NULL,
+            'any_label' => NULL,
+            'filter_rewrite_values' => NULL,
+          ),
+          'secondary_label' => NULL,
+          'collapsible_label' => NULL,
+          'combine_rewrite' => NULL,
+          'reset_label' => NULL,
+          'bef_filter_description' => NULL,
+          'any_label' => NULL,
+          'filter_rewrite_values' => NULL,
+        ),
+        'rewrite' => array(
+          'filter_rewrite_values' => '',
+          'secondary_label' => NULL,
+          'collapsible_label' => NULL,
+          'combine_rewrite' => NULL,
+          'reset_label' => NULL,
+          'bef_filter_description' => NULL,
+          'any_label' => NULL,
+        ),
+        'secondary_label' => NULL,
+        'collapsible_label' => NULL,
+        'combine_rewrite' => NULL,
+        'reset_label' => NULL,
+        'filter_rewrite_values' => NULL,
+      ),
+      'secondary_label' => NULL,
+      'collapsible_label' => NULL,
+      'combine_rewrite' => NULL,
+      'reset_label' => NULL,
+      'bef_filter_description' => NULL,
+      'any_label' => NULL,
+      'filter_rewrite_values' => NULL,
+    ),
+    'field_geofield_distance' => array(
+      'bef_format' => 'bef_slider',
+      'slider_options' => array(
+        'bef_slider_min' => '0',
+        'bef_slider_max' => '100',
+        'bef_slider_step' => '1',
+        'bef_slider_animate' => 'normal',
+        'bef_slider_orientation' => 'horizontal',
+        'secondary_label' => NULL,
+        'collapsible_label' => NULL,
+        'combine_rewrite' => NULL,
+        'reset_label' => NULL,
+        'bef_filter_description' => NULL,
+        'any_label' => NULL,
+        'filter_rewrite_values' => NULL,
+      ),
+      'more_options' => array(
+        'is_secondary' => 0,
+        'any_label' => '',
+        'bef_filter_description' => '',
+        'tokens' => array(
+          'available' => array(
+            0 => 'global_types',
+            'secondary_label' => NULL,
+            'collapsible_label' => NULL,
+            'combine_rewrite' => NULL,
+            'reset_label' => NULL,
+            'bef_filter_description' => NULL,
+            'any_label' => NULL,
+            'filter_rewrite_values' => NULL,
+          ),
+          'secondary_label' => NULL,
+          'collapsible_label' => NULL,
+          'combine_rewrite' => NULL,
+          'reset_label' => NULL,
+          'bef_filter_description' => NULL,
+          'any_label' => NULL,
+          'filter_rewrite_values' => NULL,
+        ),
+        'rewrite' => array(
+          'filter_rewrite_values' => '',
+          'secondary_label' => NULL,
+          'collapsible_label' => NULL,
+          'combine_rewrite' => NULL,
+          'reset_label' => NULL,
+          'bef_filter_description' => NULL,
+          'any_label' => NULL,
+        ),
+        'secondary_label' => NULL,
+        'collapsible_label' => NULL,
+        'combine_rewrite' => NULL,
+        'reset_label' => NULL,
+        'filter_rewrite_values' => NULL,
+      ),
+      'secondary_label' => NULL,
+      'collapsible_label' => NULL,
+      'combine_rewrite' => NULL,
+      'reset_label' => NULL,
+      'bef_filter_description' => NULL,
+      'any_label' => NULL,
+      'filter_rewrite_values' => NULL,
+    ),
+    'secondary_label' => NULL,
+    'collapsible_label' => NULL,
+    'combine_rewrite' => NULL,
+    'reset_label' => NULL,
+    'bef_filter_description' => NULL,
+    'any_label' => NULL,
+    'filter_rewrite_values' => NULL,
+  );
+  $handler->display->display_options['exposed_form']['options']['input_required'] = 0;
+  $handler->display->display_options['exposed_form']['options']['text_input_required_format'] = 'filtered_html';
   $handler->display->display_options['pager']['type'] = 'full';
   $handler->display->display_options['pager']['options']['items_per_page'] = '100';
   $handler->display->display_options['style_plugin'] = 'gmap';
@@ -366,7 +548,7 @@ function league_views_default_views() {
   $handler->display->display_options['style_options']['latfield'] = 'title';
   $handler->display->display_options['style_options']['lonfield'] = 'title';
   $handler->display->display_options['style_options']['markerfield'] = 'title';
-  $handler->display->display_options['style_options']['geofield'] = 'field_league_address';
+  $handler->display->display_options['style_options']['geofield'] = 'field_league_position';
   $handler->display->display_options['style_options']['enablermt'] = 0;
   $handler->display->display_options['style_options']['rmtfield'] = 'title';
   $handler->display->display_options['style_options']['rmtfieldraw'] = 1;
@@ -378,7 +560,6 @@ function league_views_default_views() {
     'title' => 'title',
     'field_league_sport' => 'field_league_sport',
     'field_league_date' => 'field_league_date',
-    'field_notes' => 'field_notes',
     'field_skill_level' => 'field_skill_level',
     'field_fees' => 'field_fees',
     'field_league_image' => 'field_league_image',
@@ -438,6 +619,23 @@ function league_views_default_views() {
   $handler->display->display_options['fields']['field_league_address']['click_sort_column'] = 'lid';
   $handler->display->display_options['fields']['field_league_address']['type'] = 'location_default';
   $handler->display->display_options['fields']['field_league_address']['group_column'] = 'lid';
+  /* Field: Content: Position */
+  $handler->display->display_options['fields']['field_league_position']['id'] = 'field_league_position';
+  $handler->display->display_options['fields']['field_league_position']['table'] = 'field_data_field_league_position';
+  $handler->display->display_options['fields']['field_league_position']['field'] = 'field_league_position';
+  /* Field: Content: Position (field_league_position) - proximity */
+  $handler->display->display_options['fields']['field_geofield_distance']['id'] = 'field_geofield_distance';
+  $handler->display->display_options['fields']['field_geofield_distance']['table'] = 'field_data_field_league_position';
+  $handler->display->display_options['fields']['field_geofield_distance']['field'] = 'field_geofield_distance';
+  $handler->display->display_options['fields']['field_geofield_distance']['precision'] = '0';
+  $handler->display->display_options['fields']['field_geofield_distance']['source'] = 'exposed_geofield_filter';
+  $handler->display->display_options['fields']['field_geofield_distance']['geofield_proximity_manual'] = array(
+    'lat' => '',
+    'lon' => '',
+  );
+  $handler->display->display_options['fields']['field_geofield_distance']['geofield_proximity_entity_url_field'] = 'field_league_position';
+  $handler->display->display_options['fields']['field_geofield_distance']['geofield_proximity_current_user_field'] = 'field_league_position';
+  $handler->display->display_options['fields']['field_geofield_distance']['radius_of_earth'] = '3959';
   /* Sort criterion: Content: Title */
   $handler->display->display_options['sorts']['title']['id'] = 'title';
   $handler->display->display_options['sorts']['title']['table'] = 'node';
@@ -473,42 +671,6 @@ function league_views_default_views() {
     4 => 0,
     3 => 0,
   );
-  /* Filter criterion: Location: Distance / Proximity */
-  $handler->display->display_options['filters']['distance']['id'] = 'distance';
-  $handler->display->display_options['filters']['distance']['table'] = 'location';
-  $handler->display->display_options['filters']['distance']['field'] = 'distance';
-  $handler->display->display_options['filters']['distance']['operator'] = 'dist';
-  $handler->display->display_options['filters']['distance']['value'] = array(
-    'latitude' => '',
-    'longitude' => '',
-    'postal_code' => '',
-    'country' => '',
-    'php_code' => '',
-    'nid_arg' => '',
-    'nid_loc_field' => 'node',
-    'uid_arg' => '',
-    'search_distance' => '25',
-    'search_units' => 'mile',
-  );
-  $handler->display->display_options['filters']['distance']['exposed'] = TRUE;
-  $handler->display->display_options['filters']['distance']['expose']['operator_id'] = 'distance_op';
-  $handler->display->display_options['filters']['distance']['expose']['label'] = 'Distance / Proximity';
-  $handler->display->display_options['filters']['distance']['expose']['operator'] = 'distance_op';
-  $handler->display->display_options['filters']['distance']['expose']['identifier'] = 'distance';
-  $handler->display->display_options['filters']['distance']['expose']['remember_roles'] = array(
-    2 => '2',
-    1 => 0,
-    5 => 0,
-    4 => 0,
-    3 => 0,
-  );
-  $handler->display->display_options['filters']['distance']['expose']['gmap_macro'] = array(
-    'default' => '[gmap ]',
-  );
-  $handler->display->display_options['filters']['distance']['expose']['user_location_choose'] = array(
-    'default' => FALSE,
-  );
-  $handler->display->display_options['filters']['distance']['origin'] = 'postal_default';
   /* Filter criterion: Content: Age Group (field_age_group) */
   $handler->display->display_options['filters']['field_age_group_value']['id'] = 'field_age_group_value';
   $handler->display->display_options['filters']['field_age_group_value']['table'] = 'field_data_field_age_group';
@@ -525,6 +687,32 @@ function league_views_default_views() {
     4 => 0,
     3 => 0,
   );
+  /* Filter criterion: Content: Position (field_league_position) - proximity */
+  $handler->display->display_options['filters']['field_geofield_distance']['id'] = 'field_geofield_distance';
+  $handler->display->display_options['filters']['field_geofield_distance']['table'] = 'field_data_field_league_position';
+  $handler->display->display_options['filters']['field_geofield_distance']['field'] = 'field_geofield_distance';
+  $handler->display->display_options['filters']['field_geofield_distance']['operator'] = '<';
+  $handler->display->display_options['filters']['field_geofield_distance']['value'] = array(
+    'distance' => '25',
+    'distance2' => 200,
+    'unit' => '3959',
+    'origin' => '',
+  );
+  $handler->display->display_options['filters']['field_geofield_distance']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_geofield_distance']['expose']['operator_id'] = 'field_geofield_distance_op';
+  $handler->display->display_options['filters']['field_geofield_distance']['expose']['label'] = 'Search by Zip Code';
+  $handler->display->display_options['filters']['field_geofield_distance']['expose']['operator'] = 'field_geofield_distance_op';
+  $handler->display->display_options['filters']['field_geofield_distance']['expose']['identifier'] = 'field_geofield_distance';
+  $handler->display->display_options['filters']['field_geofield_distance']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    5 => 0,
+    4 => 0,
+    3 => 0,
+  );
+  $handler->display->display_options['filters']['field_geofield_distance']['source'] = 'geocoder';
+  $handler->display->display_options['filters']['field_geofield_distance']['geofield_proximity_entity_url_field'] = 'field_league_position';
+  $handler->display->display_options['filters']['field_geofield_distance']['geofield_proximity_current_user_field'] = 'field_league_position';
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'page');

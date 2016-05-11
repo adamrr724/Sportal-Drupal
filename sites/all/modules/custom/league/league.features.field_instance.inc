@@ -114,7 +114,7 @@ function league_field_default_field_instances() {
     'entity_type' => 'node',
     'field_name' => 'field_league_address',
     'label' => 'Address',
-    'required' => 0,
+    'required' => 1,
     'settings' => array(
       'user_register_form' => FALSE,
     ),
@@ -127,13 +127,13 @@ function league_field_default_field_instances() {
         'draggable' => 1,
         'format_handlers' => array(
           'address' => 'address',
+          'organisation' => 'organisation',
+          'name-full' => 'name-full',
+          'name-oneline' => 'name-oneline',
+          'address-optional' => 'address-optional',
           'address-hide-postal-code' => 0,
           'address-hide-street' => 0,
           'address-hide-country' => 0,
-          'organisation' => 0,
-          'name-full' => 0,
-          'name-oneline' => 0,
-          'address-optional' => 0,
         ),
         'geolocation' => TRUE,
         'html5_geocode' => 1,
@@ -255,6 +255,69 @@ function league_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-league-field_league_position'.
+  $field_instances['node-league-field_league_position'] = array(
+    'bundle' => 'league',
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'geofield_map',
+        'settings' => array(
+          'geofield_map_baselayers_hybrid' => 1,
+          'geofield_map_baselayers_map' => 1,
+          'geofield_map_baselayers_physical' => 0,
+          'geofield_map_baselayers_satellite' => 1,
+          'geofield_map_center' => array(
+            'lat' => 0,
+            'lon' => 0,
+          ),
+          'geofield_map_controltype' => 'default',
+          'geofield_map_draggable' => 0,
+          'geofield_map_height' => '300px',
+          'geofield_map_maptype' => 'map',
+          'geofield_map_max_zoom' => 0,
+          'geofield_map_min_zoom' => 0,
+          'geofield_map_mtc' => 'standard',
+          'geofield_map_overview' => 0,
+          'geofield_map_overview_opened' => 0,
+          'geofield_map_pancontrol' => 1,
+          'geofield_map_scale' => 0,
+          'geofield_map_scrollwheel' => 0,
+          'geofield_map_streetview_show' => 0,
+          'geofield_map_width' => '100%',
+          'geofield_map_zoom' => 8,
+        ),
+        'type' => 'geofield_map_map',
+        'weight' => 9,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_league_position',
+    'label' => 'Position',
+    'required' => 1,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'addressfield_autocomplete',
+      'settings' => array(
+        'addressfield_autocomplete_field' => 'field_league_address',
+        'delta_handling' => 'default',
+      ),
+      'type' => 'addressfield_autocomplete_latlng',
+      'weight' => 12,
+    ),
+  );
+
   // Exported field_instance: 'node-league-field_league_sport'.
   $field_instances['node-league-field_league_sport'] = array(
     'bundle' => 'league',
@@ -290,42 +353,6 @@ function league_field_default_field_instances() {
       'settings' => array(),
       'type' => 'options_select',
       'weight' => 1,
-    ),
-  );
-
-  // Exported field_instance: 'node-league-field_locationleague'.
-  $field_instances['node-league-field_locationleague'] = array(
-    'bundle' => 'league',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'location_cck',
-        'settings' => array(),
-        'type' => 'location_default',
-        'weight' => 9,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_locationleague',
-    'label' => 'location',
-    'required' => FALSE,
-    'settings' => array(
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'module' => 'location_cck',
-      'settings' => array(),
-      'type' => 'location',
-      'weight' => 12,
     ),
   );
 
@@ -468,11 +495,11 @@ function league_field_default_field_instances() {
   t('Please define an age group.');
   t('Please enter the league website.');
   t('Please outline when participants must sign up.');
+  t('Position');
   t('Sign Up Date');
   t('Skill Level');
   t('Sport');
   t('Website');
-  t('location');
 
   return $field_instances;
 }
