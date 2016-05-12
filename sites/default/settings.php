@@ -217,6 +217,7 @@ $databases = array (
   array (
     'default' =>
     array (
+      'prefix' => 'dr_',
       'database' => 'sportal',
       'username' => 'admin',
       'password' => 'epicodus',
