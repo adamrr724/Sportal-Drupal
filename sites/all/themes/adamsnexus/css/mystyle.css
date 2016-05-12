@@ -1,14 +1,46 @@
 
 .links li .unflag-action {
     background-color: #e57373 ;
-    padding: 8px;
+    border-radius: 0px;
+    padding: 10px;
     margin-left: 40px;
     font-size: 20px;
+    box-shadow: 0 1px 3px;
+    text-shadow: 1px 1px #d3d3d3;
+    border: solid .5px black;
 }
 
 .links li .flag-action {
     background-color: #81c784 ;
-    padding: 8px;
+    border-radius: 0px;
+    padding: 10px;
     margin-left: 40px;
     font-size: 20px;
+    box-shadow: 0 1px 3px;
+    text-shadow: 1px 1px #d3d3d3;
+    border: solid .5px black;
+}
+
+#bottom li {
+    list-style: none;
+}
+
+#bottom li a{
+    color: lightgrey;
+}
+
+a {
+    color: black;
+}
+
+a:visited {
+    color:black;
+}
+
+#edit-field-geofield-distance-distance {
+    max-width: 40px;
+}
+
+#edit-field-geofield-distance-origin {
+    max-width: 80px;
 }

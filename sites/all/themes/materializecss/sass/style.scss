@@ -1,0 +1,55 @@
+/*********** overide css ***********/
+.brand-logo {
+  margin-top: 7px;
+}
+
+.collection-header {
+  margin: 0;
+}
+
+.field-type-text-long {
+  margin-bottom: 1em;
+}
+
+.btn {
+  margin-right: 1em;
+}
+
+/************ css for sidebar regions ***********/
+.region-sidebar-first,
+.region-sidebar-last,
+.action-links {
+	li {
+	  list-style-type: none;
+  } 
+}
+
+.field-type-taxonomy-term-reference {
+	.field-item {
+	  display: inline-block;
+	  margin-right: 0.5rem;
+	}
+}
+
+/******** for comment form ***********/
+.comment-form {
+	.form-type-item {
+		label {
+			position: inherit;
+			display: block;
+    	margin-bottom: 12px;
+		}
+		span, .username {
+			padding-left: 12px;
+		}
+	}
+	.filter-wrapper {
+		.form-type-select {
+			label {
+				position: inherit;
+			  display: block;
+    	  margin-bottom: 20px;
+			}
+		}
+	}
+}

@@ -1,0 +1,52 @@
+/*********** overide css ***********/
+/* line 2, ../sass/style.scss */
+.brand-logo {
+  margin-top: 7px;
+}
+
+/* line 6, ../sass/style.scss */
+.collection-header {
+  margin: 0;
+}
+
+/* line 10, ../sass/style.scss */
+.field-type-text-long {
+  margin-bottom: 1em;
+}
+
+/* line 14, ../sass/style.scss */
+.btn {
+  margin-right: 1em;
+}
+
+/************ css for sidebar regions ***********/
+/* line 22, ../sass/style.scss */
+.region-sidebar-first li,
+.region-sidebar-last li,
+.action-links li {
+  list-style-type: none;
+}
+
+/* line 28, ../sass/style.scss */
+.field-type-taxonomy-term-reference .field-item {
+  display: inline-block;
+  margin-right: 0.5rem;
+}
+
+/******** for comment form ***********/
+/* line 37, ../sass/style.scss */
+.comment-form .form-type-item label {
+  position: inherit;
+  display: block;
+  margin-bottom: 12px;
+}
+/* line 42, ../sass/style.scss */
+.comment-form .form-type-item span, .comment-form .form-type-item .username {
+  padding-left: 12px;
+}
+/* line 48, ../sass/style.scss */
+.comment-form .filter-wrapper .form-type-select label {
+  position: inherit;
+  display: block;
+  margin-bottom: 20px;
+}
