@@ -1,24 +1,32 @@
 
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
 .links li .unflag-action {
-    background-color: #e57373 ;
+    background-color: #ef9a9a ;
     border-radius: 0px;
     padding: 10px;
-    margin-left: 40px;
+    /*margin-left: 40px;*/
     font-size: 20px;
     box-shadow: 0 1px 3px;
     text-shadow: 1px 1px #d3d3d3;
     border: solid .5px black;
+    display:inline-flex;
+    float: right;
 }
 
 .links li .flag-action {
-    background-color: #81c784 ;
+    background-color: #4caf50;
     border-radius: 0px;
     padding: 10px;
-    margin-left: 40px;
+    /*margin-left: 40px;*/
     font-size: 20px;
     box-shadow: 0 1px 3px;
     text-shadow: 1px 1px #d3d3d3;
     border: solid .5px black;
+    display: inline-flex;
+    float: right;
 }
 
 #bottom li {
@@ -43,4 +51,26 @@ a:visited {
 
 #edit-field-geofield-distance-origin {
     max-width: 80px;
+}
+
+.node {
+    padding: 10px 20px 20px 20px;
+    border: outset .5px black;
+    margin: 15px 0 10px 0;
+    box-shadow: 0 1px 3px;
+}
+
+.addtoany_list a{
+    margin-top: 5px;
+    margin-bottom:10px;
+}
+
+.page-node .addtoany_list a{
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.field-label {
+    font-size: 16px;
+    color: #03A6D0;
 }

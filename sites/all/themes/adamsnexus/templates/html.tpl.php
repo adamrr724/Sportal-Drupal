@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="<?php print $language->language; ?>" dir="<?php print $language->dir; ?>"<?php print $rdf_namespaces; ?>>
 <head>
+<link href='https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic' rel='stylesheet' type='text/css'>
 <?php print $head; ?>
 <title><?php print $head_title; ?></title>
 <?php print $styles; ?>
