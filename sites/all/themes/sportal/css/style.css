@@ -1,0 +1,5 @@
+.content p a {
+  color: #85AC20; }
+
+.content p [href="/contact"] {
+  color: grey !important; }
