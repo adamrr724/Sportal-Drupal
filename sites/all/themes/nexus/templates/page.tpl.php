@@ -76,7 +76,16 @@
         </h1>
       </div>
       <div class="col-sm-6 mainmenu">
-        <div class="mobilenavi"></div>
+        <div class="mobilenavi">
+            <?php
+              if (module_exists('i18n_menu')) {
+                $main_menu_tree = i18n_menu_translated_tree(variable_get('menu_main_links_source', 'main-menu'));
+              } else {
+                $main_menu_tree = menu_tree(variable_get('menu_main_links_source', 'main-menu'));
+              }
+              print drupal_render($main_menu_tree);
+            ?>
+        </div>
         <nav id="navigation" role="navigation">
           <div id="main-menu">
             <?php
@@ -108,7 +117,10 @@
         <?php if($slide1_head || $slide1_desc) : ?>
           <div class="flex-caption">
             <h2><?php print $slide1_head; ?></h2><?php print $slide1_desc; ?>
-            <a class="frmore" href="<?php print url($slide1_url); ?>"> <?php print t('READ MORE'); ?> </a>
+            <div id="my-search-field">
+                <input type="texfield" name="name" placeholder="Soccer" value="">
+                <input type="button" name="name" value="Go">
+            </div>
           </div>
         <?php endif; ?>
       </li>
