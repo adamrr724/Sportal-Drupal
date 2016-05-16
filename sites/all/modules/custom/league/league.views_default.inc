@@ -48,32 +48,23 @@ function league_views_default_views() {
   $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
   $handler->display->display_options['fields']['title']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['title']['hide_alter_empty'] = FALSE;
-  /* Field: Content: Sign Up Date */
-  $handler->display->display_options['fields']['field_league_date']['id'] = 'field_league_date';
-  $handler->display->display_options['fields']['field_league_date']['table'] = 'field_data_field_league_date';
-  $handler->display->display_options['fields']['field_league_date']['field'] = 'field_league_date';
-  $handler->display->display_options['fields']['field_league_date']['label'] = '';
-  $handler->display->display_options['fields']['field_league_date']['element_label_colon'] = FALSE;
-  $handler->display->display_options['fields']['field_league_date']['hide_alter_empty'] = FALSE;
-  $handler->display->display_options['fields']['field_league_date']['settings'] = array(
-    'format_type' => 'short',
+  /* Field: Content: Sign Up By */
+  $handler->display->display_options['fields']['field_sign_up_by_2']['id'] = 'field_sign_up_by_2';
+  $handler->display->display_options['fields']['field_sign_up_by_2']['table'] = 'field_data_field_sign_up_by';
+  $handler->display->display_options['fields']['field_sign_up_by_2']['field'] = 'field_sign_up_by';
+  $handler->display->display_options['fields']['field_sign_up_by_2']['settings'] = array(
+    'format_type' => 'long',
     'fromto' => 'both',
     'multiple_number' => '',
     'multiple_from' => '',
     'multiple_to' => '',
     'show_remaining_days' => 0,
   );
-  $handler->display->display_options['fields']['field_league_date']['group_rows'] = FALSE;
-  $handler->display->display_options['fields']['field_league_date']['delta_offset'] = '0';
-  /* Sort criterion: Content: Sign Up Date -  start date (field_league_date) */
-  $handler->display->display_options['sorts']['field_league_date_value']['id'] = 'field_league_date_value';
-  $handler->display->display_options['sorts']['field_league_date_value']['table'] = 'field_data_field_league_date';
-  $handler->display->display_options['sorts']['field_league_date_value']['field'] = 'field_league_date_value';
   /* Filter criterion: Content: Published */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
   $handler->display->display_options['filters']['status']['field'] = 'status';
-  $handler->display->display_options['filters']['status']['value'] = 1;
+  $handler->display->display_options['filters']['status']['value'] = '1';
   $handler->display->display_options['filters']['status']['group'] = 0;
   $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
 
@@ -94,13 +85,6 @@ function league_views_default_views() {
   $handler->display->display_options['defaults']['style_options'] = FALSE;
   $handler->display->display_options['defaults']['row_plugin'] = FALSE;
   $handler->display->display_options['row_plugin'] = 'calendar_entity';
-  $handler->display->display_options['row_options']['colors']['legend'] = 'type';
-  $handler->display->display_options['row_options']['colors']['calendar_colors_type'] = array(
-    'article' => '#ffffff',
-    'page' => '#ffffff',
-    'league' => '#ffffff',
-    'pickup_game' => '#ffffff',
-  );
   $handler->display->display_options['defaults']['row_options'] = FALSE;
   $handler->display->display_options['defaults']['arguments'] = FALSE;
   /* Contextual filter: Date: Date (node) */
@@ -227,23 +211,13 @@ function league_views_default_views() {
   $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
   $handler->display->display_options['fields']['title']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['title']['hide_alter_empty'] = FALSE;
-  /* Field: Content: Sign Up Date */
+  /* Field: Broken/missing handler */
   $handler->display->display_options['fields']['field_league_date']['id'] = 'field_league_date';
   $handler->display->display_options['fields']['field_league_date']['table'] = 'field_data_field_league_date';
   $handler->display->display_options['fields']['field_league_date']['field'] = 'field_league_date';
   $handler->display->display_options['fields']['field_league_date']['label'] = '';
   $handler->display->display_options['fields']['field_league_date']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['field_league_date']['hide_alter_empty'] = FALSE;
-  $handler->display->display_options['fields']['field_league_date']['settings'] = array(
-    'format_type' => 'short',
-    'fromto' => 'both',
-    'multiple_number' => '',
-    'multiple_from' => '',
-    'multiple_to' => '',
-    'show_repeat_rule' => '',
-  );
-  $handler->display->display_options['fields']['field_league_date']['group_rows'] = FALSE;
-  $handler->display->display_options['fields']['field_league_date']['delta_offset'] = '0';
   $handler->display->display_options['defaults']['arguments'] = FALSE;
   /* Contextual filter: Date: Date (node) */
   $handler->display->display_options['arguments']['date_argument']['id'] = 'date_argument';
@@ -542,7 +516,7 @@ function league_views_default_views() {
   $handler->display->display_options['pager']['type'] = 'full';
   $handler->display->display_options['pager']['options']['items_per_page'] = '100';
   $handler->display->display_options['style_plugin'] = 'gmap';
-  $handler->display->display_options['style_options']['macro'] = '[gmap zoom=12 |center=45.5231,-122.6765| width=100% | height=600px | type=Map]';
+  $handler->display->display_options['style_options']['macro'] = '[gmap zoom=12 | behavior=+autozoom |width=100% | height=600px | type=Map]';
   $handler->display->display_options['style_options']['datasource'] = 'geofield';
   $handler->display->display_options['style_options']['markertype'] = 'blue';
   $handler->display->display_options['style_options']['latfield'] = 'title';
@@ -578,19 +552,6 @@ function league_views_default_views() {
   $handler->display->display_options['fields']['field_league_sport']['id'] = 'field_league_sport';
   $handler->display->display_options['fields']['field_league_sport']['table'] = 'field_data_field_league_sport';
   $handler->display->display_options['fields']['field_league_sport']['field'] = 'field_league_sport';
-  /* Field: Content: Sign Up Date */
-  $handler->display->display_options['fields']['field_league_date']['id'] = 'field_league_date';
-  $handler->display->display_options['fields']['field_league_date']['table'] = 'field_data_field_league_date';
-  $handler->display->display_options['fields']['field_league_date']['field'] = 'field_league_date';
-  $handler->display->display_options['fields']['field_league_date']['label'] = 'Date';
-  $handler->display->display_options['fields']['field_league_date']['settings'] = array(
-    'format_type' => 'long',
-    'fromto' => 'both',
-    'multiple_number' => '',
-    'multiple_from' => '',
-    'multiple_to' => '',
-    'show_remaining_days' => 0,
-  );
   /* Field: Content: Skill Level */
   $handler->display->display_options['fields']['field_skill_level']['id'] = 'field_skill_level';
   $handler->display->display_options['fields']['field_skill_level']['table'] = 'field_data_field_skill_level';
@@ -623,6 +584,10 @@ function league_views_default_views() {
   $handler->display->display_options['fields']['field_league_position']['id'] = 'field_league_position';
   $handler->display->display_options['fields']['field_league_position']['table'] = 'field_data_field_league_position';
   $handler->display->display_options['fields']['field_league_position']['field'] = 'field_league_position';
+  $handler->display->display_options['fields']['field_league_position']['click_sort_column'] = 'geom';
+  $handler->display->display_options['fields']['field_league_position']['settings'] = array(
+    'data' => 'full',
+  );
   /* Field: Content: Position (field_league_position) - proximity */
   $handler->display->display_options['fields']['field_geofield_distance']['id'] = 'field_geofield_distance';
   $handler->display->display_options['fields']['field_geofield_distance']['table'] = 'field_data_field_league_position';
@@ -636,6 +601,17 @@ function league_views_default_views() {
   $handler->display->display_options['fields']['field_geofield_distance']['geofield_proximity_entity_url_field'] = 'field_league_position';
   $handler->display->display_options['fields']['field_geofield_distance']['geofield_proximity_current_user_field'] = 'field_league_position';
   $handler->display->display_options['fields']['field_geofield_distance']['radius_of_earth'] = '3959';
+  /* Sort criterion: Content: Position (field_league_position) - proximity */
+  $handler->display->display_options['sorts']['field_geofield_distance']['id'] = 'field_geofield_distance';
+  $handler->display->display_options['sorts']['field_geofield_distance']['table'] = 'field_data_field_league_position';
+  $handler->display->display_options['sorts']['field_geofield_distance']['field'] = 'field_geofield_distance';
+  $handler->display->display_options['sorts']['field_geofield_distance']['source'] = 'current_user';
+  $handler->display->display_options['sorts']['field_geofield_distance']['geofield_proximity_manual'] = array(
+    'lat' => '',
+    'lon' => '',
+  );
+  $handler->display->display_options['sorts']['field_geofield_distance']['geofield_proximity_entity_url_field'] = 'field_league_position';
+  $handler->display->display_options['sorts']['field_geofield_distance']['geofield_proximity_current_user_field'] = 'field_league_position';
   /* Sort criterion: Content: Title */
   $handler->display->display_options['sorts']['title']['id'] = 'title';
   $handler->display->display_options['sorts']['title']['table'] = 'node';

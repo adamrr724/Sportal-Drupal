@@ -75,38 +75,11 @@ function league_field_default_field_bases() {
     'indexes' => array(),
     'locked' => 0,
     'module' => 'addressfield',
-    'settings' => array(),
-    'translatable' => 0,
-    'type' => 'addressfield',
-  );
-
-  // Exported field_base: 'field_league_date'.
-  $field_bases['field_league_date'] = array(
-    'active' => 1,
-    'cardinality' => 1,
-    'deleted' => 0,
-    'entity_types' => array(),
-    'field_name' => 'field_league_date',
-    'indexes' => array(),
-    'locked' => 0,
-    'module' => 'date',
     'settings' => array(
-      'cache_count' => 4,
-      'cache_enabled' => 0,
-      'granularity' => array(
-        'day' => 'day',
-        'hour' => 0,
-        'minute' => 0,
-        'month' => 'month',
-        'second' => 0,
-        'year' => 'year',
-      ),
-      'timezone_db' => '',
-      'todate' => 'optional',
-      'tz_handling' => 'none',
+      'profile2_private' => FALSE,
     ),
     'translatable' => 0,
-    'type' => 'datetime',
+    'type' => 'addressfield',
   );
 
   // Exported field_base: 'field_league_image'.
@@ -175,6 +148,7 @@ function league_field_default_field_bases() {
     'module' => 'geofield',
     'settings' => array(
       'backend' => 'default',
+      'profile2_private' => FALSE,
       'srid' => 4326,
     ),
     'translatable' => 0,
@@ -227,6 +201,36 @@ function league_field_default_field_bases() {
     'settings' => array(),
     'translatable' => 0,
     'type' => 'text_with_summary',
+  );
+
+  // Exported field_base: 'field_sign_up_by'.
+  $field_bases['field_sign_up_by'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_sign_up_by',
+    'indexes' => array(),
+    'locked' => 0,
+    'module' => 'date',
+    'settings' => array(
+      'cache_count' => 4,
+      'cache_enabled' => 0,
+      'granularity' => array(
+        'day' => 'day',
+        'hour' => 'hour',
+        'minute' => 'minute',
+        'month' => 'month',
+        'second' => 0,
+        'year' => 'year',
+      ),
+      'profile2_private' => FALSE,
+      'timezone_db' => 'UTC',
+      'todate' => '',
+      'tz_handling' => 'user',
+    ),
+    'translatable' => 0,
+    'type' => 'datetime',
   );
 
   // Exported field_base: 'field_skill_level'.

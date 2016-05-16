@@ -30,7 +30,7 @@ function runs_and_races_views_default_views() {
   $handler->display->display_options['pager']['type'] = 'full';
   $handler->display->display_options['pager']['options']['items_per_page'] = '50';
   $handler->display->display_options['style_plugin'] = 'gmap';
-  $handler->display->display_options['style_options']['macro'] = '[gmap zoom=12 |center=45.5231,-122.6765| width=100% | height=600px | type=Map]';
+  $handler->display->display_options['style_options']['macro'] = '[gmap zoom=12 | behavior=+autozoom | width=100% | height=600px | type=Map]';
   $handler->display->display_options['style_options']['datasource'] = 'geofield';
   $handler->display->display_options['style_options']['markertype'] = 'orange';
   $handler->display->display_options['style_options']['latfield'] = 'title';
@@ -96,6 +96,17 @@ function runs_and_races_views_default_views() {
   $handler->display->display_options['fields']['field_position_runs_races']['settings'] = array(
     'data' => 'full',
   );
+  /* Sort criterion: Content: Position (field_position_runs_races) - proximity */
+  $handler->display->display_options['sorts']['field_geofield_distance']['id'] = 'field_geofield_distance';
+  $handler->display->display_options['sorts']['field_geofield_distance']['table'] = 'field_data_field_position_runs_races';
+  $handler->display->display_options['sorts']['field_geofield_distance']['field'] = 'field_geofield_distance';
+  $handler->display->display_options['sorts']['field_geofield_distance']['source'] = 'current_user';
+  $handler->display->display_options['sorts']['field_geofield_distance']['geofield_proximity_manual'] = array(
+    'lat' => '',
+    'lon' => '',
+  );
+  $handler->display->display_options['sorts']['field_geofield_distance']['geofield_proximity_entity_url_field'] = 'field_league_position';
+  $handler->display->display_options['sorts']['field_geofield_distance']['geofield_proximity_current_user_field'] = 'field_league_position';
   /* Sort criterion: Content: Post date */
   $handler->display->display_options['sorts']['created']['id'] = 'created';
   $handler->display->display_options['sorts']['created']['table'] = 'node';

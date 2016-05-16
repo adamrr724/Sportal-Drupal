@@ -618,6 +618,17 @@ function pickup_views_default_views() {
   $handler->display->display_options['fields']['field_geofield_distance']['geofield_proximity_entity_url_field'] = 'field_league_position';
   $handler->display->display_options['fields']['field_geofield_distance']['geofield_proximity_current_user_field'] = 'field_league_position';
   $handler->display->display_options['fields']['field_geofield_distance']['radius_of_earth'] = '3959';
+  /* Sort criterion: Content: Position (field_position_pickup) - proximity */
+  $handler->display->display_options['sorts']['field_geofield_distance']['id'] = 'field_geofield_distance';
+  $handler->display->display_options['sorts']['field_geofield_distance']['table'] = 'field_data_field_position_pickup';
+  $handler->display->display_options['sorts']['field_geofield_distance']['field'] = 'field_geofield_distance';
+  $handler->display->display_options['sorts']['field_geofield_distance']['source'] = 'current_user';
+  $handler->display->display_options['sorts']['field_geofield_distance']['geofield_proximity_manual'] = array(
+    'lat' => '',
+    'lon' => '',
+  );
+  $handler->display->display_options['sorts']['field_geofield_distance']['geofield_proximity_entity_url_field'] = 'field_league_position';
+  $handler->display->display_options['sorts']['field_geofield_distance']['geofield_proximity_current_user_field'] = 'field_league_position';
   /* Sort criterion: Content: Post date */
   $handler->display->display_options['sorts']['created']['id'] = 'created';
   $handler->display->display_options['sorts']['created']['table'] = 'node';
@@ -644,12 +655,12 @@ function pickup_views_default_views() {
   $handler->display->display_options['filters']['field_sport_value']['exposed'] = TRUE;
   $handler->display->display_options['filters']['field_sport_value']['expose']['operator_id'] = 'field_sport_value_op';
   $handler->display->display_options['filters']['field_sport_value']['expose']['label'] = 'Sport';
-  $handler->display->display_options['filters']['field_sport_value']['expose']['description'] = 'Sort by sport';
   $handler->display->display_options['filters']['field_sport_value']['expose']['operator'] = 'field_sport_value_op';
   $handler->display->display_options['filters']['field_sport_value']['expose']['identifier'] = 'field_sport_value';
   $handler->display->display_options['filters']['field_sport_value']['expose']['remember_roles'] = array(
     2 => '2',
     1 => 0,
+    5 => 0,
     4 => 0,
     3 => 0,
   );
@@ -702,7 +713,7 @@ function pickup_views_default_views() {
   $handler->display->display_options['title'] = 'Pickup Games';
   $handler->display->display_options['defaults']['style_plugin'] = FALSE;
   $handler->display->display_options['style_plugin'] = 'gmap';
-  $handler->display->display_options['style_options']['macro'] = '[gmap zoom=12 |center=45.5231,-122.6765| width=100% | height=600px | type=Map]';
+  $handler->display->display_options['style_options']['macro'] = '[gmap zoom=12 | behavior=+autozoom | width=100% | height=600px | type=Map]';
   $handler->display->display_options['style_options']['datasource'] = 'geofield';
   $handler->display->display_options['style_options']['markertype'] = 'gray';
   $handler->display->display_options['style_options']['latfield'] = 'title';
