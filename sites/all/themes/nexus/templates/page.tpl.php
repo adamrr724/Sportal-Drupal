@@ -112,24 +112,6 @@
           </div>
         <?php endif; ?>
       </li>
-      <li>
-        <img src="<?php print base_path() . drupal_get_path('theme', 'nexus') . '/images/slide-image-2.jpg'; ?>"/>
-        <?php if($slide2_head || $slide2_desc) : ?>
-          <div class="flex-caption">
-            <h2><?php print $slide2_head; ?></h2><?php print $slide2_desc; ?>
-            <a class="frmore" href="<?php print url($slide2_url); ?>"> <?php print t('READ MORE'); ?> </a>
-          </div>
-        <?php endif; ?>
-      </li>
-      <li>
-        <img src="<?php print base_path() . drupal_get_path('theme', 'nexus') . '/images/slide-image-3.jpg'; ?>"/>
-        <?php if($slide3_head || $slide3_desc) : ?>
-          <div class="flex-caption">
-            <h2><?php print $slide3_head; ?></h2><?php print $slide3_desc; ?>
-            <a class="frmore" href="<?php print url($slide3_url); ?>"> <?php print t('READ MORE'); ?> </a>
-          </div>
-        <?php endif; ?>
-      </li>
     </ul><!-- /slides -->
     <div class="doverlay"></div>
   </div>
