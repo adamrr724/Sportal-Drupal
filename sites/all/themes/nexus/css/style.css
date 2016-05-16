@@ -85,6 +85,14 @@
       color: #03A6D0;
   }
 
+  #my-about-block {
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+      align-items: center;
+  }
+
+
   @media screen and (min-width: 769px) {
       .mobilenavi {
           display: none;
