@@ -325,6 +325,7 @@ function league_views_default_views() {
 
   /* Display: Master */
   $handler = $view->new_display('default', 'Master', 'default');
+  $handler->display->display_options['use_ajax'] = TRUE;
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['cache']['type'] = 'none';
@@ -646,6 +647,7 @@ function league_views_default_views() {
   $handler->display->display_options['filters']['field_league_sport_value']['expose']['remember_roles'] = array(
     2 => '2',
     1 => 0,
+    6 => 0,
     5 => 0,
     4 => 0,
     3 => 0,
@@ -697,48 +699,37 @@ function league_views_default_views() {
   $handler = $view->new_display('page', 'Page', 'page');
   $handler->display->display_options['defaults']['title'] = FALSE;
   $handler->display->display_options['title'] = 'Leagues';
+  $handler->display->display_options['exposed_block'] = TRUE;
+  $handler->display->display_options['defaults']['empty'] = FALSE;
+  /* No results behavior: Global: Unfiltered text */
+  $handler->display->display_options['empty']['area_text_custom']['id'] = 'area_text_custom';
+  $handler->display->display_options['empty']['area_text_custom']['table'] = 'views';
+  $handler->display->display_options['empty']['area_text_custom']['field'] = 'area_text_custom';
+  $handler->display->display_options['empty']['area_text_custom']['empty'] = TRUE;
+  $handler->display->display_options['empty']['area_text_custom']['content'] = '<h3><strong>No Results Found.</strong></h3>
+Please try again.';
+  $handler->display->display_options['defaults']['arguments'] = FALSE;
   $handler->display->display_options['path'] = 'leagues';
   $handler->display->display_options['menu']['type'] = 'normal';
   $handler->display->display_options['menu']['title'] = 'Leagues';
   $handler->display->display_options['menu']['name'] = 'main-menu';
 
-  /* Display: Block */
-  $handler = $view->new_display('block', 'Block', 'block_1');
+  /* Display: Attachment */
+  $handler = $view->new_display('attachment', 'Attachment', 'attachment_1');
+  $handler->display->display_options['pager']['type'] = 'some';
   $handler->display->display_options['defaults']['style_plugin'] = FALSE;
   $handler->display->display_options['style_plugin'] = 'default';
   $handler->display->display_options['defaults']['style_options'] = FALSE;
   $handler->display->display_options['defaults']['row_plugin'] = FALSE;
   $handler->display->display_options['row_plugin'] = 'node';
   $handler->display->display_options['defaults']['row_options'] = FALSE;
-  $handler->display->display_options['defaults']['fields'] = FALSE;
-  /* Field: Content: Title */
-  $handler->display->display_options['fields']['title']['id'] = 'title';
-  $handler->display->display_options['fields']['title']['table'] = 'node';
-  $handler->display->display_options['fields']['title']['field'] = 'title';
-  $handler->display->display_options['fields']['title']['label'] = '';
-  $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
-  $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
-  /* Field: Content: Fees */
-  $handler->display->display_options['fields']['field_fees']['id'] = 'field_fees';
-  $handler->display->display_options['fields']['field_fees']['table'] = 'field_data_field_fees';
-  $handler->display->display_options['fields']['field_fees']['field'] = 'field_fees';
-  /* Field: Content: Address */
-  $handler->display->display_options['fields']['field_league_address']['id'] = 'field_league_address';
-  $handler->display->display_options['fields']['field_league_address']['table'] = 'field_data_field_league_address';
-  $handler->display->display_options['fields']['field_league_address']['field'] = 'field_league_address';
-  $handler->display->display_options['fields']['field_league_address']['type'] = 'location_all';
-  /* Field: Content: Notes */
-  $handler->display->display_options['fields']['field_notes']['id'] = 'field_notes';
-  $handler->display->display_options['fields']['field_notes']['table'] = 'field_data_field_notes';
-  $handler->display->display_options['fields']['field_notes']['field'] = 'field_notes';
-  /* Field: Content: Skill Level */
-  $handler->display->display_options['fields']['field_skill_level']['id'] = 'field_skill_level';
-  $handler->display->display_options['fields']['field_skill_level']['table'] = 'field_data_field_skill_level';
-  $handler->display->display_options['fields']['field_skill_level']['field'] = 'field_skill_level';
-  /* Field: Content: Sport */
-  $handler->display->display_options['fields']['field_league_sport']['id'] = 'field_league_sport';
-  $handler->display->display_options['fields']['field_league_sport']['table'] = 'field_data_field_league_sport';
-  $handler->display->display_options['fields']['field_league_sport']['field'] = 'field_league_sport';
+  $handler->display->display_options['displays'] = array(
+    'page' => 'page',
+    'default' => 0,
+    'block_1' => 0,
+  );
+  $handler->display->display_options['attachment_position'] = 'after';
+  $handler->display->display_options['inherit_exposed_filters'] = TRUE;
   $export['leagues'] = $view;
 
   return $export;
