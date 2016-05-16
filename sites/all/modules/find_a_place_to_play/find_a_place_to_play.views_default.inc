@@ -162,7 +162,10 @@ function find_a_place_to_play_views_default_views() {
   $handler->display->display_options['exposed_form']['options']['input_required'] = 0;
   $handler->display->display_options['exposed_form']['options']['text_input_required_format'] = 'filtered_html';
   $handler->display->display_options['pager']['type'] = 'full';
-  $handler->display->display_options['pager']['options']['items_per_page'] = '100';
+  $handler->display->display_options['pager']['options']['items_per_page'] = '25';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
+  $handler->display->display_options['pager']['options']['id'] = '0';
+  $handler->display->display_options['pager']['options']['quantity'] = '9';
   $handler->display->display_options['style_plugin'] = 'gmap';
   $handler->display->display_options['style_options']['macro'] = '[gmap zoom=12 | behavior=+autozoom | width=100% | height=600px | type=Map]';
   $handler->display->display_options['style_options']['datasource'] = 'geofield';
