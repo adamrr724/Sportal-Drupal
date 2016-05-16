@@ -3,10 +3,9 @@ description = Sportal Theme is built for the Sportal website and is based on Nex
 core = 7.x
 engine = phptemplate
 
-stylesheets[all][] = css/bootstrap.min.css
-stylesheets[all][] = css/flexslider.css
+stylesheets[all][] = css/vendor/bootstrap.min.css
+stylesheets[all][] = css/vendor/flexslider.css
 stylesheets[all][] = css/style.css
-stylesheets[all][] = default_style.css
 
 scripts[] = js/bootstrap.min.js
 scripts[] = js/superfish.js
