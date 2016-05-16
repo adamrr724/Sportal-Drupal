@@ -1,0 +1,13 @@
+name = Landing Page
+description = The Home page of Sportal
+core = 7.x
+package = Features
+version = 7.x-1.0
+dependencies[] = strongarm
+dependencies[] = views
+features[ctools][] = strongarm:strongarm:1
+features[ctools][] = views:views_default:3.0
+features[features_api][] = api:2
+features[variable][] = theme_nexus_settings
+features[views_view][] = my_blog_posts
+features_exclude[dependencies][ctools] = ctools
