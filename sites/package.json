@@ -4,7 +4,8 @@
   "description": "This directory structure contains the settings and configuration files specific to your site or sites and is an integral part of multisite configuration.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npm install && gulp"
   },
   "keywords": [],
   "author": "",

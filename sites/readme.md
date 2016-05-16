@@ -22,14 +22,14 @@ _**Please star this repo if you find it useful, thanks.**_
 2. From `./sites`, run `npm install`.
 3. Update `gulpconfig.json`.
   - Add the directory of your current custom theme under `"currentTheme"`.
-    - **Note**: Place your `.sass` and `.scss` files in a directory call `scss` within your custom theme. You will have issues with this setup if you are not using scss and do not have that file present. 
+    - **Note**: Place your `.sass` and `.scss` files in a directory call `scss` within your custom theme. You will have issues with this setup if you are not using scss and do not have that file present.
   - Change or add any files paths you want to watch for changes that will trigger a cache clear and reload.
   - Set the port of the proxyUrl. This is currently set to localhost:8888 to match the Drupal 7 setup instructions from [Learn How to Program](https://www.learnhowtoprogram.com/) and [Team Treehouse](https://teamtreehouse.com/home).
 
 ### Launching gulp (starting the watch)
 
 1. Navigate to the `./sites` directory of your project
-2. Run the command `gulp`
+2. Run the command `npm start`
 
 **Note**: Your drupal site needs to be up and running for this to work (for Epicodus students, this means MAMP is pointed at your project and running the Apache and MySql servers).
 
