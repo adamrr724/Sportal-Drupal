@@ -60,11 +60,10 @@ a:active {
 
 #slidebox {
   max-height: 550px;
-  position: relative;
-  background: #000; }
+  position: relative; }
 
 .doverlay {
-  background: url(images/overlay.png);
+  box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.4);
   position: absolute;
   width: 100%;
   height: 100%;
