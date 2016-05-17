@@ -1,11 +1,178 @@
 <?php
 
-function front_page_form() {
-    $form = array();
-    $form =['content_type'] = array(
-        '#title' => 'Activity Type',
-        '#type' => 'textarea',
-        '#description' => t('Please choose the recreational sports activity you are trying to find.<br> Examples: <br> Pickups = 5 v 5 pickup in the park on saturday. <br> Leagues = Find a local basketball team to play on. <br> Runs and Races = Find a 5k run, or a bike race! <br> Find a Place to Play = Find a local park with a basketball court.'),
+function front_page_form_block_info() {
+  $blocks = array();
+  $blocks['front-page-form'] = array(
+    'info' => t('Front Page Form'),
+    'region' => 'sidebar_first',
+    'status' => TRUE,
+    'visibility' => BLOCK_VISIBILITY_LISTED,
+    'pages' => variable_get('site_frontpage', NULL),
+  );
+
+  return $blocks;
+}
+
+function front_page_form_block_view($delta = '') {
+  // The $delta parameter tells us which block is being requested.
+  $block = array();
+  switch ($delta) {
+    case 'front-page-form':
+      // Create your block content here
+      $block['content'] = drupal_get_form('front_page_form_form');
+      break;
+  }
+
+  return $block;
+}
+
+function front_page_form_form($form, &$form_state) {
+
+    $options_first = _front_page_form_activity_type_dropdown();
+    $selected = isset($form_state['values']['dropdown_first']) ? $form_state['values']['dropdown_first'] : key($options_first);
+
+    $form['dropdown_first'] = array(
+        '#type' => 'select',
+        '#title' => 'What are you looking for?',
+        '#options' => $options_first,
+        '#default_value' => $selected,
+        '#ajax' => array(
+            'callback' => 'front_page_form_dropdown_callback',
+            'wrapper' => 'dropdown-second-replace',
+            'progress' => array('type' => 'none'),
+        ),
+    );
+    $form['dropdown_second'] = array(
+        '#type' => 'select',
+        '#title' =>  'Search For:',
+        '#prefix' => '<div id="dropdown-second-replace">',
+        '#suffix' => '</div>',
+        '#options' => front_page_form_sport_dropdown($selected),
+        '#default_value' => isset($form_state['values']['dropdown_second']) ? $form_state['values']['dropdown_second'] : '',
+    );
+    $form['zip'] = array(
+        '#type' => 'textfield',
+        '#title' => 'Enter Zip code',
+        '#placeholder' => t('For ex: 97227'),
+        '#element_validate' => array('element_validate_range'),
+    );
+    $form['submit'] = array(
+        '#type' => 'submit',
+        '#value' => t('Submit'),
     );
     return $form;
+}
+
+function front_page_form_dropdown_callback($form, $form_state) {
+    return $form['dropdown_second'];
+}
+
+function _front_page_form_activity_type_dropdown() {
+    return drupal_map_assoc(
+        array(
+            t('Pickup Games'),
+            t('Leagues'),
+            t('Runs and Races'),
+            t('Places to Play'),
+        )
+    );
+}
+
+function front_page_form_sport_dropdown($type = '') {
+    $options = array(
+        t('Pickup Games') => drupal_map_assoc(
+            array(
+                t('Baseball'),
+                t('Basketball'),
+                t('Flag Football'),
+                t('Kickball'),
+                t('Soccer'),
+                t('Ultimate'),
+            )
+        ),
+        t('Leagues') => drupal_map_assoc(
+            array(
+                t('Baseball'),
+                t('Basketball'),
+                t('Flag Football'),
+                t('Kickball'),
+                t('Soccer'),
+                t('Ultimate'),
+            )
+        ),
+        t('Runs and Races') => drupal_map_assoc(
+            array(
+                t('Road Bike Race'),
+                t('Mountain Bike Race'),
+                t('Triathlon'),
+                t('Biathlon'),
+                t('Marathon'),
+                t('Charity Run'),
+                t('Trail Run'),
+                t('Obstacle Run'),
+            )
+        ),
+        t('Places to Play') => drupal_map_assoc(
+            array(
+                t('Multipurpose Field Space'),
+                t('Soccer Field'),
+                t('Basketball Court'),
+                t('Baseball Diamond'),
+                t('Football Field'),
+                t('Tennis Court'),
+                t('Track'),
+                t('Volleyball Court'),
+                t('Ice Rink'),
+                t('Squash Court'),
+                t('Yoga Gym'),
+                t('Pool'),
+                t('Fitness Center'),
+                t('Walking/Running Trails'),
+                t('Hiking Trails'),
+            )
+        ),
+    );
+
+    if (isset($options[$type])) {
+        return $options[$type];
+    } else {
+        return array();
+    }
+}
+
+function element_validate_range($element) {
+    $zip = intval($element['#value']);
+    $zip_code = str_split($zip);
+
+    $zip_numbers = range(0, 9);
+
+    if (strlen($zip) !== 5) {
+        form_set_error($zip, t('Zip code must be five numbers.'));
+    }
+
+    foreach($zip_code as $zip_num) {
+        if (!in_array($zip_num, $zip_numbers)) {
+            form_set_error($zip, t('Please only enter numbers 0-9.'));
+        }
+    }
+}
+
+function front_page_form_form_submit($form_id, &$form_state) {
+    $first = $form_state['values']['dropdown_first'];
+    $second = $form_state['values']['dropdown_second'];
+    $zip = $form_state['values']['zip'];
+
+    if($first === "Pickup Games") {
+        $url = 'http://localhost:8888/pickup?field_sport_value=' . $second . '&field_pickup_skill_level_value=All&field_geofield_distance[distance]=25&field_geofield_distance[unit]=3959&field_geofield_distance[origin]=' . $zip;
+        drupal_goto($url);
+    } elseif($first === "Leagues") {
+        $url = 'http://localhost:8888/leagues?field_league_sport=' . $second . '&field_age_group_value=All&field_geofield_distance[distance]=25&field_geofield_distance[unit]=3959&field_geofield_distance[origin]=' . $zip;
+        drupal_goto($url);
+    } elseif($first === "Runs and Races") {
+        $url = 'http://localhost:8888/runs-and-races?field_event_type_value=' . $second . '&field_geofield_distance[distance]=25&field_geofield_distance[unit]=3959&field_geofield_distance[origin]=' . $zip;
+        drupal_goto($url);
+    } elseif($first === "Places to Play") {
+        $url = 'http://localhost:8888/find-a-place-to-play?field_facilities_value=' . $second . '&field_geofield_distance[distance]=25&field_geofield_distance[unit]=3959&field_geofield_distance[origin]=' . $zip;
+        drupal_goto($url);
+    }
 }
