@@ -1,0 +1,12 @@
+name = Session Cache File
+description = Extends the Session Cache API with a file storage implementation.
+dependencies[] = session_cache
+configure = admin/config/development/session_cache
+core = 7.x
+
+; Information added by Drupal.org packaging script on 2015-12-06
+version = "7.x-1.4"
+core = "7.x"
+project = "session_cache"
+datestamp = "1449373143"
+

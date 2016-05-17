@@ -1,0 +1,22 @@
+#masthead{
+  position: relative;
+}
+.site-branding{
+  margin-bottom: 20px;
+}
+#site-logo {
+  float: left;
+  padding: 15px 15px 0 0;
+}
+h1#site-title{
+  text-transform: uppercase;
+  font-weight: 800;
+  margin-top: 18px;
+  clear: none;
+}
+h1#site-title a:link, h1#site-title a:visited{
+  color: #000;
+}
+#header-block {
+  padding: 20px 0 0;
+}

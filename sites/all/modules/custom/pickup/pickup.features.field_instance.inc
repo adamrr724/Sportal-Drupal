@@ -52,43 +52,6 @@ function pickup_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-pickup_game-field_address'.
-  $field_instances['node-pickup_game-field_address'] = array(
-    'bundle' => 'pickup_game',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'location_cck',
-        'settings' => array(),
-        'type' => 'location_all',
-        'weight' => 5,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 5,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_address',
-    'label' => 'Address',
-    'required' => 1,
-    'settings' => array(
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 0,
-      'module' => 'location_cck',
-      'settings' => array(),
-      'type' => 'location',
-      'weight' => 4,
-    ),
-  );
-
   // Exported field_instance: 'node-pickup_game-field_address_pickup'.
   $field_instances['node-pickup_game-field_address_pickup'] = array(
     'bundle' => 'pickup_game',
@@ -205,12 +168,12 @@ function pickup_field_default_field_instances() {
       'module' => 'date',
       'settings' => array(
         'increment' => 15,
-        'input_format' => 'm/d/Y - H:i:s',
+        'input_format' => 'm/d/Y - g:i:sa',
         'input_format_custom' => '',
         'label_position' => 'above',
         'no_fieldset' => 0,
         'text_parts' => array(),
-        'year_range' => '-3:+3',
+        'year_range' => '-1:+3',
       ),
       'type' => 'date_popup',
       'weight' => 3,
