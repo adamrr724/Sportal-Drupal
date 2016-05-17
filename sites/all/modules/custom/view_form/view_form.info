@@ -1,0 +1,5 @@
+name = View Form
+description = Alters form to pre-populate with values from front page form
+package = Sportal Custom Modules
+core = 7.x
+files[] = view_form.module

@@ -150,7 +150,11 @@ function front_page_form_form_submit($form_id, &$form_state) {
     if($first === "Pickup Games") {
         $form_state['redirect'] = 'pickup';
     } elseif($first === "Leagues") {
-        $form_state['redirect'] = 'leagues';
+
+        $url = 'leagues?field_league_sport='. $second . '&field_age_group_value=All&field_geofield_distance%5Bdistance%5D=25&field_geofield_distance%5Bunit%5D=3959&field_geofield_distance%5Borigin%5D=' . $zip;
+
+        $form_state['redirect'] = $url;
+
     } elseif($first === "Runs and Races") {
         $form_state['redirect'] = 'runs-and-races';
     } elseif($first === "Places to Play") {
