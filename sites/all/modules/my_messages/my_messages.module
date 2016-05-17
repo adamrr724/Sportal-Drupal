@@ -1,0 +1,16 @@
+<?php
+
+function my_messages_form_alter($form_id, &$form_state) {
+  print("<pre>");
+  print_r($form_id);
+  print("</pre>");
+
+  // switch($form_id) {
+  //   case 'league_node_form':
+  //   case 'pickup_game_node_form':
+  //   case 'runs_and_races_node_form':
+  //   case 'place_to_play_node_form':
+  //     drupal_set_message('HI :D');
+  //     break;
+  // }
+}
