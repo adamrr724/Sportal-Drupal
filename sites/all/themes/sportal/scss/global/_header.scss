@@ -20,3 +20,10 @@ h1#site-title a:link, h1#site-title a:visited{
 #header-block {
   padding: 20px 0 0;
 }
+
+#front-page-form-form > div:nth-child(1), .form-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: wrap;
+}

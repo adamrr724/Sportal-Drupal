@@ -116,10 +116,9 @@
                             <div class="flex-caption">
                                 <h2><?php print $slide1_head; ?></h2><?php print $slide1_desc; ?>
                                 <div id="my-search-field">
-                                    <div id="mainsearch" class="custom-class">
+                                    <div id="mainsearch" class="col-md-12">
                                         <?php print render($page['mainsearch']); ?>
                                     </div>
-                                    <input type="button" name="name" value="Go">
                                 </div>
                             </div>
                         <?php endif; ?>
@@ -228,7 +227,7 @@
                             <div class="container">
                                 <div class="row">
                                     <div class="fcred col-sm-12">
-                                        <?php print t('Copyright'); ?> &copy; <?php echo date("Y"); ?>, <a href="<?php print $front_page; ?>"><?php print $site_name; ?></a>. <?php print t('Site by'); ?>  <a href="https://github.com/adamrr724" target="_blank">Adam Ross Russell</a>.
+                                        <?php print t('Copyright'); ?> &copy; <?php echo date("Y"); ?>, <a href="<?php print $front_page; ?>"><?php print $site_name; ?></a>. <?php print t('Site by'); ?>  <a href="/about" target="_blank">Adam Ross Russell, Aundra Miller, Alex Fallenstedt, Blake Scott, Ryan Brown, Joe Karsek </a>.
                                     </div>
                                 </div>
                             </div>
