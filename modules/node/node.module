@@ -1425,7 +1425,7 @@ function node_build_content($node, $view_mode = 'full', $langcode = NULL) {
   if ($view_mode == 'teaser') {
     $node_title_stripped = strip_tags($node->title);
     $links['node-readmore'] = array(
-      'title' => t('Read more<span class="element-invisible"> about @title</span>', array('@title' => $node_title_stripped)),
+      'title' => t('Browse<span class="element-invisible"> about @title</span>', array('@title' => $node_title_stripped)),
       'href' => 'node/' . $node->nid,
       'html' => TRUE,
       'attributes' => array('rel' => 'tag', 'title' => $node_title_stripped),
