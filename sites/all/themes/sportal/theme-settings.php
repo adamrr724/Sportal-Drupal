@@ -11,14 +11,14 @@ function sportal_form_system_theme_settings_alter(&$form, &$form_state) {
 
   $form['sportal_settings'] = array(
     '#type' => 'fieldset',
-    '#title' => t('Nexus Settings'),
+    '#title' => t('Sportal Settings'),
     '#collapsible' => FALSE,
     '#collapsed' => FALSE,
   );
   $form['sportal_settings']['breadcrumbs'] = array(
     '#type' => 'checkbox',
     '#title' => t('Show breadcrumbs in a page'),
-    '#default_value' => theme_get_setting('breadcrumbs','nexus'),
+    '#default_value' => theme_get_setting('breadcrumbs','sportal'),
     '#description'   => t("Check this option to show breadcrumbs in page. Uncheck to hide."),
   );
   $form['sportal_settings']['slideshow'] = array(
@@ -30,7 +30,7 @@ function sportal_form_system_theme_settings_alter(&$form, &$form_state) {
   $form['sportal_settings']['slideshow']['slideshow_display'] = array(
     '#type' => 'checkbox',
     '#title' => t('Show slideshow'),
-    '#default_value' => theme_get_setting('slideshow_display','nexus'),
+    '#default_value' => theme_get_setting('slideshow_display','sportal'),
     '#description'   => t("Check this option to show Slideshow in front page. Uncheck to hide."),
   );
   $form['sportal_settings']['slideshow']['slide'] = array(
@@ -45,17 +45,17 @@ function sportal_form_system_theme_settings_alter(&$form, &$form_state) {
   $form['sportal_settings']['slideshow']['slide1']['slide1_head'] = array(
     '#type' => 'textfield',
     '#title' => t('Slide Headline'),
-    '#default_value' => theme_get_setting('slide1_head','nexus'),
+    '#default_value' => theme_get_setting('slide1_head','sportal'),
   );
   $form['sportal_settings']['slideshow']['slide1']['slide1_desc'] = array(
     '#type' => 'textarea',
     '#title' => t('Slide Description'),
-    '#default_value' => theme_get_setting('slide1_desc','nexus'),
+    '#default_value' => theme_get_setting('slide1_desc','sportal'),
   );
   $form['sportal_settings']['slideshow']['slide1']['slide1_url'] = array(
     '#type' => 'textfield',
     '#title' => t('Slide URL'),
-    '#default_value' => theme_get_setting('slide1_url','nexus'),
+    '#default_value' => theme_get_setting('slide1_url','sportal'),
   );
 
   $form['sportal_settings']['slideshow']['slideimage'] = array(
