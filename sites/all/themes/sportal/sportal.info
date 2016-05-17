@@ -13,6 +13,7 @@ scripts[] = js/mobilemenu.js
 scripts[] = js/custom.js
 
 regions[sidebar_first]  = First Sidebar
+regions[mainsearch]     = Main Search
 regions[header]         = Header
 regions[preface_first]  = Preface First
 regions[preface_middle] = Preface Middle
