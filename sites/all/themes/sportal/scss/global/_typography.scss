@@ -1,16 +1,18 @@
 @import url(http://fonts.googleapis.com/css?family=Oxygen:400,300,700);
+@import url(https://fonts.googleapis.com/css?family=Bevan);//import google font Bevan
 
 body {
   nowhitespace: afterproperty;
   -webkit-font-smoothing: antialiased;
   -webkit-text-size-adjust: 100%;
-  font: 14px/1.6 'Oxygen',sans-serif;
+
   color: #606060;
 }
 
 /* Headings */
 h1,h2,h3,h4,h5,h6 {
   clear: both;
+  font-family: 'Bevan';
 }
 
 h1 { font-size: 32px; }
