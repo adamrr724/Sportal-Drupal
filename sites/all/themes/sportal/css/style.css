@@ -15,15 +15,15 @@
   color: grey !important; }
 
 a {
-  color: #f4473a; }
+  color: #1BA7CE; }
 
 a:visited {
-  color: #f4473a; }
+  color: #147d9a; }
 
 a:hover,
 a:focus,
 a:active {
-  color: #000;
+  color: #1db5df;
   text-decoration: none; }
 
 .links li a {
