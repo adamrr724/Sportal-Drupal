@@ -1,0 +1,8 @@
+name = New Event Messages
+description = displays a unique message when content is created.
+core = 7.x
+package = Features
+dependencies[] = disable_messages
+dependencies[] = rules
+dependencies[] = rules_admin
+features[features_api][] = api:2
