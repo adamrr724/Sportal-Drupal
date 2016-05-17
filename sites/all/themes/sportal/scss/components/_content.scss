@@ -1,0 +1,33 @@
+.node h2.title a, h1.page-title {
+  color: #000000;
+  font-size: 36px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  margin-top: 10px;
+}
+
+#content .node-teaser {
+  padding-bottom:30px;
+  border-bottom:1px solid #DDDDDD;
+  margin-bottom: 15px;
+}
+
+.node-teaser img {
+  border: 1px solid #CCCCCC;
+  padding: 6px;
+  height: auto;
+  max-width: 97.4%;
+  margin: 0.5em 1em 0.5em 0;
+  float: left;
+}
+.page-node #content-wrap img {
+  border: 1px solid #CCCCCC;
+  padding: 6px;
+  height: auto;
+  max-width: 97.4%;
+  margin: 0.5em 1em 0.5em 0;
+}
+
+.region-content-top {
+  margin-bottom: 20px;
+}

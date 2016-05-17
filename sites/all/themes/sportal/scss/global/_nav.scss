@@ -1,0 +1,117 @@
+.menutoggle{
+  width: 36px;
+  height: 36px;
+  color: #777;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  line-height: 36px;
+  text-align: center;
+  background: #fff;
+  position: absolute;
+  right: 20px;
+  top:25px;
+  font-size: 20px;
+  display:none;
+}
+
+#main-menu {
+  padding:0px 0px;
+  margin: 22px 0px 15px;
+  height:45px;
+  border-bottom: none;
+  float: left;
+}
+
+#main-menu ul {
+  width: auto;
+  float:left;
+  list-style: none;
+  margin: 0;
+  padding: 0 0px;
+}
+
+#main-menu li {
+  float: left;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  color: #fff;
+  font-weight:400;
+}
+
+#main-menu li a {
+  color: #777;
+  display: block;
+  margin: 0;
+  padding: 19px 10px 19px 10px;
+  text-decoration: none;
+  position: relative;
+}
+
+#main-menu li a:hover, #main-menu li a:active, #main-menu a.active, #main-menu > ul > li > a.active-trail {
+  color: #ed564b;
+}
+
+#main-menu li a.sf-with-ul {
+  padding-right: 10px;
+}
+
+#main-menu li ul li a, #main-menu li ul li a:link, #main-menu li ul li a:visited,
+#main-menu li ul li ul li a, #main-menu li ul li ul li a:link, #main-menu li ul li ul li a:visited,
+#main-menu li ul li ul li ul li a, #main-menu li ul li ul li ul li a:link, #main-menu li ul li ul li ul li a:visited {
+  color:#777;
+  width: 148px;
+  margin: 0;
+  padding: 10px 10px;
+  border-top:1px solid #ddd;
+  position: relative;
+  font-weight:400;
+}
+
+#main-menu ul li ul li:first-child a,#main-menu ul li ul li ul li:first-child a,#main-menu ul li ul li ul li ul li:first-child a  {
+  border-top:none;
+}
+
+
+#main-menu li ul li a:hover ,#main-menu li ul li ul li a:hover ,#main-menu li ul li ul li ul li a:hover {
+  color: #ed564b;
+}
+
+#main-menu li ul {
+  font-size: 12px;
+  z-index: 9999;
+  position: absolute;
+  left: -999em;
+  height: auto;
+  width: 160px;
+  margin: 0px 0px 0px 0px;
+  padding: 5px 5px;
+  background:#efefef;
+}
+
+#main-menu li ul a {
+  width: 150px;
+}
+
+#main-menu li ul a:hover, #main-menu li ul a:active {
+}
+
+#main-menu li ul ul {
+  margin: -44px 0 0 160px;
+}
+
+#main-menu li:hover ul ul, #main-menu li:hover ul ul ul, #main-menu li.sfHover ul ul, #main-menu li.sfHover ul ul ul {
+  left: -999em;
+}
+
+#main-menu li:hover ul, #main-menu li li:hover ul, #main-menu li li li:hover ul, #main-menu li.sfHover ul, #main-menu li li.sfHover ul, #main-menu li li li.sfHover ul {
+  left: auto;
+}
+
+#main-menu li:hover, #main-menu li.sfHover {
+  position: static;
+}
+
+#main-menu > ul > li > a {
+  padding : 10px;
+}
