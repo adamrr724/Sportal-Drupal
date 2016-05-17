@@ -150,61 +150,6 @@ function league_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-league-field_league_date'.
-  $field_instances['node-league-field_league_date'] = array(
-    'bundle' => 'league',
-    'deleted' => 0,
-    'description' => 'Please outline when participants must sign up.',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'date',
-        'settings' => array(
-          'format_type' => 'long',
-          'fromto' => 'both',
-          'multiple_from' => '',
-          'multiple_number' => '',
-          'multiple_to' => '',
-          'show_remaining_days' => FALSE,
-        ),
-        'type' => 'date_default',
-        'weight' => 1,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 5,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_league_date',
-    'label' => 'Sign Up Date',
-    'required' => 1,
-    'settings' => array(
-      'default_value' => 'now',
-      'default_value2' => 'same',
-      'default_value_code' => '',
-      'default_value_code2' => '',
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'date',
-      'settings' => array(
-        'increment' => 15,
-        'input_format' => 'm/d/Y - g:i:sa',
-        'input_format_custom' => '',
-        'label_position' => 'above',
-        'no_fieldset' => 0,
-        'text_parts' => array(),
-        'year_range' => '-3:+3',
-      ),
-      'type' => 'date_popup',
-      'weight' => 2,
-    ),
-  );
-
   // Exported field_instance: 'node-league-field_league_image'.
   $field_instances['node-league-field_league_image'] = array(
     'bundle' => 'league',
@@ -398,6 +343,61 @@ function league_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-league-field_sign_up_by'.
+  $field_instances['node-league-field_sign_up_by'] = array(
+    'bundle' => 'league',
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'date',
+        'settings' => array(
+          'format_type' => 'long',
+          'fromto' => 'both',
+          'multiple_from' => '',
+          'multiple_number' => '',
+          'multiple_to' => '',
+          'show_remaining_days' => FALSE,
+        ),
+        'type' => 'date_default',
+        'weight' => 10,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_sign_up_by',
+    'label' => 'Sign Up By',
+    'required' => 1,
+    'settings' => array(
+      'default_value' => 'now',
+      'default_value2' => 'same',
+      'default_value_code' => '',
+      'default_value_code2' => '',
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'date',
+      'settings' => array(
+        'increment' => 15,
+        'input_format' => 'm/d/Y - g:i:sa',
+        'input_format_custom' => '',
+        'label_position' => 'above',
+        'no_fieldset' => 0,
+        'text_parts' => array(),
+        'year_range' => '-1:+3',
+      ),
+      'type' => 'date_popup',
+      'weight' => 13,
+    ),
+  );
+
   // Exported field_instance: 'node-league-field_skill_level'.
   $field_instances['node-league-field_skill_level'] = array(
     'bundle' => 'league',
@@ -494,9 +494,8 @@ function league_field_default_field_instances() {
   t('Please choose the sport of the league.');
   t('Please define an age group.');
   t('Please enter the league website.');
-  t('Please outline when participants must sign up.');
   t('Position');
-  t('Sign Up Date');
+  t('Sign Up By');
   t('Skill Level');
   t('Sport');
   t('Website');

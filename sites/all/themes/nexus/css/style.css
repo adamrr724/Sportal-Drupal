@@ -3,3 +3,127 @@
 
 .content p [href="/contact"] {
   color: grey !important; }
+
+
+  body {
+      font-family: 'Roboto', sans-serif;
+  }
+
+  #site-logo img {
+      height: 100px;
+  }
+
+  .links li .unflag-action {
+      background-color: #ef9a9a ;
+      border-radius: 0px;
+      padding: 10px;
+      /*margin-left: 40px;*/
+      font-size: 20px;
+      box-shadow: 0 1px 3px;
+      text-shadow: 1px 1px #d3d3d3;
+      border: solid .5px black;
+      display:inline-flex;
+      float: right;
+  }
+
+  .links li .flag-action {
+      background-color: #4caf50;
+      border-radius: 0px;
+      padding: 10px;
+      /*margin-left: 40px;*/
+      font-size: 20px;
+      box-shadow: 0 1px 3px;
+      text-shadow: 1px 1px #d3d3d3;
+      border: solid .5px black;
+      display: inline-flex;
+      float: right;
+  }
+
+  #bottom li {
+      list-style: none;
+  }
+
+  #bottom li a{
+      color: lightgrey;
+  }
+
+  a {
+      color: black;
+  }
+
+  a:visited {
+      color:black;
+  }
+
+  #edit-field-geofield-distance-distance {
+      max-width: 40px;
+  }
+
+  #edit-field-geofield-distance-origin {
+      max-width: 80px;
+  }
+
+  .node {
+      padding: 10px 20px 20px 20px;
+      border: outset .5px black;
+      margin: 15px 0 10px 0;
+      box-shadow: 0 1px 3px;
+  }
+
+  .addtoany_list a{
+      margin-top: 5px;
+      margin-bottom:10px;
+  }
+
+  .page-node .addtoany_list a{
+      margin-top: 10px;
+      margin-bottom: 20px;
+  }
+
+  .field-label {
+      font-size: 16px;
+      color: #03A6D0;
+  }
+
+  #my-about-block {
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+      align-items: center;
+  }
+
+
+  @media screen and (min-width: 769px) {
+      .mobilenavi {
+          display: none;
+      }
+  }
+  @media screen and (max-width: 768px) {
+    html{
+      font-size: 60%;
+    }
+
+    h1#site-title{
+      text-align: center;
+    }
+
+    #site-logo {
+      padding-top: 0;
+    }
+
+    select.mnav{
+      width: 100%;
+      margin-bottom: 20px;
+    }
+
+    #main-menu{
+      display:none;
+    }
+
+    .flex-caption p {
+        display: none;
+    }
+    .mobilenavi {
+        float: right;
+    }
+  }
