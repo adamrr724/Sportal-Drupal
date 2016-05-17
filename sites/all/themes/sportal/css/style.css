@@ -37,6 +37,10 @@ a:active {
   background-color: #D7D5D3;
   color: #100101; }
 
+@media screen and (min-width: 769px) {
+  .mobilenavi {
+    display: none; } }
+
 @media screen and (max-width: 768px) {
   html {
     font-size: 60%; }
@@ -49,8 +53,10 @@ a:active {
     margin-bottom: 20px; }
   #main-menu {
     display: none; }
-  .flex-caption {
-    display: none; } }
+  .flex-caption p {
+    display: none; }
+  .mobilenavi {
+    float: right; } }
 
 #slidebox {
   max-height: 550px;
