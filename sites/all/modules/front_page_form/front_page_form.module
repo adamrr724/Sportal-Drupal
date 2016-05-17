@@ -1,14 +1,29 @@
 <?php
 
-function front_page_form_menu() {
-    $items['front-page-form'] = array(
-        'title' => 'Sportal Search',
-        'page callback' => 'drupal_get_form',
-        'page arguments' => array('front_page_form_form'),
-        'access callback' => TRUE,
-        'type' => MENU_NORMAL_ITEM,
-    );
-    return $items;
+function front_page_form_block_info() {
+  $blocks = array();
+  $blocks['front-page-form'] = array(
+    'info' => t('Front Page Form'),
+    'region' => 'sidebar_first',
+    'status' => TRUE,
+    'visibility' => BLOCK_VISIBILITY_LISTED,
+    'pages' => variable_get('site_frontpage', NULL),
+  );
+
+  return $blocks;
+}
+
+function front_page_form_block_view($delta = '') {
+  // The $delta parameter tells us which block is being requested.
+  $block = array();
+  switch ($delta) {
+    case 'front-page-form':
+      // Create your block content here
+      $block['content'] = drupal_get_form('front_page_form_form');
+      break;
+  }
+
+  return $block;
 }
 
 function front_page_form_form($form, &$form_state) {
@@ -18,7 +33,7 @@ function front_page_form_form($form, &$form_state) {
 
     $form['dropdown_first'] = array(
         '#type' => 'select',
-        '#title' => 'Activity Type',
+        '#title' => 'What are you looking for?',
         '#options' => $options_first,
         '#default_value' => $selected,
         '#ajax' => array(
@@ -29,7 +44,7 @@ function front_page_form_form($form, &$form_state) {
     );
     $form['dropdown_second'] = array(
         '#type' => 'select',
-        '#title' => t("Activity type:") . " " . $options_first[$selected],
+        '#title' =>  'Search For:',
         '#prefix' => '<div id="dropdown-second-replace">',
         '#suffix' => '</div>',
         '#options' => front_page_form_sport_dropdown($selected),
@@ -72,7 +87,7 @@ function front_page_form_sport_dropdown($type = '') {
                 t('Flag Football'),
                 t('Kickball'),
                 t('Soccer'),
-                t('Ultimate Frisbee'),
+                t('Ultimate'),
             )
         ),
         t('Leagues') => drupal_map_assoc(
@@ -82,7 +97,7 @@ function front_page_form_sport_dropdown($type = '') {
                 t('Flag Football'),
                 t('Kickball'),
                 t('Soccer'),
-                t('Ultimate Frisbee'),
+                t('Ultimate'),
             )
         ),
         t('Runs and Races') => drupal_map_assoc(
@@ -148,16 +163,16 @@ function front_page_form_form_submit($form_id, &$form_state) {
     $zip = $form_state['values']['zip'];
 
     if($first === "Pickup Games") {
-        $form_state['redirect'] = 'pickup';
+        $url = 'http://localhost:8888/pickup?field_sport_value=' . $second . '&field_pickup_skill_level_value=All&field_geofield_distance[distance]=25&field_geofield_distance[unit]=3959&field_geofield_distance[origin]=' . $zip;
+        drupal_goto($url);
     } elseif($first === "Leagues") {
-
-        $url = 'leagues?field_league_sport='. $second . '&field_age_group_value=All&field_geofield_distance%5Bdistance%5D=25&field_geofield_distance%5Bunit%5D=3959&field_geofield_distance%5Borigin%5D=' . $zip;
-
-        $form_state['redirect'] = $url;
-
+        $url = 'http://localhost:8888/leagues?field_league_sport=' . $second . '&field_age_group_value=All&field_geofield_distance[distance]=25&field_geofield_distance[unit]=3959&field_geofield_distance[origin]=' . $zip;
+        drupal_goto($url);
     } elseif($first === "Runs and Races") {
-        $form_state['redirect'] = 'runs-and-races';
+        $url = 'http://localhost:8888/runs-and-races?field_event_type_value=' . $second . '&field_geofield_distance[distance]=25&field_geofield_distance[unit]=3959&field_geofield_distance[origin]=' . $zip;
+        drupal_goto($url);
     } elseif($first === "Places to Play") {
-        $form_state['redirect'] = 'find-a-place-to-play';
+        $url = 'http://localhost:8888/find-a-place-to-play?field_facilities_value=' . $second . '&field_geofield_distance[distance]=25&field_geofield_distance[unit]=3959&field_geofield_distance[origin]=' . $zip;
+        drupal_goto($url);
     }
 }
