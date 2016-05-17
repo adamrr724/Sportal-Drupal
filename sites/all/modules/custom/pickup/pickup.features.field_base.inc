@@ -68,6 +68,7 @@ function pickup_field_default_field_bases() {
         'year' => 'year',
       ),
       'profile2_private' => FALSE,
+      'repeat' => 0,
       'timezone_db' => 'UTC',
       'todate' => '',
       'tz_handling' => 'user',
@@ -191,12 +192,12 @@ function pickup_field_default_field_bases() {
     'module' => 'list',
     'settings' => array(
       'allowed_values' => array(
-        'Soccer' => 'Soccer',
-        'Basketball' => 'Basketball',
-        'Ultimate' => 'Ultimate',
         'Baseball' => 'Baseball',
+        'Basketball' => 'Basketball',
         'Flag Football' => 'Flag Football',
         'Kickball' => 'Kickball',
+        'Soccer' => 'Soccer',
+        'Ultimate' => 'Ultimate',
       ),
       'allowed_values_function' => '',
     ),
