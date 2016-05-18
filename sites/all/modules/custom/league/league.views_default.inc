@@ -326,9 +326,7 @@ function league_views_default_views() {
   /* Display: Master */
   $handler = $view->new_display('default', 'Master', 'default');
   $handler->display->display_options['use_ajax'] = TRUE;
-  $handler->display->display_options['use_more'] = TRUE;
   $handler->display->display_options['use_more_always'] = FALSE;
-  $handler->display->display_options['use_more_text'] = 'More leagues';
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['cache']['type'] = 'none';
   $handler->display->display_options['query']['type'] = 'views_query';
@@ -696,19 +694,11 @@ function league_views_default_views() {
   $handler->display->display_options['filters']['field_geofield_distance']['source'] = 'geocoder';
   $handler->display->display_options['filters']['field_geofield_distance']['geofield_proximity_entity_url_field'] = 'field_league_position';
   $handler->display->display_options['filters']['field_geofield_distance']['geofield_proximity_current_user_field'] = 'field_league_position';
-  /* Filter criterion: Content: Sign Up By (field_sign_up_by) */
-  $handler->display->display_options['filters']['field_sign_up_by_value']['id'] = 'field_sign_up_by_value';
-  $handler->display->display_options['filters']['field_sign_up_by_value']['table'] = 'field_data_field_sign_up_by';
-  $handler->display->display_options['filters']['field_sign_up_by_value']['field'] = 'field_sign_up_by_value';
-  $handler->display->display_options['filters']['field_sign_up_by_value']['operator'] = '>=';
-  $handler->display->display_options['filters']['field_sign_up_by_value']['default_date'] = 'yesterday';
-  $handler->display->display_options['filters']['field_sign_up_by_value']['year_range'] = '-1:+3';
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'page');
   $handler->display->display_options['defaults']['title'] = FALSE;
   $handler->display->display_options['title'] = 'Leagues';
-  $handler->display->display_options['exposed_block'] = TRUE;
   $handler->display->display_options['defaults']['empty'] = FALSE;
   /* No results behavior: Global: Unfiltered text */
   $handler->display->display_options['empty']['area_text_custom']['id'] = 'area_text_custom';
@@ -739,7 +729,6 @@ Please try again.';
   );
   $handler->display->display_options['attachment_position'] = 'after';
   $handler->display->display_options['inherit_exposed_filters'] = TRUE;
-  $handler->display->display_options['render_pager'] = TRUE;
   $export['leagues'] = $view;
 
   return $export;

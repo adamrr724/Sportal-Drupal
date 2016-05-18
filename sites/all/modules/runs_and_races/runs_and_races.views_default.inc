@@ -22,9 +22,7 @@ function runs_and_races_views_default_views() {
 
   /* Display: Master */
   $handler = $view->new_display('default', 'Master', 'default');
-  $handler->display->display_options['use_more'] = TRUE;
   $handler->display->display_options['use_more_always'] = FALSE;
-  $handler->display->display_options['use_more_text'] = 'More runs and races';
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['cache']['type'] = 'none';
   $handler->display->display_options['query']['type'] = 'views_query';
@@ -82,14 +80,14 @@ function runs_and_races_views_default_views() {
   $handler->display->display_options['fields']['field_geofield_distance']['table'] = 'field_data_field_position_runs_races';
   $handler->display->display_options['fields']['field_geofield_distance']['field'] = 'field_geofield_distance';
   $handler->display->display_options['fields']['field_geofield_distance']['precision'] = '0';
-  $handler->display->display_options['fields']['field_geofield_distance']['source'] = 'exposed_geofield_filter';
+  $handler->display->display_options['fields']['field_geofield_distance']['source'] = 'contextual_geofield_filter';
   $handler->display->display_options['fields']['field_geofield_distance']['geofield_proximity_manual'] = array(
     'lat' => '',
     'lon' => '',
   );
   $handler->display->display_options['fields']['field_geofield_distance']['geofield_proximity_entity_url_field'] = 'field_league_position';
   $handler->display->display_options['fields']['field_geofield_distance']['geofield_proximity_current_user_field'] = 'field_league_position';
-  $handler->display->display_options['fields']['field_geofield_distance']['radius_of_earth'] = '3959';
+  $handler->display->display_options['fields']['field_geofield_distance']['radius_of_earth'] = '6371';
   /* Field: Content: Position */
   $handler->display->display_options['fields']['field_position_runs_races']['id'] = 'field_position_runs_races';
   $handler->display->display_options['fields']['field_position_runs_races']['table'] = 'field_data_field_position_runs_races';
@@ -170,13 +168,6 @@ function runs_and_races_views_default_views() {
   $handler->display->display_options['filters']['field_geofield_distance']['source'] = 'geocoder';
   $handler->display->display_options['filters']['field_geofield_distance']['geofield_proximity_entity_url_field'] = 'field_league_position';
   $handler->display->display_options['filters']['field_geofield_distance']['geofield_proximity_current_user_field'] = 'field_league_position';
-  /* Filter criterion: Content: Date (field_date_run_race) */
-  $handler->display->display_options['filters']['field_date_run_race_value']['id'] = 'field_date_run_race_value';
-  $handler->display->display_options['filters']['field_date_run_race_value']['table'] = 'field_data_field_date_run_race';
-  $handler->display->display_options['filters']['field_date_run_race_value']['field'] = 'field_date_run_race_value';
-  $handler->display->display_options['filters']['field_date_run_race_value']['operator'] = '>=';
-  $handler->display->display_options['filters']['field_date_run_race_value']['default_date'] = 'yesterday';
-  $handler->display->display_options['filters']['field_date_run_race_value']['year_range'] = '-1:+3';
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'page');
@@ -249,13 +240,6 @@ Please try again.';
   $handler->display->display_options['filters']['field_geofield_distance']['source'] = 'geocoder';
   $handler->display->display_options['filters']['field_geofield_distance']['geofield_proximity_entity_url_field'] = 'field_league_position';
   $handler->display->display_options['filters']['field_geofield_distance']['geofield_proximity_current_user_field'] = 'field_league_position';
-  /* Filter criterion: Content: Date (field_date_run_race) */
-  $handler->display->display_options['filters']['field_date_run_race_value']['id'] = 'field_date_run_race_value';
-  $handler->display->display_options['filters']['field_date_run_race_value']['table'] = 'field_data_field_date_run_race';
-  $handler->display->display_options['filters']['field_date_run_race_value']['field'] = 'field_date_run_race_value';
-  $handler->display->display_options['filters']['field_date_run_race_value']['operator'] = '>=';
-  $handler->display->display_options['filters']['field_date_run_race_value']['default_date'] = 'yesterday';
-  $handler->display->display_options['filters']['field_date_run_race_value']['year_range'] = '-1:+3';
   $handler->display->display_options['path'] = 'runs-and-races';
   $handler->display->display_options['menu']['type'] = 'normal';
   $handler->display->display_options['menu']['title'] = 'Runs and Races';
@@ -277,7 +261,6 @@ Please try again.';
   );
   $handler->display->display_options['attachment_position'] = 'after';
   $handler->display->display_options['inherit_exposed_filters'] = TRUE;
-  $handler->display->display_options['render_pager'] = TRUE;
   $export['runs_and_races'] = $view;
 
   return $export;
