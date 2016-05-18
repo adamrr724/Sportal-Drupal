@@ -171,12 +171,12 @@ function league_field_default_field_bases() {
     'module' => 'list',
     'settings' => array(
       'allowed_values' => array(
-        'Soccer' => 'Soccer',
+        'Baseball' => 'Baseball',
         'Basketball' => 'Basketball',
         'Flag Football' => 'Flag Football',
-        'Ultimate' => 'Ultimate',
-        'Baseball' => 'Baseball',
         'Kickball' => 'Kickball',
+        'Soccer' => 'Soccer',
+        'Ultimate' => 'Ultimate',
       ),
       'allowed_values_function' => '',
     ),
@@ -225,6 +225,7 @@ function league_field_default_field_bases() {
         'year' => 'year',
       ),
       'profile2_private' => FALSE,
+      'repeat' => 0,
       'timezone_db' => 'UTC',
       'todate' => '',
       'tz_handling' => 'user',
