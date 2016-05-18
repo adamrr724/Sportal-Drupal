@@ -853,9 +853,6 @@ ul.secondary a.active {
 ul.inline, ul.links.inline {
   margin-left: 0; }
 
-li a.active {
-  color: #85AC20 !important; }
-
 .site-footer {
   padding: 10px 0px;
   background: #292929;
