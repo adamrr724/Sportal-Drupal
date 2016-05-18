@@ -1,0 +1,290 @@
+<?php
+
+/**
+ * @file
+ * Tests permission and access settings for different users.
+ *
+ * Copyright © 2006-2015 Dr. Tobias Quathamer <t.quathamer@mailbox.org>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ */
+
+/**
+ * Test class for permissions.
+ */
+class WeatherPermissionTestCase extends DrupalWebTestCase {
+  /**
+   * General information.
+   */
+  public static function getInfo() {
+    return array(
+      'name' => 'Permission',
+      'description' => 'Tests permission and access settings for different users.',
+      'group' => 'Weather',
+    );
+  }
+
+  /**
+   * Set up testing environment
+   */
+  public function setUp() {
+    parent::setUp('weather', 'block');
+  }
+
+  /**
+   * Permissions of weather block
+   *
+   * This test requires that at least one system wide block is enabled.
+   */
+  public function testPermissions() {
+    // Set a fixed time for testing to 2013-10-07 20:00:00 UTC
+    variable_set('weather_time_for_testing', 1381176000);
+    // This user is allowed to view the system block
+    $normal_user = $this->drupalCreateUser(array(
+      'access content'
+    ));
+    // This user is allowed to administer a custom weather block
+    $weather_user_1 = $this->drupalCreateUser(array(
+      'access content', 'administer custom weather block'
+    ));
+    // This user is also allowed to administer a custom weather block,
+    // like weather_user_1. However, he's not allowed to edit the
+    // custom block of weather_user_1. This catches bug #244087
+    // (Only one permission for everyone)
+    $weather_user_2 = $this->drupalCreateUser(array(
+      'access content', 'administer custom weather block'
+    ));
+    // This user is allowed to access the weather search page
+    $weather_search_page_user = $this->drupalCreateUser(array(
+      'access content', 'access weather search page'
+    ));
+    // This user may setup a system-wide weather block.
+    $admin_user = $this->drupalCreateUser(array(
+      'access content', 'administer custom weather block',
+      'administer site configuration', 'administer blocks'
+    ));
+
+    // Test with admin user
+    $this->drupalLogin($admin_user);
+    // Get different pages
+    $this->drupalGet('node');
+    $this->drupalGet('user/' . $admin_user->uid . '/weather');
+    $this->assertText(t('Weather'));
+    $this->drupalGet('admin/config/user-interface/weather');
+    $this->assertText(t('Add display'));
+    $this->assertText(t('Edit default display'));
+    $this->assertText(t('Directory for custom images'));
+    $this->assertNoText('Add location to this display');
+
+    // Enable a system-wide weather block
+    $this->drupalPost('admin/config/user-interface/weather/system-wide/add', array(), t('Save'));
+    $this->drupalGet('admin/config/user-interface/weather');
+    $this->assertText(t('Add display'));
+    $this->assertText(t('Edit default display'));
+    $this->assertText(t('Directory for custom images'));
+    $this->assertText('Add location to this display');
+    $edit = array('blocks[weather_system_1][region]' => 'sidebar_second');
+    $this->drupalPost('admin/structure/block', $edit, t('Save blocks'));
+    // Make sure that the weather block is not displayed without a configured place
+    $this->drupalGet('node');
+    $this->assertNoRaw('<div class="weather">');
+    $this->assertNoLink('Hamburg');
+    $this->assertNoLinkByHref('weather/Germany/Hamburg/Hamburg');
+    // Configure the default place
+    $this->drupalPost('admin/config/user-interface/weather/system-wide/1/add', array(), t('Save'));
+    $this->drupalGet('admin/config/user-interface/weather');
+    $this->assertText(t('Add display'));
+    $this->assertText(t('Edit default display'));
+    $this->assertText(t('Directory for custom images'));
+    $this->assertText('Hamburg');
+    $this->assertText('Add location to this display');
+    // Make sure that the weather block is displayed now
+    $this->drupalGet('node');
+    $this->assertRaw('<div class="weather">');
+    $this->assertLink('Hamburg');
+    $this->assertLinkByHref('weather/Germany/Hamburg/Hamburg/1');
+    // Logout current user
+    $this->drupalLogout();
+
+    // Test with normal user
+    $this->drupalLogin($normal_user);
+    // Get front page
+    $this->drupalGet('node');
+    $this->assertText(t('Weather'));
+    $this->assertRaw('<div class="weather">');
+    $this->assertLink('Hamburg');
+    $this->assertLinkByHref('weather/Germany/Hamburg/Hamburg/1');
+    // The user weather tab should not be there
+    $this->drupalGet('user/' . $normal_user->uid);
+    $this->assertNoLink(t('Weather'));
+    $this->assertNoLinkByHref('user/' . $normal_user->uid . '/weather');
+    // Using the direct URL should be forbidden
+    $this->drupalGet('user/' . $normal_user->uid . '/weather');
+    $this->assertResponse(403);
+    $this->assertText(t('Access denied'));
+    // Administration of weather module should be forbidden
+    $this->drupalGet('admin/config/user-interface/weather');
+    $this->assertResponse(403);
+    $this->assertText(t('Access denied'));
+    // Search page should be forbidden
+    $this->drupalGet('weather');
+    $this->assertResponse(403);
+    $this->assertText(t('Access denied'));
+    // Using the direct search URL should be forbidden
+    $this->drupalGet('weather/zollenspieker');
+    $this->assertResponse(403);
+    $this->assertText(t('Access denied'));
+    // The user may view the page with the detailed forecast of the
+    // system-wide display.
+    $this->drupalGet('weather/Germany/Hamburg/Hamburg/1');
+    $this->assertResponse(200);
+    $this->assertText(t('Weather forecast'));
+    $this->assertText('Hamburg');
+    // But the user may not view any other detailed forecasts.
+    // This needs the permission to access the search page.
+    $this->drupalGet('weather/Germany/Hamburg/Zollenspieker');
+    $this->assertResponse(403);
+    $this->assertNoText('Zollenspieker');
+    $this->drupalGet('weather/Germany/Hamburg/Zollenspieker/1');
+    $this->assertResponse(403);
+    $this->assertNoText('Zollenspieker');
+    // Logout current user
+    $this->drupalLogout();
+
+    // Test with weather user 1
+    $this->drupalLogin($weather_user_1);
+    // Get front page
+    $this->drupalGet('node');
+    $this->assertText(t('Weather'));
+    $this->assertRaw('<div class="weather">');
+    $this->assertLink('Hamburg');
+    $this->assertLinkByHref('weather/Germany/Hamburg/Hamburg/1');
+    // The user weather tab should be there
+    $this->drupalGet('user/' . $weather_user_1->uid);
+    $this->assertLink(t('Weather'));
+    $this->assertLinkByHref('user/' . $weather_user_1->uid . '/weather');
+    // Using the direct URL should be allowed
+    $this->drupalGet('user/' . $weather_user_1->uid . '/weather');
+    $this->assertResponse(200);
+    $this->assertLink(t('Add location to this display'));
+    $this->assertLinkByHref('user/' . $weather_user_1->uid . '/weather/add');
+    // Administration of weather module should be forbidden
+    $this->drupalGet('admin/config/user-interface/weather');
+    $this->assertResponse(403);
+    $this->assertText(t('Access denied'));
+    // Search page should be forbidden
+    $this->drupalGet('weather');
+    $this->assertResponse(403);
+    $this->assertText(t('Access denied'));
+    // Using the direct search URL should be forbidden
+    $this->drupalGet('weather/zollenspieker');
+    $this->assertResponse(403);
+    $this->assertText(t('Access denied'));
+    // The user may view the page with the detailed forecast of the
+    // system-wide display.
+    $this->drupalGet('weather/Germany/Hamburg/Hamburg/1');
+    $this->assertResponse(200);
+    // But the user may not view any other detailed forecasts.
+    // This needs the permission to access the search page.
+    $this->drupalGet('weather/Germany/Hamburg/Zollenspieker');
+    $this->assertResponse(403);
+    $this->assertNoText('Zollenspieker');
+    // Logout current user
+    $this->drupalLogout();
+
+    // Test with weather user 2
+    $this->drupalLogin($weather_user_2);
+    // Get front page
+    $this->drupalGet('node');
+    $this->assertText(t('Weather'));
+    $this->assertRaw('<div class="weather">');
+    $this->assertLink('Hamburg');
+    $this->assertLinkByHref('weather/Germany/Hamburg/Hamburg/1');
+    // The user weather tab should be there
+    $this->drupalGet('user/' . $weather_user_2->uid);
+    $this->assertLink(t('Weather'));
+    $this->assertLinkByHref('user/' . $weather_user_2->uid . '/weather');
+    // Using the direct URL should be allowed
+    $this->drupalGet('user/' . $weather_user_2->uid . '/weather');
+    $this->assertResponse(200);
+    $this->assertLink(t('Add location to this display'));
+    $this->assertLinkByHref('user/' . $weather_user_2->uid . '/weather/add');
+    // Administration of weather module should be forbidden
+    $this->drupalGet('admin/config/user-interface/weather');
+    $this->assertResponse(403);
+    $this->assertText(t('Access denied'));
+    // Search page should be forbidden
+    $this->drupalGet('weather');
+    $this->assertResponse(403);
+    $this->assertText(t('Access denied'));
+    // Using the direct search URL should be forbidden
+    $this->drupalGet('weather/zollenspieker');
+    $this->assertResponse(403);
+    $this->assertText(t('Access denied'));
+    // The user may view the page with the detailed forecast of the
+    // system-wide display.
+    $this->drupalGet('weather/Germany/Hamburg/Hamburg/1');
+    $this->assertResponse(200);
+    // But the user may not view any other detailed forecasts.
+    // This needs the permission to access the search page.
+    $this->drupalGet('weather/Germany/Hamburg/Zollenspieker');
+    $this->assertResponse(403);
+    $this->assertNoText('Zollenspieker');
+    // Do not allow editing another user's settings, see #244087
+    $this->drupalGet('user/' . $weather_user_1->uid . '/weather');
+    $this->assertResponse(403);
+    $this->assertText(t('Access denied'));
+    // Logout current user
+    $this->drupalLogout();
+
+    // Test with weather search page
+    $this->drupalLogin($weather_search_page_user);
+    // Get front page
+    $this->drupalGet('node');
+    $this->assertText(t('Weather'));
+    $this->assertRaw('<div class="weather">');
+    $this->assertLink('Hamburg');
+    $this->assertLinkByHref('weather/Germany/Hamburg/Hamburg/1');
+    // The user weather tab should not be there
+    $this->drupalGet('user/' . $weather_search_page_user->uid);
+    $this->assertLink(t('Weather'));
+    $this->assertNoLinkByHref('user/' . $weather_search_page_user->uid . '/weather');
+    // Using the direct URL should be forbidden
+    $this->drupalGet('user/' . $weather_search_page_user->uid . '/weather');
+    $this->assertResponse(403);
+    $this->assertText(t('Access denied'));
+    // Administration of weather module should be forbidden
+    $this->drupalGet('admin/config/user-interface/weather');
+    $this->assertResponse(403);
+    $this->assertText(t('Access denied'));
+    // Search page should be allowed
+    $this->drupalGet('weather');
+    $this->assertResponse(200);
+    $this->assertText(t('Search for a location'));
+    // Using the direct search URL should be allowed
+    $this->drupalGet('weather/zollenspieker');
+    $this->assertResponse(200);
+    $this->assertText(t('Zollenspieker'));
+    // Using the direct forecast URL should be allowed
+    $this->drupalGet('weather/Germany/Hamburg/Altona');
+    $this->assertResponse(200);
+    $this->assertText(t('Altona'));
+    // Get non-existent page
+    $this->drupalGet('weather/toddy');
+    $this->assertText(t('Your search did not return any results.'));
+    // Logout current user
+    $this->drupalLogout();
+  }
+}

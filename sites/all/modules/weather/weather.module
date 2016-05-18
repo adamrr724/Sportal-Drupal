@@ -1,0 +1,669 @@
+<?php
+
+/**
+ * @file
+ * Display current weather data from many places in the world.
+ *
+ * Copyright © 2006-2015 Dr. Tobias Quathamer <t.quathamer@mailbox.org>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ */
+
+/**
+ * Implement hook_views_api().
+ */
+function weather_views_api() {
+  return array('api' => 3);
+}
+
+/**
+ * Implement hook_cron().
+ *
+ * Deletes expired forecasts and forecast information.
+ */
+function weather_cron() {
+  // Calculate UTC time for yesterday.
+  // This way, forecasts for western timezones which lag
+  // behind UTC are not removed prematurely from the database.
+  $yesterday_utc_time = gmdate('Y-m-d H:i:s', REQUEST_TIME - 86400);
+  // Delete expired forecasts.
+  db_delete('weather_forecasts')->condition('time_to', $yesterday_utc_time, '<=')->execute();
+  // Delete expired information.
+  db_delete('weather_forecast_information')->condition('next_download_attempt', $yesterday_utc_time, '<=')->execute();
+}
+
+/**
+ * Implement hook_permission().
+ */
+function weather_permission() {
+  return array(
+    'administer custom weather block' => array(
+      'title' => t('Administer custom weather block'),
+      'description' => t('Allows users to configure their custom weather block.'),
+    ),
+    'access weather search page' => array(
+      'title' => t('Access weather search page'),
+      'description' => t('Allows users to access the !weather_search_page which provides a search for all weather stations.',
+        array('!weather_search_page' => l(t('weather search page'), 'weather'))),
+    ),
+  );
+}
+
+/**
+ * Implement hook_menu().
+ */
+function weather_menu() {
+  $items['admin/config/user-interface/weather'] = array(
+    'title' => 'Weather',
+    'description' => 'Configure system-wide weather displays and the default configuration of new displays. Add new places to the module.',
+    'page callback' => 'weather_admin_main_page',
+    'file' => 'weather.forms.inc',
+    'access arguments' => array('administer site configuration'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+  $items['admin/config/user-interface/weather/displays'] = array(
+    'title' => 'Displays',
+    'description' => 'Configure system-wide weather displays and the default configuration of new displays.',
+    'page callback' => 'weather_admin_main_page',
+    'file' => 'weather.forms.inc',
+    'access arguments' => array('administer site configuration'),
+    'type' => MENU_DEFAULT_LOCAL_TASK,
+  );
+  $items['admin/config/user-interface/weather/places'] = array(
+    'title' => 'Places',
+    'description' => 'Configure places for weather.',
+    'page callback' => 'weather_admin_places',
+    'file' => 'weather.forms.inc',
+    'access arguments' => array('administer site configuration'),
+    'type' => MENU_LOCAL_TASK,
+  );
+  $items['admin/config/user-interface/weather/default'] = array(
+    'title' => 'Edit default display',
+    'description' => 'Configure the default display.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('weather_display_config_form', 4),
+    'file' => 'weather.forms.inc',
+    'access arguments' => array('administer site configuration'),
+    'type' => MENU_LOCAL_ACTION,
+  );
+  $items['admin/config/user-interface/weather/system-wide/add'] = array(
+    'title' => 'Add display',
+    'description' => 'Configure a weather display.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('weather_display_config_form', 4, 5),
+    'file' => 'weather.forms.inc',
+    'access arguments' => array('administer site configuration'),
+    'type' => MENU_LOCAL_ACTION,
+  );
+  $items['admin/config/user-interface/weather/system-wide/%'] = array(
+    'title' => 'Edit display',
+    'description' => 'Configure a weather display.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('weather_display_config_form', 4, 5),
+    'file' => 'weather.forms.inc',
+    'access arguments' => array('administer site configuration'),
+    'type' => MENU_CALLBACK,
+  );
+  $items['admin/config/user-interface/weather/system-wide/%/delete'] = array(
+    'title' => 'Delete display',
+    'description' => 'Delete a weather display.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('weather_display_delete_confirm', 4, 5),
+    'file' => 'weather.forms.inc',
+    'access arguments' => array('administer site configuration'),
+    'type' => MENU_CALLBACK,
+  );
+  $items['admin/config/user-interface/weather/system-wide/%/add'] = array(
+    'title' => 'Add location',
+    'description' => 'Configure settings for a location.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('weather_location_settings_form', 4, 5, 6),
+    'file' => 'weather.forms.inc',
+    'access arguments' => array('administer site configuration'),
+    'type' => MENU_CALLBACK,
+  );
+  $items['admin/config/user-interface/weather/system-wide/%/%'] = array(
+    'title' => 'Edit location',
+    'description' => 'Configure settings for a location.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('weather_location_settings_form', 4, 5, 6),
+    'file' => 'weather.forms.inc',
+    'access arguments' => array('administer site configuration'),
+    'type' => MENU_CALLBACK,
+  );
+  $items['admin/config/user-interface/weather/system-wide/%/%/delete'] = array(
+    'title' => 'Delete location',
+    'description' => 'Delete a location from a system-wide weather display.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('weather_location_delete_confirm', 6),
+    'file' => 'weather.forms.inc',
+    'access arguments' => array('administer site configuration'),
+    'type' => MENU_CALLBACK,
+  );
+  $items['user/%/weather'] = array(
+    'title' => 'Weather',
+    'description' => 'Configure your custom weather display.',
+    'page callback' => 'weather_user_main_page',
+    'page arguments' => array(1),
+    'file' => 'weather.forms.inc',
+    'access callback' => 'weather_access_userblock',
+    'access arguments' => array(1),
+    'type' => MENU_LOCAL_TASK,
+  );
+  $items['user/%/weather/display'] = array(
+    'title' => 'Edit display',
+    'description' => 'Configure your custom weather display.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('weather_display_config_form', 0, 1),
+    'file' => 'weather.forms.inc',
+    'access callback' => 'weather_access_userblock',
+    'access arguments' => array(1),
+    'type' => MENU_CALLBACK,
+  );
+  $items['user/%/weather/display/delete'] = array(
+    'title' => 'Delete display',
+    'description' => 'Delete your custom weather display.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('weather_display_delete_confirm', 0, 1),
+    'file' => 'weather.forms.inc',
+    'access callback' => 'weather_access_userblock',
+    'access arguments' => array(1),
+    'type' => MENU_CALLBACK,
+  );
+  $items['user/%/weather/add'] = array(
+    'title' => 'Add location',
+    'description' => 'Configure settings for a location.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('weather_location_settings_form', 0, 1, 3),
+    'file' => 'weather.forms.inc',
+    'access callback' => 'weather_access_userblock',
+    'access arguments' => array(1),
+    'type' => MENU_CALLBACK,
+  );
+  $items['user/%/weather/%'] = array(
+    'title' => 'Edit location',
+    'description' => 'Configure settings for a location.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('weather_location_settings_form', 0, 1, 3),
+    'file' => 'weather.forms.inc',
+    'access callback' => 'weather_access_userblock',
+    'access arguments' => array(1),
+    'type' => MENU_CALLBACK,
+  );
+  $items['user/%/weather/%/delete'] = array(
+    'title' => 'Delete location',
+    'description' => 'Delete a location from your custom weather display.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('weather_location_delete_confirm', 3),
+    'file' => 'weather.forms.inc',
+    'access callback' => 'weather_access_userblock',
+    'access arguments' => array(1),
+    'type' => MENU_CALLBACK,
+  );
+  $items['weather'] = array(
+    'title' => 'Weather',
+    'description' => 'Search for locations and display their current weather.',
+    'page callback' => 'weather_search_location',
+    'file' => 'weather.forms.inc',
+    'access arguments' => array('access weather search page'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+  $items['weather/autocomplete/%'] = array(
+    'page callback' => 'weather_search_autocomplete',
+    'page arguments' => array(2),
+    'file' => 'weather.forms.inc',
+    'access arguments' => array('access weather search page'),
+    'type' => MENU_CALLBACK,
+  );
+  $items['weather/%/%menu_tail'] = array(
+    'title' => 'Weather forecast',
+    'description' => 'Display current weather and detailed forecast.',
+    'page callback' => 'weather_show_detailed_forecast',
+    'page arguments' => array(1, 2),
+    'file' => 'weather.common.inc',
+    'load arguments'   => array('%map', '%index'),
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+  );
+  return $items;
+}
+
+/**
+ * Implement hook_help().
+ */
+function weather_help($path, $arg) {
+  $output = '';
+  switch ($path) {
+    case 'admin/config/user-interface/weather':
+      $output .= '<p>';
+      $output .= t('You can add, edit, and delete locations from system-wide weather displays. Moreover, you can specify default values for newly created displays. If you want to change the format of the displayed date, you can do that in the <a href="@url">date configuration</a>.',
+        array('@url' => url('admin/config/regional/date-time')));
+      $output .= '</p>';
+      break;
+    case 'admin/config/user-interface/weather/places':
+      $output .= '<p>';
+      $output .= t('You can add new places to the module. Just paste the URL of the weather forecast on the <a href="@url">yr.no</a> website in the input field below. The easiest way to do this is to search on their website for the wanted place, click on the forecast link and copy the URL from the address bar of your browser.',
+        array('@url' => url('http://www.yr.no/')));
+      $output .= '</p>';
+      break;
+    case 'user/%/weather':
+      $output .= '<p>';
+      $output .= t('You can add, edit, and delete locations from your custom weather display.');
+      $output .= "\n";
+      $output .= t('Please note that the display will not be shown until you configure at least one location.');
+      $output .= '</p>';
+      break;
+  }
+  return $output;
+}
+
+/**
+ * Implement hook_block_info().
+ */
+function weather_block_info() {
+  module_load_include('inc', 'weather', 'weather.common');
+  $blocks['user'] = array(
+    'info' => t('Weather: custom user'),
+  );
+  $blocks['location'] = array(
+    'info' => t('Weather: location of nodes (requires Location module)'),
+  );
+  $blocks['geofield'] = array(
+    'info' => t('Weather: location of nodes (requires Geofield module)'),
+  );
+  $blocks['geofieldtaxonomyterms'] = array(
+    'info' => t('Weather: location of taxonomy terms (requires Geofield module)'),
+  );
+  $blocks['ip'] = array(
+    'info' => t('Weather: IP-based location of user (requires Smart IP module)'),
+  );
+  $current_displays = weather_get_displays_in_use();
+  foreach ($current_displays as $display_number) {
+    $key = 'system_' . $display_number;
+    $blocks[$key] = array(
+      'info' => t('Weather: system-wide display (#!number)', array('!number' => $display_number)),
+    );
+  }
+  return $blocks;
+}
+
+/**
+ * Implement hook_block_view().
+ */
+function weather_block_view($delta = '') {
+  global $user;
+  module_load_include('inc', 'weather', 'weather.common');
+  $block = array();
+  // Handle the 'system_NUMBER' type of blocks
+  if (strpos($delta, '_') === FALSE) {
+    $display_type = $delta;
+  }
+  else {
+    list($display_type, $display_number) = explode('_', $delta);
+  }
+  $forecast_days = (int) variable_get('weather_forecast_days', '2');
+  switch ($display_type) {
+    case 'user':
+      if (weather_access_userblock()) {
+        // Show the user's custom weather block, if there is already
+        // a place configured. Otherwise, do not show the block.
+        $places = weather_get_places_in_use('user', $user->uid);
+        if (!$places) {
+          return;
+        }
+        $block['subject'] = t('Weather');
+        $weather = array();
+        $display = weather_get_display_config('user', $user->uid);
+        $display->detailed = FALSE;
+        foreach ($places as $idx => $place) {
+          $forecasts = weather_get_weather($place->place_geoid, $forecast_days, $display->detailed);
+          $weather[$idx]['forecasts'] = $forecasts['forecasts'];
+          $weather[$idx]['utc_offset'] = $forecasts['utc_offset'];
+          $weather[$idx]['name'] = $place->displayed_name;
+          $weather[$idx]['geoid'] = $place->place_geoid;
+          $link = _weather_get_link_for_geoid($place->place_geoid, 'user', $user->uid);
+          $weather[$idx]['link'] = l($place->displayed_name, $link);
+          $link = _weather_get_link_for_geoid($place->place_geoid, 'yr.no');
+          $weather[$idx]['yr.no'] = $link;
+        }
+        $block['content'] = theme('weather_forecast_preprocess',
+          array('weather' => $weather, 'display' => $display));
+      }
+      break;
+    case 'location':
+      if (user_access('access content')) {
+        // Set up the node location weather block.
+        if (arg(0) == 'node' and is_numeric(arg(1))) {
+          $node = node_load(arg(1));
+          $block['subject'] = t('Weather nearby');
+          $block['content'] = '';
+          $display = weather_get_display_config('default');
+          $display->detailed = FALSE;
+          // This checks the location module.
+          if (isset($node->locations)) {
+            // Iterate through all available locations and check
+            // for lat/long information. If there is no information,
+            // the location module returns 0.0/0.0 instead of NULL values.
+            foreach ($node->locations as $location) {
+              if (($location['latitude'] != 0) or ($location['longitude'] != 0)) {
+                $place = weather_get_nearest_station($location['latitude'], $location['longitude']);
+                $forecasts = weather_get_weather($place->geoid, $forecast_days, $display->detailed);
+                $weather[0]['forecasts'] = $forecasts['forecasts'];
+                $weather[0]['utc_offset'] = $forecasts['utc_offset'];
+                $weather[0]['name'] = $place->displayed_name;
+                $weather[0]['geoid'] = $place->geoid;
+                $link = _weather_get_link_for_geoid($place->geoid, 'default');
+                $weather[0]['link'] = l($place->displayed_name, $link);
+                $link = _weather_get_link_for_geoid($place->geoid, 'yr.no');
+                $weather[0]['yr.no'] = $link;
+                $weather[0]['station'] = array('distance' => $place->distance, 'bearing' => $place->bearing);
+                $block['content'] = theme('weather_forecast_preprocess',
+                  array('weather' => $weather, 'display' => $display));
+              }
+            }
+          }
+          // Check for location fields.
+          else {
+            // Get a list of all field names which are location fields.
+            $location_field_names = db_select('field_config', 'fc')
+              ->fields('fc', array('field_name'))
+              ->condition('type', 'location', '=')
+              ->execute()
+              ->fetchCol();
+            foreach ($location_field_names as $location_field_name) {
+              if (isset($node->$location_field_name)) {
+                // The node has location fields, determine if there's usable data.
+                // First cycle through the language codes (will mostly be 'und').
+                foreach ($node->$location_field_name as $language) {
+                  // Now cycle through the different locations.
+                  foreach ($language as $location) {
+                    if (($location['latitude'] != 0) or ($location['longitude'] != 0)) {
+                      $place = weather_get_nearest_station($location['latitude'], $location['longitude']);
+                      $forecasts = weather_get_weather($place->geoid, $forecast_days, $display->detailed);
+                      $weather[0]['forecasts'] = $forecasts['forecasts'];
+                      $weather[0]['utc_offset'] = $forecasts['utc_offset'];
+                      $weather[0]['name'] = $place->displayed_name;
+                      $weather[0]['geoid'] = $place->geoid;
+                      $link = _weather_get_link_for_geoid($place->geoid, 'default');
+                      $weather[0]['link'] = l($place->displayed_name, $link);
+                      $link = _weather_get_link_for_geoid($place->geoid, 'yr.no');
+                      $weather[0]['yr.no'] = $link;
+                      $weather[0]['station'] = array('distance' => $place->distance, 'bearing' => $place->bearing);
+                      $block['content'] = theme('weather_forecast_preprocess',
+                        array('weather' => $weather, 'display' => $display));
+                    }
+                  }
+                }
+              }
+            }
+          }
+          // Do not show block if no lat/long information has been found.
+          if (empty($block['content'])) {
+            return;
+          }
+        }
+      }
+      break;
+    case 'geofield':
+      if (user_access('access content')) {
+        // Set up the node geofield weather block.
+        if (arg(0) == 'node' and is_numeric(arg(1))) {
+          $node = node_load(arg(1));
+          $block['subject'] = t('Weather nearby');
+          $block['content'] = '';
+          $display = weather_get_display_config('default');
+          $display->detailed = FALSE;
+          // Get a list of all field names which are geofield fields.
+          $geofield_field_names = db_select('field_config', 'fc')
+            ->fields('fc', array('field_name'))
+            ->condition('type', 'geofield', '=')
+            ->execute()
+            ->fetchCol();
+          foreach ($geofield_field_names as $geofield_field_name) {
+            if (isset($node->$geofield_field_name)) {
+              // The node has geofield fields, determine if there's usable data.
+              // First cycle through the language codes (will mostly be 'und').
+              foreach ($node->$geofield_field_name as $language) {
+                // Now cycle through the different locations.
+                foreach ($language as $location) {
+                  if (($location['lat'] != 0) or ($location['lon'] != 0)) {
+                    $place = weather_get_nearest_station($location['lat'], $location['lon']);
+                    $forecasts = weather_get_weather($place->geoid, $forecast_days, $display->detailed);
+                    $weather[0]['forecasts'] = $forecasts['forecasts'];
+                    $weather[0]['utc_offset'] = $forecasts['utc_offset'];
+                    $weather[0]['name'] = $place->displayed_name;
+                    $weather[0]['geoid'] = $place->geoid;
+                    $link = _weather_get_link_for_geoid($place->geoid, 'default');
+                    $weather[0]['link'] = l($place->displayed_name, $link);
+                    $link = _weather_get_link_for_geoid($place->geoid, 'yr.no');
+                    $weather[0]['yr.no'] = $link;
+                    $weather[0]['station'] = array('distance' => $place->distance, 'bearing' => $place->bearing);
+                    $block['content'] = theme('weather_forecast_preprocess',
+                      array('weather' => $weather, 'display' => $display));
+                  }
+                }
+              }
+            }
+          }
+          // Do not show block if no lat/long information has been found.
+          if (empty($block['content'])) {
+            return;
+          }
+        }
+      }
+      break;
+    case 'geofieldtaxonomyterms':
+      if (user_access('access content')) {
+        // Set up the taxonomy terms geofield weather block.
+        if (arg(0) == 'taxonomy' and arg(1) == 'term') {
+          $tid = (int) arg(2);
+          $term = taxonomy_term_load($tid);
+          $block['subject'] = t('Weather nearby');
+          $block['content'] = '';
+          $display = weather_get_display_config('default');
+          $display->detailed = FALSE;
+          // Get a list of all field names which are geofield fields.
+          $geofield_field_names = db_select('field_config', 'fc')
+            ->fields('fc', array('field_name'))
+            ->condition('type', 'geofield', '=')
+            ->execute()
+            ->fetchCol();
+          foreach ($geofield_field_names as $geofield_field_name) {
+            if (isset($term->$geofield_field_name)) {
+              // The term has geofield fields, determine if there's usable data.
+              // First cycle through the language codes (will mostly be 'und').
+              foreach ($term->$geofield_field_name as $language) {
+                // Now cycle through the different locations.
+                foreach ($language as $location) {
+                  if (($location['lat'] != 0) or ($location['lon'] != 0)) {
+                    $place = weather_get_nearest_station($location['lat'], $location['lon']);
+                    $forecasts = weather_get_weather($place->geoid, $forecast_days, $display->detailed);
+                    $weather[0]['forecasts'] = $forecasts['forecasts'];
+                    $weather[0]['utc_offset'] = $forecasts['utc_offset'];
+                    $weather[0]['name'] = $place->displayed_name;
+                    $weather[0]['geoid'] = $place->geoid;
+                    $link = _weather_get_link_for_geoid($place->geoid, 'default');
+                    $weather[0]['link'] = l($place->displayed_name, $link);
+                    $link = _weather_get_link_for_geoid($place->geoid, 'yr.no');
+                    $weather[0]['yr.no'] = $link;
+                    $weather[0]['station'] = array('distance' => $place->distance, 'bearing' => $place->bearing);
+                    $block['content'] = theme('weather_forecast_preprocess',
+                      array('weather' => $weather, 'display' => $display));
+                  }
+                }
+              }
+            }
+          }
+          // Do not show block if no lat/long information has been found.
+          if (empty($block['content'])) {
+            return;
+          }
+        }
+      }
+      break;
+    case 'ip':
+      if (user_access('access content') and module_exists('smart_ip')) {
+        $smart_ip_session = smart_ip_session_get('smart_ip');
+        // Check that the lookup did find a location for the IP.
+        if (isset($smart_ip_session['location'])) {
+          $latitude = $smart_ip_session['location']['latitude'];
+          $longitude = $smart_ip_session['location']['longitude'];
+          if (!empty($latitude) and !empty($longitude)) {
+            $block['subject'] = t('Weather near you');
+            $display = weather_get_display_config('default');
+            $display->detailed = FALSE;
+            $place = weather_get_nearest_station($latitude, $longitude);
+            $forecasts = weather_get_weather($place->geoid, $forecast_days, $display->detailed);
+            $weather[0]['forecasts'] = $forecasts['forecasts'];
+            $weather[0]['utc_offset'] = $forecasts['utc_offset'];
+            $weather[0]['name'] = $place->displayed_name;
+            $weather[0]['geoid'] = $place->geoid;
+            $link = _weather_get_link_for_geoid($place->geoid, 'default');
+            $weather[0]['link'] = l($place->displayed_name, $link);
+            $link = _weather_get_link_for_geoid($place->geoid, 'yr.no');
+            $weather[0]['yr.no'] = $link;
+            $weather[0]['station'] = array('distance' => $place->distance, 'bearing' => $place->bearing);
+            $block['content'] = theme('weather_forecast_preprocess',
+              array('weather' => $weather, 'display' => $display));
+          }
+        }
+      }
+      break;
+    case 'system':
+      if (user_access('access content')) {
+        // Show a system-wide weather display.
+        $block['subject'] = t('Weather');
+        $weather = array();
+        $display = weather_get_display_config('system-wide', $display_number);
+        $display->detailed = FALSE;
+        $places = weather_get_places_in_use('system-wide', $display_number);
+        if (!$places) {
+          return;
+        }
+        foreach ($places as $idx => $place) {
+          $forecasts = weather_get_weather($place->place_geoid, $forecast_days, $display->detailed);
+          $weather[$idx]['forecasts'] = $forecasts['forecasts'];
+          $weather[$idx]['utc_offset'] = $forecasts['utc_offset'];
+          $weather[$idx]['name'] = $place->displayed_name;
+          $weather[$idx]['geoid'] = $place->place_geoid;
+          $link = _weather_get_link_for_geoid($place->place_geoid, 'system-wide', $display_number);
+          $weather[$idx]['link'] = l($place->displayed_name, $link);
+          $link = _weather_get_link_for_geoid($place->place_geoid, 'yr.no');
+          $weather[$idx]['yr.no'] = $link;
+        }
+        $block['content'] = theme('weather_forecast_preprocess',
+          array('weather' => $weather, 'display' => $display));
+      }
+  }
+  return $block;
+}
+
+/**
+ * Checks whether the user has access to their own custom weather block.
+ *
+ * @param int $uid
+ *   User id.
+ *
+ * @return boolean
+ *   TRUE or FALSE.
+ */
+function weather_access_userblock($uid=NULL) {
+  global $user;
+  // If $uid is not set, just check for the access permission.
+  if (is_null($uid) || $user->uid == $uid) {
+    return user_access('administer custom weather block');
+  }
+  return FALSE;
+}
+
+/**
+* Implements hook_date_format_types().
+*/
+function weather_date_format_types() {
+  return array(
+    'weather'  => t('Weather'),
+  );
+}
+
+/**
+* Implements hook_date_formats().
+*/
+function weather_date_formats() {
+  $formats = array();
+  $formats[] = array(
+    'type'    => 'weather',
+    'format' => 'F j, Y', // e.g. March 6, 2014
+    'locales' => array(''),
+  );
+  $formats[] = array(
+    'type'    => 'weather',
+    'format' => 'F j', // e.g. March 6
+    'locales' => array(''),
+  );
+  $formats[] = array(
+    'type'    => 'weather',
+    'format' => 'Y/m/d', // e.g. 2014/03/06
+    'locales' => array(''),
+  );
+  $formats[] = array(
+    'type'    => 'weather',
+    'format' => 'm/d', // e.g. 03/06
+    'locales' => array(''),
+  );
+  $formats[] = array(
+    'type'    => 'weather',
+    'format' => 'j. F Y', // e.g. 6. March 2014
+    'locales' => array(''),
+  );
+  $formats[] = array(
+    'type'    => 'weather',
+    'format' => 'j. F', // e.g. 6. March
+    'locales' => array(''),
+  );
+  $formats[] = array(
+    'type'    => 'weather',
+    'format' => 'd.m.Y', // e.g. 06.03.2014
+    'locales' => array(''),
+  );
+  $formats[] = array(
+    'type'    => 'weather',
+    'format' => 'd.m.', // e.g. 06.03.
+    'locales' => array(''),
+  );
+  return $formats;
+}
+
+/**
+ * Implement hook_theme().
+ */
+function weather_theme() {
+  return array(
+    // Custom theme function for preprocessing variables
+    'weather_forecast_preprocess' => array(
+      'file' => 'weather_theme.inc',
+      'variables' => array('weather' => NULL, 'display' => NULL),
+    ),
+    // Compact forecast template (default for blocks)
+    'weather' => array(
+      'template' => 'weather',
+      'variables' => array('weather' => NULL),
+    ),
+    // Detailed forecast template
+    'weather_detailed_forecast' => array(
+      'template' => 'weather_detailed_forecast',
+      'variables' => array('weather' => NULL),
+    ),
+  );
+}

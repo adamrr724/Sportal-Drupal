@@ -1,0 +1,999 @@
+Version: 7.x-2.14                                    Date: 2015-12-11
+---------------------------------------------------------------------
+
+* Proper fix for broken update path. Thanks to cstoner for the
+  follow up. Closes: [#2542966]
+
+
+Version: 7.x-2.13                                    Date: 2015-12-08
+---------------------------------------------------------------------
+
+* Remove double addition of database field resulting in a broken
+  update path. Thanks to iowatiger08 and cstoner for the bug report.
+  Closes: [#2542966]
+
+
+Version: 7.x-2.12                                    Date: 2015-08-26
+---------------------------------------------------------------------
+
+* Correct download link on yr.no for places with special (non-ASCII)
+  characters in the URL. Thanks to 1mundus for the bug report.
+  Closes: [#2505035]
+* Fix integrity constraint violation for downloaded weather
+  forecasts. Thanks to Reis Quarteu for the bug report and
+  kevinn for the patch. Closes: [#1412352]
+* Fix string vs. integer comparision on PostgreSQL. Thanks to
+  JimmyAx for the bug report and patch. Closes: [#2542408]
+
+
+Version: 7.x-2.11                                    Date: 2015-05-06
+---------------------------------------------------------------------
+
+* Fix typo from array conversion
+
+
+Version: 7.x-2.10                                    Date: 2015-05-06
+---------------------------------------------------------------------
+
+* Change short array syntax [] into array() to support old
+  PHP versions < 5.4
+
+
+Version: 7.x-2.9                                     Date: 2015-05-06
+---------------------------------------------------------------------
+
+* Change custom image directory, use the active frontend theme
+  instead of the Drupal files path. This enabled users to upload
+  custom images on acquia servers. Thanks to Abdulla Abu-Zakham
+  for the bug report and patch. Closes: [#2464255]
+* Use proper type casts for forecast conversion. Some databases
+  fail if the type is not correct. Thanks to Jeffrey Zhou for
+  the bug report and patch. Closes: [#2478181], [#2257971]
+* Enable refreshing of weather data when using Views.
+  Closes: [#2229041], [#2471419]
+
+
+Version: 7.x-2.8                                     Date: 2015-02-12
+---------------------------------------------------------------------
+
+* Add support for location of taxonomy terms, requires Geofield
+  module. Thanks to kodo for the patch. Closes: [#2390721]
+
+
+Version: 7.x-2.7                                     Date: 2014-11-28
+---------------------------------------------------------------------
+
+* Enable additions of custom locations. Closes: [#1757324], [#2306735]
+* Comply again with yr.no requirements for using the free weather data
+  service. This requires a link to their weather forecast below
+  every displayed weather data.
+
+
+Version: 7.x-2.6                                     Date: 2014-09-30
+---------------------------------------------------------------------
+
+* Fix markup error in detailed forecast template. Thanks to
+  Ambient.Impact for the bug report and patch. Closes: [#2250977]
+* Add new images for weather conditions at yr.no.
+  Closes: [#2279173], [#2339005]
+* Add more Greenlandic places. Thanks to eewan for the bug report
+  and patch. Closes: [#2321905]
+* Fix an error in cron check for outdated forecasts. Thanks to
+  rudins for the bug report and patch. Closes: [#2315743]
+
+
+Version: 7.x-2.5                                     Date: 2014-04-24
+---------------------------------------------------------------------
+
+* Use a configurable date format for displays. Closes: [#2221783],
+  [#2141667]
+* Make number of forecast days configurable. Closes: [#2151443]
+* Fix minor error with subsequent locations in a display
+
+
+Version: 7.x-2.4                                     Date: 2013-11-06
+---------------------------------------------------------------------
+
+* Add a new views handler to support a complete wind information
+* Add precipitation to detailed forecast table
+* Fix broken handler in views for sorting. Thanks to Mike Shaw
+  for the bug report. Closes: [#2129155]
+* Some minor bug fixes
+
+
+Version: 7.x-2.3                                     Date: 2013-10-19
+---------------------------------------------------------------------
+
+* Move some functions from weather.module to weather.common.inc to
+  reduce the size of the main module file.
+* Add Astoria, Oregon. Thanks to Jacob Lear for the bug report.
+  Closes: [#2113663]
+* Add regions to some place names to be able to distinguish them.
+  Thanks to Jacob Lear for the bug report. Closes: [#2113667]
+* Use hook_cron() to delete expired forecasts.
+
+
+Version: 7.x-2.2                                     Date: 2013-10-16
+---------------------------------------------------------------------
+
+* Add views integration. Closes: [#588292], [#1358918]
+* Support Geofield module. Closes: [#1419888], [#2091391]
+* Fix an error in the calculation of the next download attempt.
+
+
+Version: 7.x-2.1                                     Date: 2013-10-13
+---------------------------------------------------------------------
+
+* Do not use DateTime functions to run on older PHP versions than 5.3.
+  Closes: [#2110837]
+
+
+Version: 7.x-2.0                                     Date: 2013-10-11
+---------------------------------------------------------------------
+
+* Finally, support weather forecasts! Closes: [#100838], [#300629]
+* More than 14.000 weather stations are included now instead of
+  about 4500.
+
+
+Version: 7.x-1.9                                     Date: 2013-10-16
+---------------------------------------------------------------------
+
+* Support Geofield module. Closes: [#1419888], [#2091391]
+* Add station CWMJ. Thanks to Michael Clermont for the bug report.
+  Closes: [#2103471]
+
+
+Version: 7.x-1.8                                     Date: 2013-09-11
+---------------------------------------------------------------------
+
+* Update information for Mariscal Sucre International Airport,
+  Ecuador. Thanks to Julián Bustamante for the bug report.
+  Closes: [#2082881]
+* Refresh list of known METAR stations. 294 weather stations have
+  been removed, 877 have been added, resulting in a total of 4470
+  locations which provide weather data.
+
+
+Version: 7.x-1.7                                     Date: 2013-09-01
+---------------------------------------------------------------------
+
+* Support heat index, thanks to on4sar for the idea. Closes: [#2061103]
+* Do not show an error message if the smart_ip module could not
+  find a location for a given IP. Thanks to Vict0rC for the bug
+  report. Closes: [#2012580]
+
+
+Version: 7.x-1.6                                     Date: 2013-07-29
+---------------------------------------------------------------------
+
+* Add three locations on the Northern Mariana Islands.
+  Thanks to rosgar for the bug report. Closes: [#2048103]
+
+
+Version: 7.x-1.5                                     Date: 2013-02-07
+---------------------------------------------------------------------
+
+* Fix undefined property for very low visibility in miles.
+  Thanks to Cracu for the bug report and patch. Closes: [#1894646]
+* Support weather phenomenon 'freezing fog'
+
+
+Version: 7.x-1.4                                     Date: 2013-01-08
+---------------------------------------------------------------------
+
+* Add 'not null' to primary key for table 'weather_location'.
+  Thanks to Skispcs for the bug report. Closes: [#1678662]
+* Wrap drupal_write_record() in try/catch block.
+  Thanks to Rik de Boer for the bug report. Closes: [#1412352]
+* Enable display of block for location of nodes with location cck
+  fields.
+* Rewrite calculation of nearest weather station to work with both
+  MySQL and PostgreSQL. Thanks to Marc G. Fournier for the bug
+  report. Closes: [#1268844]
+
+
+Version: 7.x-1.3                                     Date: 2012-06-24
+---------------------------------------------------------------------
+
+* Create a new object before using it. This fixes a strict warning.
+  Thanks to rappelkiste_src for the bug report. Closes: [#1571892]
+* Fix undefined property notice in weather_retrieve_data().
+  Thanks to Les Lim for the bug report and patch. Closes: [#1588848]
+
+
+Version: 7.x-1.2                                     Date: 2012-04-04
+---------------------------------------------------------------------
+
+* Add Israel Haifa Airport. Closes: [#1330278]
+* Add support for Iraq. Closes: [#1344628]
+* Add Krasnoyarsk (Russian Federation). Closes: [#1093688]
+* Update download location to http://www.aviationweather.gov/
+* Use smart_ip module for IP-based location weather. Closes: [#1492992]
+* Numerous documentation and coding style updates
+* Remove ICAO textfield in weather location configuration and solve a
+  problem with the automatic update of the real name textfield.
+  Closes: [#1167692], [#1219498], [#643696]
+* Use Drupal's ip_address(). Closes: [#1270058]
+* Fix problem with custom images. Closes: [#1354586]
+
+
+Version: 7.x-1.1                                     Date: 2011-08-18
+---------------------------------------------------------------------
+
+* Fix some PHP strict warnings. Thanks to James Wilson for the bug
+  report and patch. Closes: [#1222552], [#1252584]
+
+
+Version: 7.x-1.0                                     Date: 2010-12-17
+---------------------------------------------------------------------
+
+* Port weather 6.x-5.x to Drupal 7.x
+* Split module into several smaller files. The file weather.module
+  gets loaded and parsed on every page request, so having a small
+  file size speeds up Drupal. The file has been reduced from 67 kB to
+  21 kB, meaning a decrease of almost 70%. Moreover, the parser is
+  now loaded only when needed instead of unconditionally on every page
+  request, resulting in an overall size reduction from 87 kB to 21 kB,
+  which is about 25% of the original size. This speeds up the weather
+  module by factor 4!
+* Implement a cache for parsed METAR data, so that the parsing needs
+  to be done only once instead of every time the weather data is
+  displayed.
+* Rewrite download handler for METAR weather data. If the data is not
+  available, the module retries at increasing time intervals up to
+  one day to download the data. This better supports METAR stations
+  which report their data only a few times a day. Moreover, if an
+  ICAO code is no longer valid, the module tries to download only once
+  a day. In both cases, the previous download interval had been
+  10 minutes.
+* AJAX code in location form is fixed. Closes: [#416892]
+* Installation of weather ICAO data is about six times faster.
+* The distance to the next weather station (for location enabled
+  nodes) is now an explicit setting instead of being derived from the
+  visibility setting. Closes: [#589222]
+* A new display type has been added. This allows to show the weather
+  nearby a user's location based on their IP address. This uses the
+  data available from hostip.info.
+* Replace file_directory_path() with file_default_scheme(). Thanks to
+  John Voskuilen for the bug report. Closes: [#920508]
+* Support a timeout for fetching new weather data. Closes: [#967646]
+* Translation updates for:
+  - German, thanks to Tobias Quathamer.
+  - Norwegian, thanks to Stein Magne.
+  - Greek, thanks to Vasileios Lourdas.
+  - Czech, thanks to Marek Drápal.
+  - Russian, thanks to Alexander Lavrinenko.
+  - Croatian, thanks to Mihaela Jurkovic.
+  - Slovak, thanks to Peter Slama.
+
+
+Version: 6.x-5.18                                    Date: 2010-12-16
+---------------------------------------------------------------------
+
+* Remove dependency on Location module if NodeMap module is used for
+  locations. Closes: [#803778]
+
+
+Version: 6.x-5.17                                    Date: 2010-12-15
+---------------------------------------------------------------------
+
+* Implement support for location CCK fields. Closes: [#338086],
+  [#587606], [#792050],[#803778]
+* New translation to Slovak, thanks to Peter Slama.
+
+
+Version: 6.x-5.16                                    Date: 2010-12-06
+---------------------------------------------------------------------
+
+* Support a timeout for fetching new weather data. Closes: [#967646]
+* Backport intelligent download interval calculation from D7 port.
+  This way, the website will be much more responsive if a request
+  times out or an ICAO code is no longer valid.
+
+
+Version: 6.x-5.15                                    Date: 2010-09-23
+---------------------------------------------------------------------
+
+* Add missing hook_update_N() for Belgian cities.
+
+
+Version: 6.x-5.14                                    Date: 2010-09-23
+---------------------------------------------------------------------
+
+* Use drupal_http_request() for downloading. This enables the use
+  of proxies. Thanks to Mariano Renzi for providing a patch.
+  Closes: [#847344]
+* Add places from Belgium. Thanks to Marijn Schops for the bug
+  report. Closes: [#895240]
+
+
+Version: 6.x-5.13                                    Date: 2010-07-03
+---------------------------------------------------------------------
+
+* Update location of HTTP POST script on weather.noaa.gov. Many
+  thanks to Stein Magne for providing a fix. Closes: [#838280]
+* If fetching weather data via HTTP didn't work, try FTP next time.
+* Make an entry in the watchdog table, if the download did not
+  succeed. Closes: [#836582]
+* Only show an error message about failed downloads to users with
+  administration priviledges. Thanks to AaronELBorg for the patch.
+  Closes: [#836582]
+* Remove Maribo Lufthavn, Denmark, which does no longer exist.
+
+
+Version: 6.x-5.12                                    Date: 2010-05-03
+---------------------------------------------------------------------
+
+* Remove block information from database if module is uninstalled.
+* Reduce size of PNG images with optipng. This saves about 25% of the
+  data which needs to be transmitted. Thanks to Nico Schlömer for
+  the idea. Closes: [#770236]
+* Support custom weather images. Thanks to Szántó Gábor for the
+  patch. Closes: [#457414]
+* Translation updates for:
+  - Norwegian, thanks to Stein Magne.
+  - Hungarian, thanks to Füleki Miklós.
+  - Spanish, thanks to Jota Jota. Closes: [#769568]
+  - French, thanks to Jota Jota. Closes: [#769568]
+  - German, thanks to Tobias Quathamer.
+
+
+Version: 6.x-5.11                                    Date: 2010-03-10
+---------------------------------------------------------------------
+
+* Fix typography of two locations and remove Lupin Airport
+  Supplementary Aviation Weather Reporting Station.
+
+
+Version: 6.x-5.10                                    Date: 2010-02-21
+---------------------------------------------------------------------
+
+* Add cities in South Carolina and change name in North Carolina.
+  Thanks to Bill Funderburk for the report. Closes: [#719578]
+* Fix wrong translation for Spanish temperatures. Thanks to kuli70
+  for the bug report. Closes: [#720542]
+
+
+Version: 6.x-5.9                                     Date: 2010-02-06
+---------------------------------------------------------------------
+
+* Correctly parse snow showers. Thanks to bloto for reporting the bug
+  with METAR data. Closes: [#700060]
+* Translation updates for:
+  - German, thanks to Tobias Quathamer.
+
+
+Version: 6.x-5.8                                     Date: 2010-01-01
+---------------------------------------------------------------------
+
+* Fix calculation error with night images. Thanks to Dwaine Trummert
+  for the patch. Closes: [#202885]
+* Add La Roche-sur-Yon, France. Thanks to relianor. Closes: [#336847]
+
+
+Version: 6.x-5.7                                     Date: 2009-09-28
+---------------------------------------------------------------------
+
+* Use the time settings from admin/settings/date-time. Thanks to
+  John Noceda for the suggestion. Closes: [#392776]
+* Prevent wrapping of &thinsp;. Closes: [#357628]
+* New translation to Croatian, thanks to Mihaela Jurkovic.
+  Closes: [#576426]
+
+
+Version: 6.x-5.6                                     Date: 2009-07-29
+---------------------------------------------------------------------
+
+* Change ICAO code of Bangalore, India from VOBG to VOBL, which is
+  updated more often. Thanks to Raghavan Subramaniyan for the report.
+  Closes: [#421326]
+
+
+Version: 6.x-5.5                                     Date: 2009-02-01
+---------------------------------------------------------------------
+
+* Correct some spellings of Romanian cities and add some more ICAO
+  codes. Thanks to Marcel Cozma for the list. Closes: [#361231]
+* Add Salerno, Italy. Thanks to hopfrog. Closes: [#361422]
+* Add Abuja, Nigeria. Thanks to Kemi Ukadike. Closes: [#362987]
+* Correct spellings of Polish cities and add Łódź-Lublinek. Thanks
+  to Szymon Nitka for the bug report. Closes: [#365509]
+* Add Arusha and Dar es Salaam, Tanzania. Thanks to artistique.
+* Translation updates for:
+  - Dutch, thanks to garmisch. Closes: [#365646]
+
+
+Version: 6.x-5.4                                     Date: 2009-01-16
+---------------------------------------------------------------------
+
+* Fix bug in Polish translation, thanks to Szymon Nitka.
+  Closes: [#356175]
+* Allow both Fahrenheit and Celsius in one location. Thanks to
+  John Refano for the initial patch. Closes: [#356572]
+* Translation updates for:
+  - Brazilian Portuguese, thanks to Ramon Magnus.
+  - Polish, thanks to Szymon Nitka.
+  - German, thanks to Tobias Quathamer.
+
+
+Version: 6.x-5.3                                     Date: 2009-01-05
+---------------------------------------------------------------------
+
+* Use location information from Node Map module, if available. Thanks
+  to Anders Ross for the suggestion. Closes: [#318116]
+* Support drizzle in weather output
+* New set of images, using a foggy atmosphere. This enables the
+  module to support mist, fog, and smoke in weather output.
+  Closes: [#100371]
+* Add more parser tests
+* Make ICAO parser more robust:
+  - Recognize 7000NDV visibility information from automatic stations
+  - Some automatic stations report FEW023///, so accept three slashes
+* Translation updates for:
+  - German, thanks to Tobias Quathamer.
+  - Greek, thanks to Vasileios Lourdas.
+  - Russian, thanks to Alexander Lavrinenko.
+  - Czech, thanks to Marek Drápal.
+  - Dutch, thanks to Martin Niewzwaag.
+
+
+Version: 6.x-5.2                                     Date: 2008-12-21
+---------------------------------------------------------------------
+
+* Add Messina, Sicily to supported ICAO codes. Thanks to gambry
+  for the report. Closes: [#342181]
+* Add parser tests
+* Support new API of Location module. Thanks to tquakulinsky for
+  the bug report. Closes: [#349757]
+
+
+Version: 6.x-5.1                                     Date: 2008-12-03
+---------------------------------------------------------------------
+
+* Optionally calculate windchill ("Feels like temperature")
+* Add Kathmandu, Nepal to supported ICAO codes. Thanks to sarmiluv
+  for the report. Closes: [#330026]
+* Make the ICAO parser more robust:
+  - Recognize crossed out dewpoints (e.g. '16/XX') and spaces between
+    cloud conditions (e.g. 'FEW 025')
+  - If no information about vertical visibility ('VV///') is
+    available, the data will be rendered as overcast
+* Add new translation to Romanian. Thanks to Füleki Miklós.
+* Add new translation to Greek. Thanks to Vasileios Lourdas.
+* Rename Danish translation from dk.po to da.po
+* Translation updates for:
+  - German, thanks to Tobias Quathamer.
+  - Russian, thanks to Vasili Pinchuk and Alexander Lavrinenko.
+    Closes: [#337306]
+  - Dutch, thanks to Martin Niewzwaag.
+  - Spanish, thanks to Marcos Goyeneche.
+  - Czech, thanks to Marek Drápal.
+  - Polish, thanks to Adrian Siemieniak.
+  - Hungarian, thanks to Füleki Miklós.
+  - Brazilian Portuguese, thanks to Ramon Magnus.
+  - Danish, thanks to Morten Wulff.
+
+
+Version: 6.x-5.0                                     Date: 2008-11-20
+---------------------------------------------------------------------
+
+* No longer use Batch API during installation of module. This seems
+  to have gone wrong on too many installations.
+* Add autocomplete search form for locations. Thanks to Chris Cohen
+  for the initial patch. Closes: [#109388], [#313843]
+* Fix unit spacing, thanks to Nico Schlömer. Closes: [#326363]
+* Translation updates for:
+  - Turkish, thanks to Drupal Hizmetleri.
+  - German, thanks to Tobias Quathamer.
+
+
+Version: 6.x-4.2                                     Date: 2008-10-05
+---------------------------------------------------------------------
+
+* Add 'kPa' as unit for pressure. Thanks to kojow for the bug report
+  and patch. Closes: #292765
+* Add new translation to Turkish. Thanks to Drupal Hizmetleri.
+  Closes: #307659
+
+
+Version: 6.x-4.1                                     Date: 2008-07-28
+---------------------------------------------------------------------
+
+* Fix typo in variable name for relative humidity. Thanks to Ramon
+  Magnus for the bug report.
+
+
+Version: 6.x-4.0                                     Date: 2008-07-27
+---------------------------------------------------------------------
+
+* Use template engine for block output to make theming easier.
+  Closes: #206629, #282711
+* Add new translation to Brazilian Portuguese.
+  Thanks to Ramon Magnus.
+* Translation updates for:
+  - Polish, thanks to Adrian Siemieniak
+
+
+Version: 6.x-3.0                                     Date: 2008-07-12
+---------------------------------------------------------------------
+
+* Add support for snow images. Closes: #120167, #210216, #218898,
+  #252553. Thanks to Samuel Vanhove for providing an initial patch.
+* Translation updates for:
+  - German, thanks to me
+  - Italian, thanks to Alessandro Frigeri
+  - Dutch, thanks to Martin Niewzwaag
+  - Czech, thanks to Marek Drápal
+
+
+Version: 6.x-2.3                                     Date: 2008-07-03
+---------------------------------------------------------------------
+
+* Fix error in substitution variable in Italian translation. Thanks
+  to namberone for the bug report. Closes: #277679
+
+
+Version: 6.x-2.2                                     Date: 2008-05-21
+---------------------------------------------------------------------
+
+* Replace MySQL specific query with standard ANSI SQL. Thanks to
+  bj.drupal for the bug report and patch. Closes: #260910
+
+
+Version: 6.x-2.1                                     Date: 2008-04-15
+---------------------------------------------------------------------
+
+* Show sunrise and sunset times in configurable timezones.
+  Closes: #227611, #239533
+* Prevent users from changing custom weather blocks of another user.
+  Thanks to Paul Maddern for the bug report. Closes: #244087
+* Add test to verify that users are allowed to only edit their own
+  custom weather block
+* Translation updates for:
+  - Italian, thanks to Alessandro Frigeri
+  - German, thanks to me
+  - Polish, thanks to Adrian Siemieniak
+  - Czech, thanks to Marek Drápal
+
+
+Version: 6.x-2.0                                     Date: 2008-03-27
+---------------------------------------------------------------------
+
+* Add options to disable the display of specified weather data.
+  Closes: #192717, #232731
+
+
+Version: 6.x-2.0-BETA1                               Date: 2008-03-18
+---------------------------------------------------------------------
+
+* Support multiple system-wide blocks instead of only one.
+  Closes: #109660, #232727
+* Add tests which can be executed by Simpletest module. Initially,
+  those tests only cover the permission and access system.
+* Rename Norwegian translation from no.po to nb.po for Norwegian
+  Bokmål
+* Translation updates for:
+  - Norwegian, thanks to Stein Magne
+  - German, thanks to me.
+
+
+Version: 6.x-1.3                                     Date: 2008-03-05
+---------------------------------------------------------------------
+
+* Add Gyumri and Yerevan (both Armenia) to ICAO codes. Thanks to
+  Joseph K and Mark Tonino for the information and research.
+  Closes: #229229
+* Include new messages for translation
+* Translation updates for:
+  - Spanish, thanks to Marcos Goyeneche.
+  - German, thanks to me.
+
+
+Version: 6.x-1.2                                     Date: 2008-03-03
+---------------------------------------------------------------------
+
+* Use Batch API during installation to avoid PHP timeout problems on
+  slow servers. Closes: #166456, #177244, #215982
+* Use user_access() for checking permissions of the custom user
+  weather block, otherwise the menu tab will not be shown.
+
+
+Version: 6.x-1.1                                     Date: 2008-02-28
+---------------------------------------------------------------------
+
+* Rename directory po/ to translations/ to support I18N capabilities
+  of Drupal 6
+* Remove database updates 1, 2, and 3 from weather.install. Those
+  were needed for the Drupal 4.7 releases of this module and are no
+  longer supported.
+* Enable selection boxes for country/place again
+* Translation updates for:
+  - German, thanks to me.
+  - Polish, thanks to Adrian Siemieniak.
+  - Italian, thanks to Alessandro Frigeri
+  - Dutch, thanks to Martin Niewzwaag
+  - Russian, thanks to Alexander Lavrinenko
+  - Czech, thanks to Marek Drápal
+
+
+Version: 6.x-1.0                                     Date: 2008-02-23
+---------------------------------------------------------------------
+
+* Ported 5.x-6.0 to Drupal 6
+* Unfortunately the selection boxes for country/place are no longer
+  available due to Drupal 6 API changes. A workaround is not yet
+  known.
+
+
+Version: 5.x-6.4                                     Date: 2010-07-03
+---------------------------------------------------------------------
+
+* Update location of HTTP POST script on weather.noaa.gov. Many
+  thanks to Stein Magne for providing a fix. Closes: [#838280]
+* If fetching weather data via HTTP didn't work, try FTP next time.
+* Make an entry in the watchdog table, if the download did not
+  succeed. Closes: [#836582]
+* Only show an error message about failed downloads to users with
+  administration priviledges. Thanks to AaronELBorg for the patch.
+  Closes: [#836582]
+* Remove Maribo Lufthavn, Denmark, which does no longer exist.
+
+
+Version: 5.x-6.3                                     Date: 2008-12-03
+---------------------------------------------------------------------
+
+* Add new translation to Romanian. Thanks to Füleki Miklós.
+* Add new translation to Greek. Thanks to Vasileios Lourdas.
+* Rename Danish translation from dk.po to da.po
+* Translation updates for:
+  - Turkish, thanks to Drupal Hizmetleri.
+  - Danish, thanks to Morten Wulff.
+  - Hungarian, thanks to Füleki Miklós.
+
+
+Version: 5.x-6.2                                     Date: 2008-10-05
+---------------------------------------------------------------------
+
+* Add support for snow images. Closes: #120167, #210216, #218898,
+  #252553. Thanks to Samuel Vanhove for providing an initial patch.
+* Fix error in substitution variable in Italian translation. Thanks
+  to namberone for the bug report. Closes: #277679
+* Add new translation to Turkish. Thanks to Drupal Hizmetleri.
+  Closes: #307659
+* Add new translation to Brazilian Portuguese.
+  Thanks to Ramon Magnus.
+* Rename Norwegian translation from no.po to nb.po for Norwegian
+  Bokmål
+* Translation updates for:
+  - Spanish, thanks to Marcos Goyeneche.
+  - German, thanks to me.
+
+
+Version: 5.x-6.1                                     Date: 2008-03-04
+---------------------------------------------------------------------
+
+* Add Gyumri and Yerevan (both Armenia) to ICAO codes. Thanks to
+  Joseph K and Mark Tonino for the information and research.
+  Closes: #229229
+
+
+Version: 5.x-6.0                                     Date: 2008-02-23
+---------------------------------------------------------------------
+
+* Add Beaufort scale to supported wind speeds. Closes: #206589
+* Provide a compact block view which displays only name, condition,
+  and temperature of the weather station. Closes: #143869
+
+
+Version: 5.x-5.1                                     Date: 2007-12-06
+---------------------------------------------------------------------
+
+* Use a smarter display of sunrise and sunset if the sun stays above
+  or below the horizon. Thanks to Stein Magne Bjørklund for the bug
+  report.
+* Add new translation to Polish. Thanks to Adrian Siemieniak.
+* Translation updates for:
+  - Italian, thanks to Alessandro Frigeri
+  - Dutch, thanks to Martin Niewzwaag
+  - Czech, thanks to Marek Drápal
+  - French, thanks to Eric Leduc
+  - Russian, thanks to Alexander Lavrinenko
+  - Norwegian, thanks to Stein Magne Bjørklund.
+
+
+Version: 5.x-5.0                                     Date: 2007-11-30
+---------------------------------------------------------------------
+
+* Optionally show the times for sunrise and sunset as GMT.
+  Closes: #195970
+* Translation updates for:
+  - French, thanks to Eric Leduc.
+  - German, thanks to me.
+
+
+Version: 5.x-4.1                                     Date: 2007-09-24
+---------------------------------------------------------------------
+
+* Fix typo in Spanish translation. Closes: #176501
+* Add images day-clear-light-rain and night-clear-light-rain, as
+  those conditions are actually reported. Closes: #165423
+* Use translatable text for 'alt' and 'title' attributes in the
+  weather image instead of the filename. Closes: #176745
+* Add Denpasar / Ngurah-Rai, Indonesia (WADD) to database.
+  Closes: #177884
+* Add field names to SQL queries, preparing for Drupal 6
+
+
+Version: 5.x-4.0                                     Date: 2007-09-10
+---------------------------------------------------------------------
+
+* The configuration of weather block locations are no longer done
+  in a custom list, but rather in an officially themable table
+  provided by Drupal.
+* It's possible to specify a custom default location that overrides
+  Hamburg-Fuhlsbüttel. Closes: #170584
+* If Drupal's cache is enabled, provide a cron handler that clears
+  the cache when new weather data is received. Closes: #120396
+* The custom user block is not shown if there is no location
+  configured. Closes: #171038
+* Change access rules for admin/settings/weather pages from
+  "access administration pages" to "administer site configuration"
+* Add new block for nodes with associated locations (requires
+  Location module). Thanks to Dan Morrison for the patch.
+  Closes: #98307
+* Add Melbourne (YMML) to supported ICAO codes. Closes: #174291
+* Translation updates for:
+  - Italian, thanks to Alessandro Frigeri.
+  - Dutch, thanks to Martin Niewzwaag.
+  - Norwegian, thanks to Stein Magne Bjørklund.
+  - German, thanks to me.
+  - Russian, thanks to Alexander Lavrinenko.
+  - Czech, thanks to Marek Drápal.
+  - French, thanks to Eric Leduc.
+
+
+Version: 5.x-3.1                                     Date: 2007-08-27
+---------------------------------------------------------------------
+
+* Correctly set up the include path for installations other than
+  modules/weather, e.g. sites/all/modules/weather. Closes: #169393
+* Correctly set up i18n for relative humidity
+* Replace custom JavaScript code for selection box update with a
+  cleaner and smaller jQuery approach
+* Fix bug: ICAO and real name textfields are now updated after the
+  country has changed
+* Add new translation to French. Thanks to Eric Leduc.
+* Translation updates for:
+  - German, thanks to me.
+  - Spanish, thanks to Marcos Goyeneche.
+
+
+Version: 5.x-3.0                                     Date: 2007-08-13
+---------------------------------------------------------------------
+
+* Use the database instead of a gigantic array for ICAO codes and
+  their associated information. This should drastically reduce the
+  needed memory, which could in turn resolve the "blank page" bugs.
+* Add a note on the configuration page that not all ICAO stations
+  provide weather information, thus not every one of them is
+  supported by this module.
+* Use correct German umlauts (ue -> ü etc.) for German ICAO codes.
+* Remove 'KUCA' from ICAO code list, it's no longer supported by
+  NOAA. Closes: #112673
+* Translation updates for:
+  - German, thanks to me.
+  - Italian, thanks to Alessandro Frigeri.
+  - Dutch, thanks to Martin Niewzwaag.
+  - Czech, thanks to Marek Drápal.
+  - Russian, thanks to Alexander Lavrinenko.
+  - Norwegian, thanks to Stein Magne.
+
+
+Version: 5.x-2.3                                     Date: 2007-06-26
+---------------------------------------------------------------------
+
+* Use an array for the default configuration instead of serialized
+  strings. Thanks to Andre Molnar. Closes: #150865
+* Add new translation to Italian. Thanks to Alessandro Frigeri.
+* Add new translation to Spanish. Thanks to Marcos Goyeneche.
+
+
+Version: 5.x-2.2                                     Date: 2007-05-29
+---------------------------------------------------------------------
+
+* Add new translation to Danish. Thanks to Jørgen Green.
+
+
+Version: 5.x-2.1                                     Date: 2007-05-14
+---------------------------------------------------------------------
+
+* Support meter/s for windspeeds and mmHg for pressure.
+  Closes: #130556
+* Display the default location in the section of "Current locations
+  in the block:" even if not yet configured, to reduce confusion
+* Support display of abbreviated wind directions instead of full
+  text. Closes: #130487
+* Support display of degrees for wind directions. Closes: #130487
+* Add three ICAO codes for India. Thanks to Vinay Yadav.
+  Closes: #135300
+* Additional check if correct METAR data has been received.
+  Mentioned in #136065
+* Translation updates for:
+  - Hungarian, thanks to FEHÉR János.
+  - Norwegian, thanks to Stein Magne.
+  - Russian, thanks to Alexander Lavrinenko.
+  - Dutch, thanks to Martin Niewzwaag.
+  - Czech, thanks to Marek Drápal.
+
+
+Version: 5.x-2.0                                     Date: 2007-03-22
+---------------------------------------------------------------------
+
+* Don't display "No data" for empty fields, remove them altogether.
+  Closes: #113549
+* Dynamically determine width and height of displayed images to allow
+  alternative images. Closes: #123616
+* Display of units is now completely configurable, also adding
+  "knots" as windspeed unit. Closes: #102330
+* The parser now supports windspeed units other than only knots in
+  METAR reports. Closes: #128852
+* If JavaScript is enabled, use the AJAX version of the country
+  and place lookup. Otherwise, the ICAO textfield will be shown
+  without the country and place selection boxes. Closes: #115339,
+  #115842
+* The country and place selection boxes do no longer provide the
+  entry "- None -", as it wasn't accepted anyway.
+* Add Pristina to the list of supported ICAO codes
+* Optionally, the block can display the raw METAR data.
+  Closes: #111377
+* Add new translation to Russian. Thanks to Alexander Lavrinenko.
+  Closes: #127460
+* Add new translation to Hungarian. Thanks to Zsolt Rohberg.
+  Closes: #128852
+
+
+Version: 5.x-1.1                                     Date: 2007-01-31
+---------------------------------------------------------------------
+
+* Update FTP site for weather.noaa.gov. Closes: #112673, #113547,
+  #114479
+
+
+Version: 5.x-1.0                                     Date: 2007-01-23
+---------------------------------------------------------------------
+
+* Equal to version 4.7.x-3.2, just converted to be used with
+  Drupal 5.x
+
+
+
+
+
+Version: 4.7.x-3.5                                   Date: 2007-04-11
+---------------------------------------------------------------------
+
+* Add three ICAO codes for India. Thanks to Vinay Yadav.
+  Closes: #135300
+
+
+Version: 4.7.x-3.4                                   Date: 2007-02-02
+---------------------------------------------------------------------
+
+* Update FTP site for weather.noaa.gov. Closes: #112673, #113547,
+  #114479
+* Compared to the last version (4.7.x-3.3), the other accidentally
+  introduced changes are reverted
+
+
+Version: 4.7.x-3.3                                   Date: 2007-01-31
+---------------------------------------------------------------------
+
+* Update FTP site for weather.noaa.gov. Closes: #112673, #113547,
+  #114479
+
+
+Version: 4.7.x-3.2                                   Date: 2006-12-27
+---------------------------------------------------------------------
+
+* New translation into Norwegian
+* Translation updates for Dutch and Czech
+
+
+Version: 4.7.x-3.1                                   Date: 2006-11-28
+---------------------------------------------------------------------
+
+* Correct timezone calculation for the day/night images.
+  Closes: #97050
+* Use base_path() to correctly handle installations in
+  subdirectories. Closes: #99714
+* Move the menu item "my weather" into the block "my account".
+  Closes: #100243
+* Handle special case "NSC" and "NCD" in METAR reports
+* Add new translation to Czech
+
+
+Version: 4.7.x-3.0                                   Date: 2006-11-24
+---------------------------------------------------------------------
+
+* Displays the correct image for daytime and nighttime
+* Supports multiple download locations (FTP and HTTP POST)
+* New translation: Dutch
+
+
+Version: 4.7.x-2.3                                   Date: 2006-11-22
+---------------------------------------------------------------------
+
+* Fix typos in the ICAO database and correct sorting
+* Rename weather block for a better overview in the blocks
+  administration section
+* Better sorting of locations in the block settings page
+
+
+Version: 4.7.x-2.2                                   Date: 2006-11-16
+---------------------------------------------------------------------
+
+* Add wget as an alternative download mechanism
+* Validate the ICAO code
+* Update documentation
+
+
+Version: 4.7.x-2.1                                   Date: 2006-11-16
+---------------------------------------------------------------------
+
+* Provide an alternative download method for getting METAR data.
+  If file_get_contents() does not work, try to use CURL instead.
+* Translation updates
+
+
+Version: 4.7.x-2.0                                   Date: 2006-11-15
+---------------------------------------------------------------------
+
+* Users can add a custom weather block, if they have the necessary
+  access rights
+* A block can display more than only one location
+* The module does no longer depend on cron for updating the data.
+  It uses some smart algorithms to keep the network traffic as low
+  as possible
+
+
+Version: 4.7.x-1.4                                   Date: 2006-11-15
+---------------------------------------------------------------------
+
+* Security release: Escape the real name of the location
+
+
+Version: 4.7.x-1.3                                   Date: 2006-11-10
+---------------------------------------------------------------------
+
+* URL of images and AJAX calls depends on the setting of 'clean_url'
+  This fixes the problem with images not being available and the
+  failure of the AJAX update of the places selection. Closes: #93275,
+  #93802
+* Check 'access content' permission before showing the block.
+  Closes: #94055
+* Add 'Reported on:' to the block display. Closes: #94060
+
+
+Version: 4.7.x-1.2                                   Date: 2006-11-09
+---------------------------------------------------------------------
+
+* Add text field for ICAO codes
+  The text field can be used as an alternative way to specify the
+  wanted ICAO code, because the AJAX selection box does not seem to
+  work reliably enough yet.
+* Make the installation instructions a bit clearer. Suggested
+  in #93736
+
+
+Version: 4.7.x-1.1                                   Date: 2006-11-04
+---------------------------------------------------------------------
+
+* Include ICAO codes for USA. Closes: #92914
+* Don't allow the "- None -" entry to be tried as ICAO code
+
+
+Version: 4.7.x-1.0                                   Date: 2006-11-04
+---------------------------------------------------------------------
+
+* Initial release

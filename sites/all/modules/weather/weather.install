@@ -1,0 +1,691 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the weather module.
+ *
+ * Copyright © 2006-2015 Dr. Tobias Quathamer <t.quathamer@mailbox.org>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ */
+
+/**
+ * Helper function for installation and upgrades.
+ *
+ * This function inserts data into the weather_places table.
+ *
+ * The data file lists one table entry per line. Fields are separated
+ * by tab stops. The format is as follows:
+ *
+ * GeoID
+ *   Primary key, string. Currently supported keys are:
+ *   - GeoNames ID, prefixed with geonames_
+ *   - Sentralt stadnamnregister ID, prefixed with ssr_
+ *   (tab stop)
+ * Latitude
+ *   -90 .. 90, Positive values for north, negative for south.
+ *   (tab stop)
+ * Longitude
+ *   -180 .. 180, Positive values for east, negative for west.
+ *   (tab stop)
+ * Country
+ *   (tab stop)
+ * Name
+ *   (tab stop)
+ * Link to yr.no weather forecast
+ *   (newline)
+ *
+ * To save space, the link to the actual yr.no URL has been shortened.
+ * Every URL starts with "http://www.yr.no/place/", followed by the
+ * country.
+ *
+ * In the country's name, every whitespace gets replaced with an
+ * underscore, all other characters are kept as they are. The only
+ * exception is the last dot in the following country:
+ *
+ * "Virgin Islands, U.S." -> "Virgin_Islands,_U.S_"
+ *
+ */
+function _weather_data_installation() {
+  // Delete all original entries from the table, if any.
+  db_delete('weather_places')
+    ->condition('status', 'original')
+    ->execute();
+  // Get all remaining entries in the table.
+  $changed_geoids = db_query('SELECT geoid FROM {weather_places}')->fetchCol();
+  // Prepare the SQL query.
+  $query = db_insert('weather_places')
+    ->fields(array('geoid', 'latitude', 'longitude', 'country', 'name', 'link', 'status'));
+  // Read the data file and append values to query.
+  $data = fopen(drupal_get_path('module', 'weather') . '/weather_data.txt', 'r');
+  // Use a counter for regular commits, in order to minimize memory usage.
+  $count = 0;
+  while (!feof($data)) {
+    $line = fgets($data);
+    $fields = explode("\t", $line);
+    // If we get to the last line, there won't be more than one field.
+    if (isset($fields[1])) {
+      // Check if the geoid has been modified, if so, skip it.
+      if (in_array($fields[0], $changed_geoids)) {
+        continue;
+      }
+      $query->values(array(
+        'geoid' => $fields[0],
+        'latitude' => $fields[1],
+        'longitude' => $fields[2],
+        'country' => $fields[3],
+        'name' => $fields[4],
+        'link' => trim($fields[5]),
+        'status' => 'original',
+      ));
+    }
+    $count = $count + 1;
+    // Execute the query after 500 lines to use less memory.
+    if (($count % 500) == 0) {
+      // Commit entries to database.
+      $query->execute();
+      // Prepare the SQL query again.
+      $query = db_insert('weather_places')
+        ->fields(array('geoid', 'latitude', 'longitude', 'country', 'name', 'link', 'status'));
+    }
+  }
+  fclose($data);
+  $query->execute();
+}
+
+/**
+ * Implement hook_install().
+ *
+ * Currently, it's only needed to insert data into the weather_icao
+ * table. We use a helper function for this task.
+ */
+function weather_install() {
+  _weather_data_installation();
+  // Save the first new date format into variables.
+  variable_set('date_format_weather', 'F j, Y');
+}
+
+/**
+ * Implement hook_uninstall().
+ */
+function weather_uninstall() {
+  variable_del('weather_image_directory');
+  variable_del('date_format_weather');
+  variable_del('weather_forecast_days');
+  // Remove blocks provided by the module
+  db_delete('block')
+    ->condition('module', 'weather')
+    ->execute();
+  db_delete('block_node_type')
+    ->condition('module', 'weather')
+    ->execute();
+  db_delete('block_role')
+    ->condition('module', 'weather')
+    ->execute();
+}
+
+/**
+ * Implement hook_schema().
+ */
+function weather_schema() {
+  $schema['weather_displays'] = array(
+    'description' => 'Configuration of weather displays.',
+    'fields' => array(
+      'type' => array(
+        'description' => 'Type of display (system-wide, user, default).',
+        'type' => 'varchar', 'length' => 20, 'not null' => TRUE, 'default' => ''
+      ),
+      'number' => array(
+        'description' => 'Display number.',
+        'type' => 'int', 'not null' => TRUE, 'default' => 0
+      ),
+      'config' => array(
+        'description' => 'Configuration for display (units and settings).',
+        'type' => 'text', 'size' => 'normal', 'not null' => TRUE, 'serialize' => TRUE
+      ),
+    ),
+    'primary key' => array(
+      'type',
+      'number'
+    ),
+  );
+  $schema['weather_places'] = array(
+    'description' => 'Information about known places at yr.no.',
+    'fields' => array(
+      'geoid' => array(
+        'description' => 'GeoID of the location.',
+        'type' => 'varchar', 'length' => 20, 'not null' => TRUE, 'default' => ''
+      ),
+      'latitude' => array(
+        'description' => 'Latitude of location.',
+        'type' => 'float', 'size' => 'big', 'not null' => TRUE, 'default' => 0.0
+      ),
+      'longitude' => array(
+        'description' => 'Longitude of location.',
+        'type' => 'float', 'size' => 'big', 'not null' => TRUE, 'default' => 0.0
+      ),
+      'country' => array(
+        'description' => 'Country of location.',
+        'type' => 'varchar', 'length' => 255, 'not null' => TRUE, 'default' => ''
+      ),
+      'name' => array(
+        'description' => 'Name of location.',
+        'type' => 'varchar', 'length' => 255, 'not null' => TRUE, 'default' => ''
+      ),
+      'link' => array(
+        'description' => 'Shortened link of location at yr.no.',
+        'type' => 'varchar', 'length' => 255, 'not null' => TRUE, 'default' => ''
+      ),
+      'status' => array(
+        'description' => 'Status of place',
+        'type' => 'varchar', 'length' => 8, 'not null' => TRUE, 'default' => ''
+      ),
+    ),
+    'primary key' => array(
+      'geoid',
+    ),
+  );
+  $schema['weather_displays_places'] = array(
+    'description' => 'Places used in weather displays.',
+    'fields' => array(
+      'id' => array(
+        'description' => 'ID.',
+        'type' => 'serial', 'not null' => TRUE
+      ),
+      'display_type' => array(
+        'description' => 'Type of display (system-wide, user, location, default, ...).',
+        'type' => 'varchar', 'length' => 20, 'not null' => TRUE, 'default' => ''
+      ),
+      'display_number' => array(
+        'description' => 'Display number.',
+        'type' => 'int', 'not null' => TRUE, 'default' => 0
+      ),
+      'place_geoid' => array(
+        'description' => 'GeoID of the place.',
+        'type' => 'varchar', 'length' => 20, 'not null' => TRUE, 'default' => ''
+      ),
+      'displayed_name' => array(
+        'description' => 'Displayed name of place.',
+        'type' => 'varchar', 'length' => 255, 'not null' => FALSE
+      ),
+      'weight' => array(
+        'description' => 'Weight of the location.',
+        'type' => 'int', 'not null' => TRUE, 'default' => 0
+      ),
+    ),
+    'primary key' => array(
+      'id',
+    ),
+    'foreign keys' => array(
+      'display_type' => array('weather_displays' => 'type'),
+      'display_number' => array('weather_displays' => 'number'),
+      'place_geoid' => array('weather_places' => 'geoid')
+    ),
+  );
+  $schema['weather_forecasts'] = array(
+    'description' => 'Parsed XML forecast data from yr.no.',
+    'fields' => array(
+      'id' => array(
+        'description' => 'ID.',
+        'type' => 'serial', 'not null' => TRUE
+      ),
+      'geoid' => array(
+        'description' => 'GeoID of the location.',
+        'type' => 'varchar', 'length' => 20, 'not null' => TRUE, 'default' => ''
+      ),
+      'time_from' => array(
+        'description' => 'Start time of forecast.',
+        'type' => 'varchar', 'length' => 20, 'not null' => TRUE, 'default' => ''
+      ),
+      'time_to' => array(
+        'description' => 'End time of forecast.',
+        'type' => 'varchar', 'length' => 20, 'not null' => TRUE, 'default' => ''
+      ),
+      'period' => array(
+        'description' => 'Period of day.',
+        'type' => 'varchar', 'length' => 1, 'not null' => TRUE, 'default' => ''
+      ),
+      'symbol' => array(
+        'description' => 'Symbol to use for weather display.',
+        'type' => 'varchar', 'length' => 3, 'not null' => TRUE, 'default' => ''
+      ),
+      'precipitation' => array(
+        'description' => 'Amount of precipitation in mm.',
+        'type' => 'float', 'size' => 'big', 'not null' => FALSE, 'default' => NULL
+      ),
+      'wind_direction' => array(
+        'description' => 'Wind direction in degrees.',
+        'type' => 'int', 'not null' => FALSE, 'default' => NULL
+      ),
+      'wind_speed' => array(
+        'description' => 'Wind speed in m/s.',
+        'type' => 'float', 'size' => 'big', 'not null' => FALSE, 'default' => NULL
+      ),
+      'temperature' => array(
+        'description' => 'Temperature in degree celsius.',
+        'type' => 'int', 'not null' => FALSE, 'default' => NULL
+      ),
+      'pressure' => array(
+        'description' => 'Pressure in hPa.',
+        'type' => 'int', 'not null' => FALSE, 'default' => NULL
+      ),
+    ),
+    'primary key' => array(
+      'id'
+    ),
+  );
+  $schema['weather_forecast_information'] = array(
+    'description' => 'Information about the forecast data for a place.',
+    'fields' => array(
+      'geoid' => array(
+        'description' => 'GeoID of the location.',
+        'type' => 'varchar', 'length' => 20, 'not null' => TRUE, 'default' => ''
+      ),
+      'last_update' => array(
+        'description' => 'UTC time of last update.',
+        'type' => 'varchar', 'length' => 20, 'not null' => TRUE, 'default' => ''
+      ),
+      'next_update' => array(
+        'description' => 'UTC time of next scheduled update.',
+        'type' => 'varchar', 'length' => 20, 'not null' => TRUE, 'default' => ''
+      ),
+      'next_download_attempt' => array(
+        'description' => 'UTC time of next scheduled download attempt.',
+        'type' => 'varchar', 'length' => 20, 'not null' => TRUE, 'default' => ''
+      ),
+      'utc_offset' => array(
+        'description' => 'UTC offset of local time in minutes.',
+        'type' => 'int', 'not null' => TRUE, 'default' => 0
+      ),
+    ),
+    'primary key' => array(
+      'geoid'
+    ),
+  );
+  return $schema;
+}
+
+/**
+ * Implement hook_update_last_removed().
+ *
+ * 7104 was the last update of the 7.x-1.x branch.
+ * The module only supports an upgrade to the 7.x-2.x branch from the
+ * last version of the 7.x-1.x branch.
+ */
+function weather_update_last_removed() {
+  return 7104;
+}
+
+/**
+ * Create new database tables for 7.x-2.x branch of the weather module.
+ */
+function weather_update_7200(&$sandbox) {
+  db_create_table('weather_displays', array(
+    'description' => 'Configuration of weather displays.',
+    'fields' => array(
+      'type' => array(
+        'description' => 'Type of display (system-wide, user, location, default, ...).',
+        'type' => 'varchar', 'length' => 20, 'not null' => TRUE, 'default' => ''
+      ),
+      'number' => array(
+        'description' => 'Display number.',
+        'type' => 'int', 'not null' => TRUE, 'default' => 0
+      ),
+      'config' => array(
+        'description' => 'Configuration for display (units and settings).',
+        'type' => 'text', 'size' => 'normal', 'not null' => TRUE, 'serialize' => TRUE
+      ),
+    ),
+    'primary key' => array(
+      'type',
+      'number'
+    ),
+  ));
+  db_create_table('weather_places', array(
+    'description' => 'Information about known places at yr.no.',
+    'fields' => array(
+      'geoid' => array(
+        'description' => 'GeoID of the location.',
+        'type' => 'varchar', 'length' => 20, 'not null' => TRUE, 'default' => ''
+      ),
+      'latitude' => array(
+        'description' => 'Latitude of location.',
+        'type' => 'float', 'size' => 'big', 'not null' => TRUE, 'default' => 0.0
+      ),
+      'longitude' => array(
+        'description' => 'Longitude of location.',
+        'type' => 'float', 'size' => 'big', 'not null' => TRUE, 'default' => 0.0
+      ),
+      'country' => array(
+        'description' => 'Country of location.',
+        'type' => 'varchar', 'length' => 255, 'not null' => TRUE, 'default' => ''
+      ),
+      'name' => array(
+        'description' => 'Name of location.',
+        'type' => 'varchar', 'length' => 255, 'not null' => TRUE, 'default' => ''
+      ),
+      'link' => array(
+        'description' => 'Shortened link of location at yr.no.',
+        'type' => 'varchar', 'length' => 255, 'not null' => TRUE, 'default' => ''
+      ),
+      'status' => array(
+        'description' => 'Status of place',
+        'type' => 'varchar', 'length' => 8, 'not null' => TRUE, 'default' => ''
+      ),
+    ),
+    'primary key' => array(
+      'geoid',
+    ),
+  ));
+  db_create_table('weather_displays_places', array(
+    'description' => 'Places used in weather displays.',
+    'fields' => array(
+      'id' => array(
+        'description' => 'ID.',
+        'type' => 'serial', 'not null' => TRUE
+      ),
+      'display_type' => array(
+        'description' => 'Type of display (system-wide, user, location, default, ...).',
+        'type' => 'varchar', 'length' => 20, 'not null' => TRUE, 'default' => ''
+      ),
+      'display_number' => array(
+        'description' => 'Display number.',
+        'type' => 'int', 'not null' => TRUE, 'default' => 0
+      ),
+      'place_geoid' => array(
+        'description' => 'GeoID of the place.',
+        'type' => 'varchar', 'length' => 20, 'not null' => TRUE, 'default' => ''
+      ),
+      'displayed_name' => array(
+        'description' => 'Displayed name of place.',
+        'type' => 'varchar', 'length' => 255, 'not null' => FALSE
+      ),
+      'weight' => array(
+        'description' => 'Weight of the location.',
+        'type' => 'int', 'not null' => TRUE, 'default' => 0
+      ),
+    ),
+    'primary key' => array(
+      'id',
+    ),
+    'foreign keys' => array(
+      'display_type' => array('weather_displays' => 'type'),
+      'display_number' => array('weather_displays' => 'number'),
+      'place_geoid' => array('weather_places' => 'geoid')
+    ),
+  ));
+  db_create_table('weather_forecasts', array(
+    'description' => 'Parsed XML forecast data from yr.no.',
+    'fields' => array(
+      'geoid' => array(
+        'description' => 'GeoID of the location.',
+        'type' => 'varchar', 'length' => 20, 'not null' => TRUE, 'default' => ''
+      ),
+      'time_from' => array(
+        'description' => 'Start time of forecast.',
+        'type' => 'varchar', 'length' => 20, 'not null' => TRUE, 'default' => ''
+      ),
+      'time_to' => array(
+        'description' => 'End time of forecast.',
+        'type' => 'varchar', 'length' => 20, 'not null' => TRUE, 'default' => ''
+      ),
+      'period' => array(
+        'description' => 'Period of day.',
+        'type' => 'varchar', 'length' => 1, 'not null' => TRUE, 'default' => ''
+      ),
+      'symbol' => array(
+        'description' => 'Symbol to use for weather display.',
+        'type' => 'varchar', 'length' => 3, 'not null' => TRUE, 'default' => ''
+      ),
+      'precipitation' => array(
+        'description' => 'Amount of precipitation in mm.',
+        'type' => 'float', 'size' => 'big', 'not null' => FALSE, 'default' => NULL
+      ),
+      'wind_direction' => array(
+        'description' => 'Wind direction in degrees.',
+        'type' => 'int', 'not null' => FALSE, 'default' => NULL
+      ),
+      'wind_speed' => array(
+        'description' => 'Wind speed in m/s.',
+        'type' => 'float', 'size' => 'big', 'not null' => FALSE, 'default' => NULL
+      ),
+      'temperature' => array(
+        'description' => 'Temperature in degree celsius.',
+        'type' => 'int', 'not null' => FALSE, 'default' => NULL
+      ),
+      'pressure' => array(
+        'description' => 'Pressure in hPa.',
+        'type' => 'int', 'not null' => FALSE, 'default' => NULL
+      ),
+    ),
+    'primary key' => array(
+      'geoid',
+      'time_from'
+    ),
+  ));
+  db_create_table('weather_forecast_information', array(
+    'description' => 'Information about the forecast data for a place.',
+    'fields' => array(
+      'geoid' => array(
+        'description' => 'GeoID of the location.',
+        'type' => 'varchar', 'length' => 20, 'not null' => TRUE, 'default' => ''
+      ),
+      'last_update' => array(
+        'description' => 'UTC time of last update.',
+        'type' => 'varchar', 'length' => 20, 'not null' => TRUE, 'default' => ''
+      ),
+      'next_update' => array(
+        'description' => 'UTC time of next scheduled update.',
+        'type' => 'varchar', 'length' => 20, 'not null' => TRUE, 'default' => ''
+      ),
+      'next_download_attempt' => array(
+        'description' => 'UTC time of next scheduled download attempt.',
+        'type' => 'varchar', 'length' => 20, 'not null' => TRUE, 'default' => ''
+      ),
+      'utc_offset' => array(
+        'description' => 'UTC offset of local time in minutes.',
+        'type' => 'int', 'not null' => TRUE, 'default' => 0
+      ),
+    ),
+    'primary key' => array(
+      'geoid'
+    ),
+  ));
+  // Install data.
+  _weather_data_installation();
+}
+
+/**
+ * Convert old permission 'access weather pages' to new permission 'access weather search page'.
+ */
+function weather_update_7201(&$sandbox) {
+  db_update('role_permission')
+    ->fields(array(
+      'permission' => 'access weather search page'
+    ))
+    ->condition('permission', 'access weather pages')
+    ->condition('module', 'weather')
+    ->execute();
+}
+
+/**
+ * Convert old settings to new settings.
+ */
+function weather_update_7202(&$sandbox) {
+  $old_displays = db_query('SELECT * FROM {weather_display}');
+  foreach ($old_displays as $old_display) {
+    $units = unserialize($old_display->units);
+    $settings = unserialize($old_display->settings);
+    $config = array(
+      'temperature' => $units['temperature'],
+      'windspeed' => $units['windspeed'],
+      'pressure' => $units['pressure'],
+      'distance' => $units['distance'],
+      'show_sunrise_sunset' => array_key_exists('suninfo', $settings['data']),
+      'show_windchill_temperature' => $settings['show_apparent_temperature'],
+      'show_abbreviated_directions' => $settings['show_abbreviated_directions'],
+      'show_directions_degree' => $settings['show_directions_degree'],
+    );
+    db_insert('weather_displays')
+      ->fields(array(
+        'type' => $old_display->type,
+        'number' => $old_display->number,
+        'config' => serialize($config)
+      ))
+      ->execute();
+  }
+}
+
+/**
+ * Convert old locations to new locations.
+ */
+function weather_update_7203(&$sandbox) {
+  module_load_include('inc', 'weather', 'weather.common');
+  $old_locations = db_query('SELECT * FROM {weather_location} AS wl LEFT JOIN {weather_icao} AS wi on wl.icao=wi.icao');
+  foreach ($old_locations as $old_location) {
+    // Determine position of location.
+    $new_place = weather_get_nearest_station($old_location->latitude, $old_location->longitude);
+    $record = array(
+      'display_type' => $old_location->display_type,
+      'display_number' => $old_location->display_number,
+      'place_geoid' => $new_place->geoid,
+      // Append the old name to the new name to avoid confusion.
+      // Also use the distance of the new place to the old place.
+      'displayed_name' => $new_place->displayed_name . ' (' . $new_place->distance . ' km from ' . $old_location->real_name . ')',
+      'weight' => $old_location->weight,
+    );
+    db_insert('weather_displays_places')->fields($record)->execute();
+  }
+}
+
+/**
+ * Remove old tables.
+ */
+function weather_update_7204(&$sandbox) {
+  db_drop_table('weather_display');
+  db_drop_table('weather_icao');
+  db_drop_table('weather_location');
+  db_drop_table('weather_metar');
+}
+
+/**
+ * Add an ID to the weather_forecasts table, in order to use views.
+ */
+function weather_update_7205(&$sandbox) {
+  // Remove old table and forecasts, need to be downloaded again.
+  db_drop_table('weather_forecasts');
+  // Remove forecast information.
+  db_truncate('weather_forecast_information')->execute();
+  // Create new table.
+  db_create_table('weather_forecasts', array(
+    'description' => 'Parsed XML forecast data from yr.no.',
+    'fields' => array(
+      'id' => array(
+        'description' => 'ID.',
+        'type' => 'serial', 'not null' => TRUE
+      ),
+      'geoid' => array(
+        'description' => 'GeoID of the location.',
+        'type' => 'varchar', 'length' => 20, 'not null' => TRUE, 'default' => ''
+      ),
+      'time_from' => array(
+        'description' => 'Start time of forecast.',
+        'type' => 'varchar', 'length' => 20, 'not null' => TRUE, 'default' => ''
+      ),
+      'time_to' => array(
+        'description' => 'End time of forecast.',
+        'type' => 'varchar', 'length' => 20, 'not null' => TRUE, 'default' => ''
+      ),
+      'period' => array(
+        'description' => 'Period of day.',
+        'type' => 'varchar', 'length' => 1, 'not null' => TRUE, 'default' => ''
+      ),
+      'symbol' => array(
+        'description' => 'Symbol to use for weather display.',
+        'type' => 'varchar', 'length' => 3, 'not null' => TRUE, 'default' => ''
+      ),
+      'precipitation' => array(
+        'description' => 'Amount of precipitation in mm.',
+        'type' => 'float', 'size' => 'big', 'not null' => FALSE, 'default' => NULL
+      ),
+      'wind_direction' => array(
+        'description' => 'Wind direction in degrees.',
+        'type' => 'int', 'not null' => FALSE, 'default' => NULL
+      ),
+      'wind_speed' => array(
+        'description' => 'Wind speed in m/s.',
+        'type' => 'float', 'size' => 'big', 'not null' => FALSE, 'default' => NULL
+      ),
+      'temperature' => array(
+        'description' => 'Temperature in degree celsius.',
+        'type' => 'int', 'not null' => FALSE, 'default' => NULL
+      ),
+      'pressure' => array(
+        'description' => 'Pressure in hPa.',
+        'type' => 'int', 'not null' => FALSE, 'default' => NULL
+      ),
+    ),
+    'primary key' => array(
+      'id'
+    ),
+  ));
+}
+
+/**
+ * Add Astoria, Oregon, USA.
+ * Add regions to some place names.
+ */
+function weather_update_7206(&$sandbox) {
+  // Do not use this in case of updates from older versions.
+  #_weather_data_installation();
+}
+
+/**
+ * Save the weather date format into variables.
+ */
+function weather_update_7207(&$sandbox) {
+  variable_set('date_format_weather', 'F j, Y');
+}
+
+/**
+ * Add several Greenlandic places.
+ */
+function weather_update_7208(&$sandbox) {
+  // Do not use this in case of updates from older versions.
+  #_weather_data_installation();
+}
+
+/**
+ * Add 'status' column to table {weather_places} to support custom locations.
+ */
+function weather_update_7209(&$sandbox) {
+  // Do not apply this update if the field has been added already.
+  // See #2542966 for more information.
+  if (!db_field_exists('weather_places', 'status')) {
+    // Delete all entries from the table, if any.
+    db_delete('weather_places')->execute();
+    // Add the new column.
+    $spec = array(
+      'description' => 'Status of place',
+      'type' => 'varchar',
+      'length' => 8,
+      'not null' => TRUE,
+      'default' => ''
+    );
+    db_add_field('weather_places', 'status', $spec);
+    // Reload data.
+    _weather_data_installation();
+  }
+}
