@@ -46,9 +46,7 @@ div > .addtoany_list {
 }
 
 .node-teaser > div.content {
-    // border: 1px solid red;
     display: flex;
-    // flex-direction: column;
     flex-wrap: wrap;
 }
 div.field.field-name-field-pickup-skill-level.field-type-list-text.field-label-above, div.field.field-name-field-sport.field-type-list-text.field-label-above {
@@ -57,4 +55,10 @@ div.field.field-name-field-pickup-skill-level.field-type-list-text.field-label-a
 
 div.field.field-name-field-date.field-type-datetime.field-label-above {
     margin-right: 5em;
+}
+
+#block-system-main > div > div.content {
+    // border: 1px solid red;
+    // display: flex;
+    // flex-wrap: wrap;
 }

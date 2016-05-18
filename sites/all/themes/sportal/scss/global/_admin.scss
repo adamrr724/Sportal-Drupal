@@ -1,3 +1,8 @@
+ul > li {
+    list-style: none !important;
+
+}
+
 .tabs-wrapper {
   border-bottom: 1px solid #b7b7b7;
   margin: 0 0 5px 0;
@@ -65,4 +70,8 @@ ul.secondary a.active {
 
 ul.inline, ul.links.inline {
   margin-left: 0;
+}
+
+li a.active {
+    color: $sportal_green !important;
 }

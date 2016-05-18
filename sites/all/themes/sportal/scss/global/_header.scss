@@ -40,6 +40,7 @@ div > .views-exposed-widgets {
     display: flex;
     flex-direction: column;
 }
-#edit-field-geofield-distance > div > input {
-    width: 200px;
+
+div.form-item.form-type-textfield.form-item-zip > input {
+    width: 90px;
 }
