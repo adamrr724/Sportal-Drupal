@@ -27,3 +27,19 @@ h1#site-title a:link, h1#site-title a:visited{
     align-items: center;
     flex-wrap: wrap;
 }
+
+div > #edit-field-geofield-distance {
+    // border: 100px solid red;
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    // flex-direction: column;
+}
+
+div > .views-exposed-widgets {
+    display: flex;
+    flex-direction: column;
+}
+#edit-field-geofield-distance > div > input {
+    width: 200px;
+}

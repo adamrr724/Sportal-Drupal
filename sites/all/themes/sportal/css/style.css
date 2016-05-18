@@ -891,6 +891,18 @@ h1#site-title a:link, h1#site-title a:visited {
   align-items: center;
   flex-wrap: wrap; }
 
+div > #edit-field-geofield-distance {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap; }
+
+div > .views-exposed-widgets {
+  display: flex;
+  flex-direction: column; }
+
+#edit-field-geofield-distance > div > input {
+  width: 200px; }
+
 .menutoggle {
   width: 36px;
   height: 36px;
@@ -937,7 +949,7 @@ h1#site-title a:link, h1#site-title a:visited {
   position: relative; }
 
 #main-menu li a:hover, #main-menu li a:active, #main-menu a.active, #main-menu > ul > li > a.active-trail {
-  color: #ed564b; }
+  color: #1BA7CE; }
 
 #main-menu li a.sf-with-ul {
   padding-right: 10px; }
@@ -957,7 +969,7 @@ h1#site-title a:link, h1#site-title a:visited {
   border-top: none; }
 
 #main-menu li ul li a:hover, #main-menu li ul li ul li a:hover, #main-menu li ul li ul li ul li a:hover {
-  color: #ed564b; }
+  color: #1BA7CE; }
 
 #main-menu li ul {
   font-size: 12px;
