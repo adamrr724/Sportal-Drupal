@@ -13,6 +13,13 @@ function landing_page_strongarm() {
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
+  $strongarm->name = 'site_frontpage';
+  $strongarm->value = 'node';
+  $export['site_frontpage'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
   $strongarm->name = 'theme_sportal_settings';
   $strongarm->value = array(
     'toggle_logo' => 1,
@@ -29,7 +36,8 @@ function landing_page_strongarm() {
     'logo_upload' => '',
     'default_favicon' => 0,
     'favicon_path' => 'public://screenshot.png',
-    'breadcrumbs' => 1,
+    'favicon_upload' => '',
+    'breadcrumbs' => 0,
     'slideshow_display' => 1,
     'slide1_head' => 'Sample product',
     'slide1_desc' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt elit, sed do eiusmod tempor...',
