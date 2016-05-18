@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Sportal Store feature.
+ */
+
+include_once 'sportal_store.features.inc';
