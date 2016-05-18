@@ -52,3 +52,11 @@ input.form-text, textarea.form-textarea, select.form-select { border: 1px solid 
 .form-type-radio .description, .form-type-checkbox .description { margin-left: 2px; }
 
 .form-actions { padding-top: 10px; }
+
+#edit-field-geofield-distance-distance {
+    max-width: 40px;
+}
+
+#edit-field-geofield-distance-origin {
+    max-width: 80px;
+}

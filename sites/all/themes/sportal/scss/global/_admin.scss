@@ -1,3 +1,8 @@
+ul > li {
+    list-style: none !important;
+
+}
+
 .tabs-wrapper {
   border-bottom: 1px solid #b7b7b7;
   margin: 0 0 5px 0;
@@ -22,9 +27,9 @@ ul.primary li a {
 }
 
 ul.primary li a:hover, ul.primary li a.active {
-  background: #666;
+  background: $sportal_blue;
   border: none;
-  color: #fff;
+  color: #fff !important;
 }
 
 ul.primary li a:hover {
