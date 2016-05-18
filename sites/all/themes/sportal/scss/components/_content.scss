@@ -38,3 +38,23 @@
 .region-content-top {
   margin-bottom: 20px;
 }
+
+div > .addtoany_list {
+    // display: flex;
+    // flex-direction: column;
+    margin-bottom: 10px;
+}
+
+.node-teaser > div.content {
+    // border: 1px solid red;
+    display: flex;
+    // flex-direction: column;
+    flex-wrap: wrap;
+}
+div.field.field-name-field-pickup-skill-level.field-type-list-text.field-label-above, div.field.field-name-field-sport.field-type-list-text.field-label-above {
+    margin-right: 2em;
+}
+
+div.field.field-name-field-date.field-type-datetime.field-label-above {
+    margin-right: 5em;
+}
