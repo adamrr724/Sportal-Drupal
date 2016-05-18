@@ -9,6 +9,7 @@ dependencies[] = views
 features[ctools][] = strongarm:strongarm:1
 features[ctools][] = views:views_default:3.0
 features[features_api][] = api:2
+features[variable][] = site_frontpage
 features[variable][] = theme_sportal_settings
 features[views_view][] = my_blog_posts
 features_exclude[dependencies][ctools] = ctools
