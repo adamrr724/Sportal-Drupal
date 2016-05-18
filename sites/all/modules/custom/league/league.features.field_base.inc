@@ -75,9 +75,7 @@ function league_field_default_field_bases() {
     'indexes' => array(),
     'locked' => 0,
     'module' => 'addressfield',
-    'settings' => array(
-      'profile2_private' => FALSE,
-    ),
+    'settings' => array(),
     'translatable' => 0,
     'type' => 'addressfield',
   );
@@ -148,7 +146,6 @@ function league_field_default_field_bases() {
     'module' => 'geofield',
     'settings' => array(
       'backend' => 'default',
-      'profile2_private' => FALSE,
       'srid' => 4326,
     ),
     'translatable' => 0,

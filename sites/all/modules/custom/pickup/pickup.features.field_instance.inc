@@ -174,7 +174,7 @@ function pickup_field_default_field_instances() {
         'input_format_custom' => '',
         'label_position' => 'above',
         'no_fieldset' => 0,
-        'repeat_collapsed' => 0,
+        'repeat_collapsed' => 1,
         'text_parts' => array(),
         'year_range' => '-1:+3',
       ),
