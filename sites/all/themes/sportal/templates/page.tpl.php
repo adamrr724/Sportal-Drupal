@@ -102,6 +102,8 @@
         </div>
     </header>
 
+    <?php print $messages; ?>
+
 
     <?php if ($is_front): ?>
         <?php if (theme_get_setting('slideshow_display','nexus')): ?>
@@ -167,7 +169,6 @@
                 <div id="primary" class="content-area col-sm-<?php print $primary_col; ?>">
                     <section id="content" role="main" class="clearfix">
                         <?php if (theme_get_setting('breadcrumbs')): ?><?php if ($breadcrumb): ?><div id="breadcrumbs"><?php print $breadcrumb; ?></div><?php endif;?><?php endif; ?>
-                            <?php print $messages; ?>
                             <?php if ($page['content_top']): ?><div id="content_top"><?php print render($page['content_top']); ?></div><?php endif; ?>
                                 <div id="content-wrap">
                                     <?php print render($title_prefix); ?>
