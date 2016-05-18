@@ -1,3 +1,10 @@
+#my-about-block {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+}
+
 .node h2.title a, h1.page-title {
   color: #000000;
   font-size: 36px;
