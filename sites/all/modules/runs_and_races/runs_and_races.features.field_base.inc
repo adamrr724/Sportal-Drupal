@@ -47,6 +47,7 @@ function runs_and_races_field_default_field_bases() {
         'year' => 'year',
       ),
       'profile2_private' => FALSE,
+      'repeat' => 0,
       'timezone_db' => 'UTC',
       'todate' => '',
       'tz_handling' => 'site',

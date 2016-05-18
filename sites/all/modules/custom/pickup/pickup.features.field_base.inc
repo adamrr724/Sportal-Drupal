@@ -49,7 +49,7 @@ function pickup_field_default_field_bases() {
   // Exported field_base: 'field_date'.
   $field_bases['field_date'] = array(
     'active' => 1,
-    'cardinality' => 1,
+    'cardinality' => -1,
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_date',
@@ -68,6 +68,7 @@ function pickup_field_default_field_bases() {
         'year' => 'year',
       ),
       'profile2_private' => FALSE,
+      'repeat' => 1,
       'timezone_db' => 'UTC',
       'todate' => '',
       'tz_handling' => 'user',
