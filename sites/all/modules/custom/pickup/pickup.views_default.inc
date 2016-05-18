@@ -344,7 +344,9 @@ function pickup_views_default_views() {
 
   /* Display: Master */
   $handler = $view->new_display('default', 'Master', 'default');
+  $handler->display->display_options['use_more'] = TRUE;
   $handler->display->display_options['use_more_always'] = FALSE;
+  $handler->display->display_options['use_more_text'] = 'More pickup games';
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['cache']['type'] = 'none';
   $handler->display->display_options['query']['type'] = 'views_query';
@@ -538,7 +540,7 @@ function pickup_views_default_views() {
   $handler->display->display_options['pager']['options']['id'] = '0';
   $handler->display->display_options['pager']['options']['quantity'] = '9';
   $handler->display->display_options['style_plugin'] = 'default';
-  $handler->display->display_options['row_plugin'] = 'node';
+  $handler->display->display_options['row_plugin'] = 'fields';
   /* Field: Content: Title */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
@@ -557,7 +559,10 @@ function pickup_views_default_views() {
     'multiple_from' => '',
     'multiple_to' => '',
     'show_remaining_days' => 0,
+    'show_repeat_rule' => 'show',
   );
+  $handler->display->display_options['fields']['field_date']['group_rows'] = FALSE;
+  $handler->display->display_options['fields']['field_date']['delta_offset'] = '0';
   /* Field: Content: Sport */
   $handler->display->display_options['fields']['field_sport']['id'] = 'field_sport';
   $handler->display->display_options['fields']['field_sport']['table'] = 'field_data_field_sport';
@@ -573,50 +578,37 @@ function pickup_views_default_views() {
     'image_style' => 'thumbnail',
     'image_link' => 'content',
   );
+  /* Field: Content: Address */
+  $handler->display->display_options['fields']['field_address_runs_races']['id'] = 'field_address_runs_races';
+  $handler->display->display_options['fields']['field_address_runs_races']['table'] = 'field_data_field_address_runs_races';
+  $handler->display->display_options['fields']['field_address_runs_races']['field'] = 'field_address_runs_races';
+  $handler->display->display_options['fields']['field_address_runs_races']['click_sort_column'] = 'country';
+  $handler->display->display_options['fields']['field_address_runs_races']['settings'] = array(
+    'use_widget_handlers' => 1,
+    'format_handlers' => array(
+      'address' => 'address',
+    ),
+  );
   /* Field: Content: Position */
   $handler->display->display_options['fields']['field_position_pickup']['id'] = 'field_position_pickup';
   $handler->display->display_options['fields']['field_position_pickup']['table'] = 'field_data_field_position_pickup';
   $handler->display->display_options['fields']['field_position_pickup']['field'] = 'field_position_pickup';
   $handler->display->display_options['fields']['field_position_pickup']['click_sort_column'] = 'geom';
-  $handler->display->display_options['fields']['field_position_pickup']['type'] = 'geofield_map_map';
   $handler->display->display_options['fields']['field_position_pickup']['settings'] = array(
-    'geofield_map_width' => '100%',
-    'geofield_map_height' => '300px',
-    'geofield_map_center' => array(
-      'lat' => '',
-      'lon' => '',
-      'geocode' => 'Find my location',
-    ),
-    'geofield_map_zoom' => '8',
-    'geofield_map_min_zoom' => '0',
-    'geofield_map_max_zoom' => '0',
-    'geofield_map_controltype' => 'default',
-    'geofield_map_mtc' => 'standard',
-    'geofield_map_pancontrol' => 1,
-    'geofield_map_maptype' => 'map',
-    'geofield_map_baselayers_map' => 1,
-    'geofield_map_baselayers_satellite' => 1,
-    'geofield_map_baselayers_hybrid' => 1,
-    'geofield_map_baselayers_physical' => 0,
-    'geofield_map_scale' => 0,
-    'geofield_map_overview' => 0,
-    'geofield_map_overview_opened' => 0,
-    'geofield_map_scrollwheel' => 0,
-    'geofield_map_draggable' => 0,
-    'geofield_map_streetview_show' => 0,
+    'data' => 'full',
   );
   /* Field: Content: Position (field_position_pickup) - proximity */
   $handler->display->display_options['fields']['field_geofield_distance']['id'] = 'field_geofield_distance';
   $handler->display->display_options['fields']['field_geofield_distance']['table'] = 'field_data_field_position_pickup';
   $handler->display->display_options['fields']['field_geofield_distance']['field'] = 'field_geofield_distance';
   $handler->display->display_options['fields']['field_geofield_distance']['precision'] = '0';
-  $handler->display->display_options['fields']['field_geofield_distance']['source'] = 'contextual_geofield_filter';
+  $handler->display->display_options['fields']['field_geofield_distance']['source'] = 'exposed_geofield_filter';
   $handler->display->display_options['fields']['field_geofield_distance']['geofield_proximity_manual'] = array(
     'lat' => '',
     'lon' => '',
   );
-  $handler->display->display_options['fields']['field_geofield_distance']['geofield_proximity_entity_url_field'] = 'field_league_position';
-  $handler->display->display_options['fields']['field_geofield_distance']['geofield_proximity_current_user_field'] = 'field_league_position';
+  $handler->display->display_options['fields']['field_geofield_distance']['geofield_proximity_entity_url_field'] = 'field_position_pickup';
+  $handler->display->display_options['fields']['field_geofield_distance']['geofield_proximity_current_user_field'] = 'field_position_pickup';
   $handler->display->display_options['fields']['field_geofield_distance']['radius_of_earth'] = '3959';
   /* Sort criterion: Content: Position (field_position_pickup) - proximity */
   $handler->display->display_options['sorts']['field_geofield_distance']['id'] = 'field_geofield_distance';
@@ -629,6 +621,14 @@ function pickup_views_default_views() {
   );
   $handler->display->display_options['sorts']['field_geofield_distance']['geofield_proximity_entity_url_field'] = 'field_league_position';
   $handler->display->display_options['sorts']['field_geofield_distance']['geofield_proximity_current_user_field'] = 'field_league_position';
+  /* Sort criterion: Content: Date (field_date) */
+  $handler->display->display_options['sorts']['field_date_value']['id'] = 'field_date_value';
+  $handler->display->display_options['sorts']['field_date_value']['table'] = 'field_data_field_date';
+  $handler->display->display_options['sorts']['field_date_value']['field'] = 'field_date_value';
+  /* Sort criterion: Content: Date (field_date:delta) */
+  $handler->display->display_options['sorts']['delta']['id'] = 'delta';
+  $handler->display->display_options['sorts']['delta']['table'] = 'field_data_field_date';
+  $handler->display->display_options['sorts']['delta']['field'] = 'delta';
   /* Sort criterion: Content: Post date */
   $handler->display->display_options['sorts']['created']['id'] = 'created';
   $handler->display->display_options['sorts']['created']['table'] = 'node';
@@ -706,6 +706,13 @@ function pickup_views_default_views() {
   $handler->display->display_options['filters']['field_geofield_distance']['source'] = 'geocoder';
   $handler->display->display_options['filters']['field_geofield_distance']['geofield_proximity_entity_url_field'] = 'field_league_position';
   $handler->display->display_options['filters']['field_geofield_distance']['geofield_proximity_current_user_field'] = 'field_league_position';
+  /* Filter criterion: Content: Date (field_date) */
+  $handler->display->display_options['filters']['field_date_value']['id'] = 'field_date_value';
+  $handler->display->display_options['filters']['field_date_value']['table'] = 'field_data_field_date';
+  $handler->display->display_options['filters']['field_date_value']['field'] = 'field_date_value';
+  $handler->display->display_options['filters']['field_date_value']['operator'] = '>=';
+  $handler->display->display_options['filters']['field_date_value']['default_date'] = 'yesterday';
+  $handler->display->display_options['filters']['field_date_value']['year_range'] = '-1:+3';
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'page');
@@ -736,6 +743,7 @@ function pickup_views_default_views() {
     'field_pickup_image' => 'field_pickup_image',
   );
   $handler->display->display_options['row_options']['separator'] = '<hr>';
+  $handler->display->display_options['row_options']['hide_empty'] = TRUE;
   $handler->display->display_options['defaults']['row_options'] = FALSE;
   $handler->display->display_options['defaults']['empty'] = FALSE;
   /* No results behavior: Global: Unfiltered text */
@@ -753,6 +761,50 @@ Please try again.';
   /* Display: Attachment */
   $handler = $view->new_display('attachment', 'Attachment', 'attachment_1');
   $handler->display->display_options['pager']['type'] = 'some';
+  $handler->display->display_options['defaults']['style_plugin'] = FALSE;
+  $handler->display->display_options['style_plugin'] = 'default';
+  $handler->display->display_options['defaults']['style_options'] = FALSE;
+  $handler->display->display_options['defaults']['row_plugin'] = FALSE;
+  $handler->display->display_options['row_plugin'] = 'node';
+  $handler->display->display_options['defaults']['row_options'] = FALSE;
+  $handler->display->display_options['defaults']['fields'] = FALSE;
+  /* Field: Content: Title */
+  $handler->display->display_options['fields']['title']['id'] = 'title';
+  $handler->display->display_options['fields']['title']['table'] = 'node';
+  $handler->display->display_options['fields']['title']['field'] = 'title';
+  $handler->display->display_options['fields']['title']['label'] = '';
+  $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
+  $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
+  /* Field: Content: Date */
+  $handler->display->display_options['fields']['field_date']['id'] = 'field_date';
+  $handler->display->display_options['fields']['field_date']['table'] = 'field_data_field_date';
+  $handler->display->display_options['fields']['field_date']['field'] = 'field_date';
+  $handler->display->display_options['fields']['field_date']['settings'] = array(
+    'format_type' => 'long',
+    'fromto' => 'both',
+    'multiple_number' => '1',
+    'multiple_from' => '',
+    'multiple_to' => '',
+    'show_remaining_days' => 0,
+    'show_repeat_rule' => 'show',
+  );
+  $handler->display->display_options['fields']['field_date']['group_rows'] = FALSE;
+  $handler->display->display_options['fields']['field_date']['delta_offset'] = '0';
+  /* Field: Content: Sport */
+  $handler->display->display_options['fields']['field_sport']['id'] = 'field_sport';
+  $handler->display->display_options['fields']['field_sport']['table'] = 'field_data_field_sport';
+  $handler->display->display_options['fields']['field_sport']['field'] = 'field_sport';
+  /* Field: Content: Image */
+  $handler->display->display_options['fields']['field_pickup_image']['id'] = 'field_pickup_image';
+  $handler->display->display_options['fields']['field_pickup_image']['table'] = 'field_data_field_pickup_image';
+  $handler->display->display_options['fields']['field_pickup_image']['field'] = 'field_pickup_image';
+  $handler->display->display_options['fields']['field_pickup_image']['label'] = '';
+  $handler->display->display_options['fields']['field_pickup_image']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_pickup_image']['click_sort_column'] = 'fid';
+  $handler->display->display_options['fields']['field_pickup_image']['settings'] = array(
+    'image_style' => 'thumbnail',
+    'image_link' => 'content',
+  );
   $handler->display->display_options['displays'] = array(
     'page' => 'page',
     'default' => 0,
@@ -761,6 +813,7 @@ Please try again.';
   );
   $handler->display->display_options['attachment_position'] = 'after';
   $handler->display->display_options['inherit_exposed_filters'] = TRUE;
+  $handler->display->display_options['render_pager'] = TRUE;
   $export['pickup_games'] = $view;
 
   return $export;

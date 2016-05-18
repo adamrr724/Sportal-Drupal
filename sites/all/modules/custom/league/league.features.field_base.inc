@@ -171,12 +171,12 @@ function league_field_default_field_bases() {
     'module' => 'list',
     'settings' => array(
       'allowed_values' => array(
-        'Baseball' => 'Baseball',
+        'Soccer' => 'Soccer',
         'Basketball' => 'Basketball',
         'Flag Football' => 'Flag Football',
-        'Kickball' => 'Kickball',
-        'Soccer' => 'Soccer',
         'Ultimate' => 'Ultimate',
+        'Baseball' => 'Baseball',
+        'Kickball' => 'Kickball',
       ),
       'allowed_values_function' => '',
     ),

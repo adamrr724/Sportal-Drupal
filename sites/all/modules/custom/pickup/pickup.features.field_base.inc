@@ -49,7 +49,7 @@ function pickup_field_default_field_bases() {
   // Exported field_base: 'field_date'.
   $field_bases['field_date'] = array(
     'active' => 1,
-    'cardinality' => 1,
+    'cardinality' => -1,
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_date',
@@ -68,7 +68,7 @@ function pickup_field_default_field_bases() {
         'year' => 'year',
       ),
       'profile2_private' => FALSE,
-      'repeat' => 0,
+      'repeat' => 1,
       'timezone_db' => 'UTC',
       'todate' => '',
       'tz_handling' => 'user',
@@ -192,12 +192,12 @@ function pickup_field_default_field_bases() {
     'module' => 'list',
     'settings' => array(
       'allowed_values' => array(
-        'Baseball' => 'Baseball',
+        'Soccer' => 'Soccer',
         'Basketball' => 'Basketball',
+        'Ultimate' => 'Ultimate',
+        'Baseball' => 'Baseball',
         'Flag Football' => 'Flag Football',
         'Kickball' => 'Kickball',
-        'Soccer' => 'Soccer',
-        'Ultimate' => 'Ultimate',
       ),
       'allowed_values_function' => '',
     ),
