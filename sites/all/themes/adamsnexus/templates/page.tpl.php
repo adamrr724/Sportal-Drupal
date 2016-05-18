@@ -108,7 +108,7 @@
         <?php if($slide1_head || $slide1_desc) : ?>
           <div class="flex-caption">
             <h2><?php print $slide1_head; ?></h2><?php print $slide1_desc; ?>
-            <a class="frmore" href="<?php print url($slide1_url); ?>"> <?php print t('READ MORE'); ?> </a>
+            <a class="frmore" href="<?php print url($slide1_url); ?>"> <?php print t('Browse'); ?> </a>
           </div>
         <?php endif; ?>
       </li>
@@ -234,7 +234,7 @@
     <div class="container">
       <div class="row">
         <div class="fcred col-sm-12">
-          <?php print t('Copyright'); ?> &copy; <?php echo date("Y"); ?> Adam Ross Russell <a href="<?php print $front_page; ?>">
+          <?php print t('Copyright'); ?> &copy; <?php echo date("Y"); ?> Sportal <a href="<?php print $front_page; ?>">
         </div>
       </div>
     </div>

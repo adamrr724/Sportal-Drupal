@@ -168,6 +168,17 @@ function runs_and_races_views_default_views() {
   $handler->display->display_options['filters']['field_geofield_distance']['source'] = 'geocoder';
   $handler->display->display_options['filters']['field_geofield_distance']['geofield_proximity_entity_url_field'] = 'field_league_position';
   $handler->display->display_options['filters']['field_geofield_distance']['geofield_proximity_current_user_field'] = 'field_league_position';
+  /* Filter criterion: Content: Date (field_date_run_race) */
+  $handler->display->display_options['filters']['field_date_run_race_value']['id'] = 'field_date_run_race_value';
+  $handler->display->display_options['filters']['field_date_run_race_value']['table'] = 'field_data_field_date_run_race';
+  $handler->display->display_options['filters']['field_date_run_race_value']['field'] = 'field_date_run_race_value';
+  $handler->display->display_options['filters']['field_date_run_race_value']['operator'] = '>=';
+  $handler->display->display_options['filters']['field_date_run_race_value']['expose']['operator_id'] = 'field_date_run_race_value_op';
+  $handler->display->display_options['filters']['field_date_run_race_value']['expose']['label'] = 'Date (field_date_run_race)';
+  $handler->display->display_options['filters']['field_date_run_race_value']['expose']['operator'] = 'field_date_run_race_value_op';
+  $handler->display->display_options['filters']['field_date_run_race_value']['expose']['identifier'] = 'field_date_run_race_value';
+  $handler->display->display_options['filters']['field_date_run_race_value']['default_date'] = 'yesterday';
+  $handler->display->display_options['filters']['field_date_run_race_value']['year_range'] = '-1:+3';
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'page');
@@ -182,64 +193,6 @@ function runs_and_races_views_default_views() {
   $handler->display->display_options['empty']['area_text_custom']['empty'] = TRUE;
   $handler->display->display_options['empty']['area_text_custom']['content'] = '<h3><strong>No Results Found.</strong></h3>
 Please try again.';
-  $handler->display->display_options['defaults']['filter_groups'] = FALSE;
-  $handler->display->display_options['defaults']['filters'] = FALSE;
-  /* Filter criterion: Content: Published */
-  $handler->display->display_options['filters']['status']['id'] = 'status';
-  $handler->display->display_options['filters']['status']['table'] = 'node';
-  $handler->display->display_options['filters']['status']['field'] = 'status';
-  $handler->display->display_options['filters']['status']['value'] = '1';
-  $handler->display->display_options['filters']['status']['group'] = 1;
-  $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
-  /* Filter criterion: Content: Type */
-  $handler->display->display_options['filters']['type']['id'] = 'type';
-  $handler->display->display_options['filters']['type']['table'] = 'node';
-  $handler->display->display_options['filters']['type']['field'] = 'type';
-  $handler->display->display_options['filters']['type']['value'] = array(
-    'runs_and_races' => 'runs_and_races',
-  );
-  /* Filter criterion: Content: Event Type (field_event_type) */
-  $handler->display->display_options['filters']['field_event_type_value']['id'] = 'field_event_type_value';
-  $handler->display->display_options['filters']['field_event_type_value']['table'] = 'field_data_field_event_type';
-  $handler->display->display_options['filters']['field_event_type_value']['field'] = 'field_event_type_value';
-  $handler->display->display_options['filters']['field_event_type_value']['exposed'] = TRUE;
-  $handler->display->display_options['filters']['field_event_type_value']['expose']['operator_id'] = 'field_event_type_value_op';
-  $handler->display->display_options['filters']['field_event_type_value']['expose']['label'] = 'Event Type ';
-  $handler->display->display_options['filters']['field_event_type_value']['expose']['operator'] = 'field_event_type_value_op';
-  $handler->display->display_options['filters']['field_event_type_value']['expose']['identifier'] = 'field_event_type_value';
-  $handler->display->display_options['filters']['field_event_type_value']['expose']['remember_roles'] = array(
-    2 => '2',
-    1 => 0,
-    5 => 0,
-    4 => 0,
-    3 => 0,
-  );
-  /* Filter criterion: Content: Position (field_position_runs_races) - proximity */
-  $handler->display->display_options['filters']['field_geofield_distance']['id'] = 'field_geofield_distance';
-  $handler->display->display_options['filters']['field_geofield_distance']['table'] = 'field_data_field_position_runs_races';
-  $handler->display->display_options['filters']['field_geofield_distance']['field'] = 'field_geofield_distance';
-  $handler->display->display_options['filters']['field_geofield_distance']['operator'] = '<';
-  $handler->display->display_options['filters']['field_geofield_distance']['value'] = array(
-    'distance' => '25',
-    'distance2' => 200,
-    'unit' => '3959',
-    'origin' => '',
-  );
-  $handler->display->display_options['filters']['field_geofield_distance']['exposed'] = TRUE;
-  $handler->display->display_options['filters']['field_geofield_distance']['expose']['operator_id'] = 'field_geofield_distance_op';
-  $handler->display->display_options['filters']['field_geofield_distance']['expose']['label'] = 'Search by Zip Code';
-  $handler->display->display_options['filters']['field_geofield_distance']['expose']['operator'] = 'field_geofield_distance_op';
-  $handler->display->display_options['filters']['field_geofield_distance']['expose']['identifier'] = 'field_geofield_distance';
-  $handler->display->display_options['filters']['field_geofield_distance']['expose']['remember_roles'] = array(
-    2 => '2',
-    1 => 0,
-    5 => 0,
-    4 => 0,
-    3 => 0,
-  );
-  $handler->display->display_options['filters']['field_geofield_distance']['source'] = 'geocoder';
-  $handler->display->display_options['filters']['field_geofield_distance']['geofield_proximity_entity_url_field'] = 'field_league_position';
-  $handler->display->display_options['filters']['field_geofield_distance']['geofield_proximity_current_user_field'] = 'field_league_position';
   $handler->display->display_options['path'] = 'runs-and-races';
   $handler->display->display_options['menu']['type'] = 'normal';
   $handler->display->display_options['menu']['title'] = 'Runs and Races';

@@ -1,0 +1,5 @@
+name = My messages
+description = I will alter the alert messages upon submission of a League
+package = My modules
+core = 7.x
+files[] = my_messages.module

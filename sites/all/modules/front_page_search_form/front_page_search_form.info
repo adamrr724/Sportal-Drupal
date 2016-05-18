@@ -1,0 +1,6 @@
+name = Front Page Search Form
+core = 7.x
+package = Features
+version = 7.x-1.0
+dependencies[] = front_page_form
+features[features_api][] = api:2
