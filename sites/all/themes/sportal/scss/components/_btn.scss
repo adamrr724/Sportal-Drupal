@@ -13,6 +13,8 @@ input[type="button"] {
     transition: all 0.2s;
     cursor: pointer;
     margin: 5px;
+
+
 }
 
 button.full-width,
@@ -25,16 +27,7 @@ button:hover,
 input[type="submit"]:hover,
 input[type="reset"]:hover,
 input[type="button"]:hover {
-
+    box-shadow: 0 1px 3px #888;
     background-color: $sportal_green;
 
-}
-
-
-.links li .unflag-action {
-    background-color: red;
-}
-
-.links li .flag-action {
-    background-color: red;
 }

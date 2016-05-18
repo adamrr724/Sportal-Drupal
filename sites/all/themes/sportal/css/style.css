@@ -27,16 +27,30 @@ a:active {
   text-decoration: none; }
 
 .links li a {
-  background-color: #E7E5E3;
-  color: #100100;
-  padding: 4px 5px;
+  display: inline-block;
   border-radius: 4px;
-  text-shadow: 1px 1px #fff;
-  font-weight: normal; }
+  background-color: #1BA7CE;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 12px;
+  padding: 8px;
+  transition: all 0.2s;
+  cursor: pointer;
+  margin: 5px;
+  box-shadow: 0 1px 3px; }
 
 .links li a:hover {
-  background-color: #D7D5D3;
-  color: #100101; }
+  background-color: #85AC20;
+  box-shadow: 0 1px 3px #888; }
+
+.links li .unflag-action {
+  font-size: 2em;
+  box-shadow: 0 1px 3px; }
+
+.links li .flag-action {
+  font-size: 2em;
+  box-shadow: 0 1px 3px; }
 
 @media screen and (min-width: 769px) {
   .mobilenavi {
@@ -367,13 +381,8 @@ button:hover,
 input[type="submit"]:hover,
 input[type="reset"]:hover,
 input[type="button"]:hover {
+  box-shadow: 0 1px 3px #888;
   background-color: #85AC20; }
-
-.links li .unflag-action {
-  background-color: red; }
-
-.links li .flag-action {
-  background-color: red; }
 
 .comment h2.title {
   margin-bottom: 1em; }
@@ -807,9 +816,9 @@ ul.primary li a {
   margin-right: 5px; }
 
 ul.primary li a:hover, ul.primary li a.active {
-  background: #666;
+  background: #1BA7CE;
   border: none;
-  color: #fff; }
+  color: #fff !important; }
 
 ul.primary li a:hover {
   background: #888;

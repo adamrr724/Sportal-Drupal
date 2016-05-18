@@ -27,9 +27,9 @@ ul.primary li a {
 }
 
 ul.primary li a:hover, ul.primary li a.active {
-  background: #666;
+  background: $sportal_blue;
   border: none;
-  color: #fff;
+  color: #fff !important;
 }
 
 ul.primary li a:hover {
