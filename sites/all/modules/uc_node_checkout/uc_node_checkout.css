@@ -1,0 +1,14 @@
+/**
+ * @file
+ * Styles for uc_node_checkout.
+ */
+
+.ucnc-attributes {
+  border: solid 1px #bbb;
+  margin-bottom: 1em;
+  padding: 1em;
+}
+
+.ucnc-attributes-label {
+  font-weight: bold;
+}
