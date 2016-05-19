@@ -163,16 +163,16 @@ function front_page_form_form_submit($form_id, &$form_state) {
     $zip = $form_state['values']['zip'];
 
     if($first === "Pickup Games") {
-        $url = 'http://localhost:8888/pickup?field_sport_value=' . $second . '&field_pickup_skill_level_value=All&field_geofield_distance[distance]=25&field_geofield_distance[unit]=3959&field_geofield_distance[origin]=' . $zip;
+        $url = 'http://live-sportal-usa.pantheonsite.io/pickup?field_sport_value=' . $second . '&field_pickup_skill_level_value=All&field_geofield_distance[distance]=25&field_geofield_distance[unit]=3959&field_geofield_distance[origin]=' . $zip;
         drupal_goto($url);
     } elseif($first === "Leagues") {
-        $url = 'http://localhost:8888/leagues?field_league_sport=' . $second . '&field_age_group_value=All&field_geofield_distance[distance]=25&field_geofield_distance[unit]=3959&field_geofield_distance[origin]=' . $zip;
+        $url = 'http://live-sportal-usa.pantheonsite.io/leagues?field_league_sport=' . $second . '&field_age_group_value=All&field_geofield_distance[distance]=25&field_geofield_distance[unit]=3959&field_geofield_distance[origin]=' . $zip;
         drupal_goto($url);
     } elseif($first === "Runs and Races") {
-        $url = 'http://localhost:8888/runs-and-races?field_event_type_value=' . $second . '&field_geofield_distance[distance]=25&field_geofield_distance[unit]=3959&field_geofield_distance[origin]=' . $zip;
+        $url = 'http://live-sportal-usa.pantheonsite.io/runs-and-races?field_event_type_value=' . $second . '&field_geofield_distance[distance]=25&field_geofield_distance[unit]=3959&field_geofield_distance[origin]=' . $zip;
         drupal_goto($url);
     } elseif($first === "Places to Play") {
-        $url = 'http://localhost:8888/find-a-place-to-play?field_facilities_value=' . $second . '&field_geofield_distance[distance]=25&field_geofield_distance[unit]=3959&field_geofield_distance[origin]=' . $zip;
+        $url = 'http://live-sportal-usa.pantheonsite.io/find-a-place-to-play?field_facilities_value=' . $second . '&field_geofield_distance[distance]=25&field_geofield_distance[unit]=3959&field_geofield_distance[origin]=' . $zip;
         drupal_goto($url);
     }
 }

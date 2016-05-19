@@ -18,7 +18,7 @@ function find_a_place_to_play_field_default_field_instances() {
     'description' => 'Tell us about this place!',
     'display' => array(
       'default' => array(
-        'label' => 'hidden',
+        'label' => 'above',
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
