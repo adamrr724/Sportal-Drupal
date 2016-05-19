@@ -13,13 +13,13 @@ function custom_roles_and_permissions_user_default_roles() {
   // Exported role: Organization.
   $roles['Organization'] = array(
     'name' => 'Organization',
-    'weight' => 3,
+    'weight' => 4,
   );
 
   // Exported role: Player.
   $roles['Player'] = array(
     'name' => 'Player',
-    'weight' => 2,
+    'weight' => 3,
   );
 
   return $roles;
