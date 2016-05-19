@@ -8,6 +8,25 @@
 #main-content {
   padding-top: 15px; }
 
+#edit-zip {
+  border-radius: 5px; }
+
+.field-label-above {
+  margin-bottom: 10px; }
+
+footer ul.links.inline {
+  align-items: baseline;
+  display: flex;
+  flex-wrap: wrap; }
+
+footer ul.links.inline li:nth-child(3) {
+  margin-left: auto; }
+
+.node {
+  padding: 10px 20px 5px 20px;
+  margin: 15px 0 10px 0;
+  box-shadow: 0 1px 3px; }
+
 .content p a {
   color: #85AC20; }
 
@@ -106,7 +125,7 @@ img.grayscale {
 
 .flex-caption h2 {
   text-transform: uppercase;
-  font-size: 4vw;
+  font-size: 2vw;
   color: #fff; }
 
 .flex-caption h2 a:link, .flex-caption h2 a:visited {
@@ -254,7 +273,7 @@ pre {
   word-wrap: break-word; }
 
 ul, ol {
-  margin: 0 0 1em 1.5em; }
+  padding-left: 0 !important; }
 
 ul {
   list-style: disc; }
@@ -525,7 +544,7 @@ input[type="button"]:hover {
   margin-top: 10px; }
 
 #content .node-teaser {
-  padding-bottom: 30px;
+  padding-bottom: 20px;
   border-bottom: 1px solid #DDDDDD;
   margin-bottom: 15px; }
 
@@ -547,8 +566,9 @@ input[type="button"]:hover {
 .region-content-top {
   margin-bottom: 20px; }
 
-div > .addtoany_list {
-  margin-bottom: 10px; }
+div.content span a {
+  margin-bottom: 10px;
+  margin-top: 10px; }
 
 .node-teaser > div.content {
   display: flex;
@@ -746,8 +766,8 @@ input.form-text, textarea.form-textarea, select.form-select {
   margin: 0; }
 
 .form-item label {
-  font-size: 13px;
-  font-weight: bold; }
+  font-size: 16px;
+  font-weight: normal; }
 
 .profile {
   margin: 1.5385em 0; }
@@ -1035,7 +1055,7 @@ h3 {
 h4 {
   font-size: 18px; }
 
-h5 {
+h5, .field-label {
   font-size: 16px; }
 
 h6 {

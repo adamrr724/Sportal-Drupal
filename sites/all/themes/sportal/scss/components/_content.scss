@@ -14,7 +14,7 @@
 }
 
 #content .node-teaser {
-  padding-bottom:30px;
+  padding-bottom:20px;
   border-bottom:1px solid #DDDDDD;
   margin-bottom: 15px;
 }
@@ -39,11 +39,15 @@
   margin-bottom: 20px;
 }
 
-div > .addtoany_list {
+// looking at a2a_kit
+div.content span a {
     // display: flex;
     // flex-direction: column;
     margin-bottom: 10px;
+    margin-top: 10px;
 }
+
+
 
 .node-teaser > div.content {
     display: flex;
