@@ -1,0 +1,46 @@
+#masthead{
+  position: relative;
+}
+.site-branding{
+  margin-bottom: 20px;
+}
+#site-logo {
+  float: left;
+  padding: 15px 15px 0 0;
+}
+h1#site-title{
+  text-transform: uppercase;
+  font-weight: 800;
+  margin-top: 18px;
+  clear: none;
+}
+h1#site-title a:link, h1#site-title a:visited{
+  color: #000;
+}
+#header-block {
+  padding: 20px 0 0;
+}
+
+#front-page-form-form > div:nth-child(1) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+div > #edit-field-geofield-distance {
+    // border: 100px solid red;
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    // flex-direction: column;
+}
+
+div > .views-exposed-widgets {
+    display: flex;
+    flex-direction: column;
+}
+
+div.form-item.form-type-textfield.form-item-zip > input {
+    width: 90px;
+}

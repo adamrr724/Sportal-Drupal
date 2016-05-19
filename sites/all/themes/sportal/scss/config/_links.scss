@@ -1,0 +1,56 @@
+
+.content {
+  p {
+    a {
+      color: $sportal_green;
+    }[href="/contact"] {
+      color: grey !important;
+    }
+  }
+}
+
+a {
+  color: $sportal_blue;
+}
+a:visited {
+  color: $sportal_blue;
+}
+a:hover,
+a:focus,
+a:active {
+  color:#1db5df;
+  text-decoration: none;
+}
+
+.links li a {
+    display: inline-block;
+    border-radius: 4px;
+    background-color: $sportal_blue;
+    border: none;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 12px;
+    padding: 8px;
+    transition: all 0.2s;
+    cursor: pointer;
+    margin: 5px;
+    box-shadow: 0 1px 3px;
+}
+
+.links li a:hover {
+    background-color: $sportal_green;
+    box-shadow: 0 1px 3px #888;
+
+}
+
+
+.links li .unflag-action {
+    font-size: 2em;
+    box-shadow: 0 1px 3px;
+}
+
+.links li .flag-action {
+    font-size: 2em;
+    box-shadow: 0 1px 3px;
+
+}

@@ -1,0 +1,14 @@
+name = Addressfield Autocomplete
+description = "Uses google maps api to help users fill in addresses, if they can't find their address then they can add one manually"
+package = Other
+core = 7.x
+dependencies[] = addressfield
+dependencies[] = gmap
+dependencies[] = libraries
+
+; Information added by Drupal.org packaging script on 2015-01-23
+version = "7.x-1.0-beta5"
+core = "7.x"
+project = "addressfield_autocomplete"
+datestamp = "1422048481"
+

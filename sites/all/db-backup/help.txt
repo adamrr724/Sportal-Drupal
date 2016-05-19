@@ -1,0 +1,17 @@
+/Applications/MAMP/Library/bin/mysql --host=localhost -uroot -proot
+
+DROP DATABASE sportal;
+
+CREATE DATABASE sportal;
+
+USE sportal;
+
+SOURCE sportal.sql;
+
+DROP USER 'admin'@'localhost' IDENTIFIED BY 'epicodus';
+
+CREATE USER 'admin'@'localhost' IDENTIFIED BY 'epicodus';
+
+GRANT ALL PRIVILEGES ON * . * TO 'admin'@'localhost';
+
+exit

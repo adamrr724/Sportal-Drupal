@@ -1,0 +1,5 @@
+name = Sportal Front Page Form
+description =  "Adds a form for users on the home page to find what they are looking for"
+package = Sportal Custom Modules
+core = 7.x
+files[] = front_page_form.module

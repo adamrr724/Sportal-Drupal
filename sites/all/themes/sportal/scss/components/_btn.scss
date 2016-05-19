@@ -1,0 +1,33 @@
+button,
+input[type="submit"],
+input[type="reset"],
+input[type="button"] {
+    display: inline-block;
+    border-radius: 4px;
+    background-color: #1BA7CE;
+    border: none;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 12px;
+    padding: 8px;
+    transition: all 0.2s;
+    cursor: pointer;
+    margin: 5px;
+
+
+}
+
+button.full-width,
+input[type="submit"].full-width,
+input[type="reset"].full-width,
+input[type="button"].full-width {
+width: 100%; padding-left: 0 !important; padding-right: 0 !important; text-align: center; }
+
+button:hover,
+input[type="submit"]:hover,
+input[type="reset"]:hover,
+input[type="button"]:hover {
+    box-shadow: 0 1px 3px #888;
+    background-color: $sportal_green;
+
+}

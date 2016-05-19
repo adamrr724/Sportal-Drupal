@@ -1,0 +1,10 @@
+<?php
+
+function empty_front_page_menu_alter(&$items) {
+  $items['node']['page callback'] = 'empty_front_page_callback';
+}
+
+function empty_front_page_callback() {
+  drupal_set_title('');
+  return array();
+}

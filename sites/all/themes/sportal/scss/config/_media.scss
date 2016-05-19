@@ -1,0 +1,35 @@
+
+  @media screen and (min-width: 769px) {
+      .mobilenavi {
+          display: none;
+      }
+  }
+  @media screen and (max-width: 768px) {
+    html{
+      font-size: 60%;
+    }
+
+    h1#site-title{
+      text-align: center;
+    }
+
+    #site-logo {
+      padding-top: 0;
+    }
+
+    select.mnav{
+      width: 100%;
+      margin-bottom: 20px;
+    }
+
+    #main-menu{
+      display:none;
+    }
+
+    .flex-caption p {
+        display: none;
+    }
+    .mobilenavi {
+        float: right;
+    }
+  }

@@ -1,0 +1,735 @@
+<?php
+
+use Drupal\gmap\GmapDefaults;
+/**
+ * @file
+ * The Addressfield Autocomplete module code.
+ *
+ * Allows the user to pick a new type of Addressfield Autocomplete widget.
+ */
+
+/**
+ * Implements hook_gmap().
+ */
+function addressfield_autocomplete_gmap($op, &$map) {
+  switch ($op) {
+    case 'libraries':
+      return array('places');
+  }
+}
+
+/**
+ * Implements hook_libraries_info().
+ */
+function addressfield_autocomplete_libraries_info() {
+  $libraries['geocomplete'] = array(
+    'name' => 'Geocomplete',
+    'vendor url' => 'http://ubilabs.github.io/geocomplete/',
+    'download url' => 'https://github.com/ubilabs/geocomplete/archive/master.zip',
+    'version arguments' => array(
+      'file' => 'jquery.geocomplete.js',
+      'pattern' => '/V\s+([0-9\.\ \-]+)/',
+      'lines' => 5,
+    ),
+    'files' => array(
+      'js' => array(
+        'jquery.geocomplete.js' => array(
+          'type' => 'file',
+          'weight' => 2,
+        ),
+      ),
+    ),
+    'variants' => array(
+      'minified' => array(
+        'files' => array(
+          'js' => array(
+            'jquery.geocomplete.min.js',
+          ),
+        ),
+        'variant arguments' => array(
+          'variant' => 'minified',
+        ),
+      ),
+    ),
+  );
+  return $libraries;
+}
+
+/**
+ * Implements hook_field_widget_info().
+ */
+function addressfield_autocomplete_field_widget_info() {
+  return array(
+    'addressfield_autocomplete' => array(
+      'label' => t('Address Autocomplete'),
+      'field types' => array('addressfield'),
+      'settings' => array(
+        'available_countries' => array(),
+        'default_country' => '',
+        'format_handlers' => array('address'),
+        'map' => TRUE,
+        'reveal' => TRUE,
+        'manual_text' => t('Enter one manually'),
+        'visible_markers' => TRUE,
+        'draggable' => TRUE,
+        'geolocation' => TRUE,
+        'reverse_geocode' => FALSE,
+        'html5_geocode' => TRUE,
+        'types' => 'geocode',
+        'restrict_country' => array(),
+      ),
+    ),
+    'addressfield_autocomplete_latlng' => array(
+      'label' => t('Fill from Addressfield Autocomplete'),
+      'field types' => array('geofield', 'geolocation_latlng', 'location'),
+      'settings' => array(
+        'addressfield_autocomplete_field' => '',
+        'delta_handling' => 'default',
+      ),
+      'behaviors' => array(
+        'multiple values' => FIELD_BEHAVIOR_CUSTOM,
+        'default value' => FIELD_BEHAVIOR_NONE,
+      ),
+    ),
+  );
+}
+
+/**
+ * Implements hook_field_widget_settings_form().
+ */
+function addressfield_autocomplete_field_widget_settings_form($field, $instance) {
+  $widget = $instance['widget'];
+  $settings = $widget['settings'];
+
+  if ($widget['type'] == 'addressfield_autocomplete') {
+    $types = array(
+      'geocode',
+      'establishment',
+      '(regions)',
+      '(cities)',
+    );
+    $form['available_countries'] = array(
+      '#type' => 'select',
+      '#multiple' => TRUE,
+      '#title' => t('Available countries'),
+      '#description' => t('If no countries are selected, all countries will be available. If one country is selected the google autocomplete search will be restricted to just that one specific country.'),
+      '#options' => _addressfield_country_options_list(),
+      '#default_value' => $settings['available_countries'],
+      '#weight' => 1,
+    );
+    $form['default_country'] = array(
+      '#type' => 'select',
+      '#title' => t('Default country'),
+      '#options' => _addressfield_country_options_list(),
+      '#default_value' => $settings['default_country'],
+      '#empty_value' => '',
+      '#weight' => 1,
+    );
+    $form['format_handlers'] = array(
+      '#type' => 'checkboxes',
+      '#title' => t('Format handlers'),
+      '#options' => addressfield_format_plugins_options(),
+      '#default_value' => $settings['format_handlers'],
+      '#weight' => 1,
+    );
+    $form['map'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Show map'),
+      '#description' => t('Uncheck this box to remove the map, if you want draggable markers this must be selected.'),
+      '#default_value' => $settings['map'],
+      '#weight' => 2,
+    );
+    $form['reveal'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Reveal widget'),
+      '#description' => t('Reveal the addressfield widget after the geocomplete has returned an address.'),
+      '#default_value' => $settings['reveal'],
+      '#weight' => 2,
+    );
+    $form['manual_text'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Manual text'),
+      '#description' => t('The text to display for the link to enter an address manually.'),
+      '#default_value' => $settings['manual_text'],
+      '#weight' => 3,
+      '#states' => array(
+        'visible' => array(
+          ':input[name="instance[widget][settings][reveal]"]' => array('checked' => TRUE),
+        ),
+      ),
+    );
+    $form['visible_markers'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Visible markers'),
+      '#description' => t('Choose whether or not the markers should be shown.'),
+      '#default_value' => $settings['visible_markers'],
+      '#weight' => 4,
+    );
+    $form['draggable'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Draggable markers'),
+      '#description' => t('Alter the location of the pointer on the map. Will only work if show map and visible markers are checked.'),
+      '#default_value' => $settings['draggable'],
+      '#weight' => 4,
+    );
+    $form['reverse_geocode'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Reverse geocode'),
+      '#description' => t('Enable this to update the address when the marker is moved.'),
+      '#default_value' => $settings['reverse_geocode'],
+      '#weight' => 4,
+    );
+    $form['html5_geocode'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('HTML5 geocode'),
+      '#description' => t('Enable HTML5 browser location share when user is entering a manual address.'),
+      '#default_value' => $settings['html5_geocode'],
+      '#weight' => 4,
+    );
+    $form['types'] = array(
+      '#type' => 'select',
+      '#title' => t('Place types'),
+      '#description' => t('The autocomplete service will return results that match any of the specified types, default is geocode.'),
+      '#options' => drupal_map_assoc($types),
+      '#default_value' => $settings['types'],
+      '#weight' => 4,
+    );
+  }
+  else {
+    $settings = $instance['widget']['settings'];
+    $fields = field_info_instances($instance['entity_type'], $instance['bundle']);
+    $options = array();
+    $geophp_installed = module_exists('geophp');
+
+    foreach ($fields as $field) {
+      if ($field['widget']['type'] == 'addressfield_autocomplete') {
+        $options[$field['field_name']] = $field['label'];
+      }
+    }
+
+    $form['addressfield_autocomplete_field'] = array(
+      '#type' => 'select',
+      '#title' => t('Fill from addressfield autocomplete'),
+      '#empty_option' => t('- Select -'),
+      '#default_value' => $settings['addressfield_autocomplete_field'],
+      '#options' => $options,
+      '#description' => t('Select which address autocomplete field to pick from.'),
+      '#required' => TRUE,
+      '#disabled' => !$geophp_installed,
+    );
+
+    $items = array(
+      'Matched with each input (e.g. One POINT for each address field)',
+      'Aggregated into a single MULTIPOINT geofield (e.g. One MULTIPOINT polygon from multiple address fields)',
+    );
+
+    $form['delta_handling'] = array(
+      '#type' => 'select',
+      '#title' => t('Multi-value input handling'),
+      '#description' => t('Should geometries from multiple inputs be: !list', array('!list' => theme('item_list', array('items' => $items)))),
+      '#default_value' => $settings['delta_handling'],
+      '#options' => array(
+        'default' => 'Match Multiples (default)',
+        'm_to_s' => 'Multiple to Single',
+      ),
+      '#required' => TRUE,
+      '#disabled' => !$geophp_installed,
+    );
+
+    if (!$geophp_installed) {
+      form_set_error('addressfield_autocomplete_field', t('You need to have installed the <a href="@project_page">geophp</a> module before you can use this feature.', array('@project_page' => 'http://drupal.org/project/geophp')));
+    }
+  }
+  return $form;
+}
+
+/**
+ * Implements hook_form_FORMID_alter().
+ */
+function addressfield_autocomplete_form_field_ui_widget_type_form_alter(&$form, $form_state, $form_id) {
+  $instance = $form_state['build_info']['args'][0];
+  $field = field_info_field($instance['field_name']);
+  if (in_array($field['type'], array('addressfield', 'geofield', 'geolocation_latlng', 'location'))) {
+    $form['#submit'][] = '_addressfield_autocomplete_field_ui_widget_type_form_submit';
+  }
+}
+
+/**
+ * Implements hook_help().
+ */
+function addressfield_autocomplete_help($path, $arg) {
+  switch ($path) {
+    case 'admin/help#addressfield_autocomplete':
+      $output = '';
+      $output .= '<p>' . t('<a href="@project_page">Addressfield autocomplete</a> provides a hook into google maps autocomplete API.', array('@project_page' => 'http://drupal.org/project/addressfield_autocomplete')) . '</p>';
+      $output .= '<h2>' . t('Usage') . '</h2>';
+      $output .= '<p>' . t('Implements a new widget which utilises the addressfield field type and provides an easy to use single box for entering an address') . '</p>';
+      $output .= '<h2>' . t('Configuration') . '</h2>';
+      $output .= '<p>' . t('The configuration is done on each field instance, choose the address autocomplete widget on an addressfield type and the settings will be made available inside the field ui.') . '</p>';
+      $output .= '<h3>' . t('Options') . '</h3>';
+      $output .= '<p>' . t('The options include, but are not limited to: specific country searches, disabling the map, adding draggable markers, using browser geolocation and place type searches.') . '</p>';
+      return $output;
+  }
+}
+
+/**
+ * Implements hook_field_widget_form().
+ */
+function addressfield_autocomplete_field_widget_form(&$form, &$form_state, $field, $instance, $langcode, $items, $delta, $element) {
+  if ($instance['widget']['type'] == 'addressfield_autocomplete') {
+    module_load_include('php', 'gmap', 'lib/Drupal/gmap/GmapDefaults');
+
+    $gmap_defaults = GmapDefaults::getInstance()->getDefaults();
+    switch ($gmap_defaults['maptype']) {
+      case 'Map':
+        $gmap_defaults['maptype'] = 'roadmap';
+        break;
+
+      case 'Physical':
+        $gmap_defaults['maptype'] = 'terrain';
+        break;
+    }
+    $gmap_defaults['maptype'] = strtolower($gmap_defaults['maptype']);
+
+    $form_ui = $form_state['build_info']['form_id'] == 'field_ui_field_edit_form';
+    $fields = &drupal_static(__FUNCTION__, array());
+    $settings = $instance['widget']['settings'];
+
+    // This field name is updated after build with the complete field name.
+    $fields[$field['field_name']] = $settings;
+    $path = drupal_get_path('module', 'addressfield_autocomplete');
+    $default_value = !empty($items[$delta]['data']) ? $items[$delta] : array();
+    $data = isset($default_value['data']) ? unserialize($default_value['data']) : array();
+    $lat = isset($data['latitude']) && $data['latitude'] ? $data['latitude'] : 0;
+    $lng = isset($data['longitude']) && $data['longitude'] ? $data['longitude'] : 0;
+    $zoom = isset($data['zoom']) && $data['zoom'] ? $data['zoom'] : 0;
+    $formatted_address = isset($data['formatted_address']) ? $data['formatted_address'] : t('Manual');
+
+    /*
+     * This has been added so that we can remove the default completely
+     * in the form ui admin settings.
+     */
+    if ($form_ui && $lat == 0 && $lng == 0) {
+      $default_value = array();
+    }
+
+    $js = GmapDefaults::getInstance()->getBaseJs();
+    $js[$path . '/addressfield_autocomplete.js'] = array(
+      'type' => 'file',
+      'weight' => 3,
+    );
+
+    $js[] = array(
+      'data' => array(
+        'addressfield_autocomplete' => array(
+          'gmap' => $gmap_defaults,
+          'fields' => $fields,
+        ),
+      ),
+      'type' => 'setting',
+    );
+
+    $attachments['js'] = $js;
+    $attachments['libraries_load'][] = array('geocomplete');
+    $attachments['css'] = array($path . '/addressfield_autocomplete.css');
+
+    $instance['widget']['type'] = 'addressfield_standard';
+    $address_field = addressfield_field_widget_form($form, $form_state, $field, $instance, $langcode, $items, $delta, $element);
+
+    $address_field += array(
+      'latitude' => array(
+        '#type' => 'hidden',
+        '#default_value' => $lat,
+        '#attributes' => array(
+          'class' => array('latitude'),
+          'data-geo' => 'lat',
+        ),
+      ),
+      'longitude' => array(
+        '#type' => 'hidden',
+        '#default_value' => $lng,
+        '#attributes' => array(
+          'class' => array('longitude'),
+          'data-geo' => 'lng',
+        ),
+      ),
+      'zoom' => array(
+        '#type' => 'hidden',
+        '#default_value' => $zoom,
+        '#attributes' => array(
+          'class' => array('zoom'),
+        ),
+      ),
+    );
+    // Add data-geo data to the address fields.
+    $data_geo = array(
+      'organisation_block' => array(
+        'organisation_name' => 'organisation_name',
+      ),
+      'street_block' => array(
+        'thoroughfare' => 'subpremise street_number route',
+      ),
+      'locality_block' => array(
+        'locality' => 'administrative_area_level_3 postal_town locality',
+        'dependent_locality' => 'sub_locality',
+        'administrative_area' => 'administrative_area_level_1_short administrative_area_level_2',
+        'postal_code' => 'postal_code_prefix postal_code',
+      ),
+    );
+    
+    /*
+     * If reveal widget is not chosen we must remove the required
+     * fields otherwise people wont be able to submit an incomplete
+     * address. This is the same if both cities or region types
+     * have been selected. However for these we need to set either
+     * locality or administrative area to required respectively.
+     */
+    foreach ($data_geo as $key => $data) {
+      foreach ($data as $field => $geo) {
+        if (isset($address_field[$key][$field])) {
+          $address_field[$key][$field]['#attributes']['data-geo'] = $geo;
+          $remove_required = $form_ui || !$settings['reveal'] || (in_array($settings['types'], array('(regions)', '(cities)')));
+          $cities = $settings['types'] == '(cities)' && $field == 'locality';
+          $regions = $settings['types'] == '(regions)' && $field == 'administrative_area';
+
+          if ($remove_required) {
+            $address_field[$key][$field]['#required'] = FALSE;
+          }
+          if ($cities || $regions) {
+            $address_field[$key][$field]['#required'] = TRUE;
+          }
+        }
+      }
+    }
+
+    // Map markup.
+    $map_variables = array(
+      'attributes' => array(
+        'id' => drupal_html_id('addressfield-autocomplete-map'),
+        'style' => 'width:' . $gmap_defaults['width'] . ';height:' . $gmap_defaults['height'],
+      ),
+    );
+    $link_variables = array(
+      'external' => TRUE,
+      'attributes' => array(
+        'class' => array('addressfield-autocomplete-reveal'),
+      ),
+    );
+
+    $element += array(
+      '#type' => 'container',
+      $element['#field_name'] => array(
+        '#type' => 'container',
+        '#after_build' => array('_addressfield_autocomplete_widget_after_build'),
+        '#element_validate' => array(
+          '_addressfield_autocomplete_widget_transform',
+        ),
+        '#attached' => $attachments,
+        'reveal' => array(
+          '#type' => 'hidden',
+          '#default_value' => $default_value && $settings['reveal'] ? 1 : 0,
+          '#attributes' => array(
+            'class' => array('addressfield-autocomplete-hidden-reveal'),
+            'autocomplete' => 'off',
+          ),
+        ),
+        'autocomplete' => array(
+          '#type' => 'textfield',
+          '#title' => check_plain($instance['label']),
+          '#required' => $delta == 0 && !$form_ui ? $instance['required'] : FALSE,
+          '#default_value' => $default_value ? $formatted_address : '',
+          '#maxlength' => 200,
+          '#description' => field_filter_xss($instance['description']),
+          '#attributes' => array(
+            'placeholder' => '',
+            'class' => array('addressfield-autocomplete-input'),
+            'autocomplete' => 'off',
+          ),
+        ),
+        'link_container' => array(
+          '#type' => 'container',
+          '#access' => $settings['reveal'],
+          '#attributes' => array(
+            'class' => array('addressfield-autocomplete-link'),
+          ),
+          'link' => array(
+            '#markup' => l(t('@manual_text', array('@manual_text' => $settings['manual_text'])), 'javascript:void(0);', $link_variables),
+          ),
+        ),
+        'widget' => array(
+          '#type' => 'container',
+          '#weight' => 10,
+        ),
+        'map' => array(
+          '#access' => $settings['map'],
+          '#markup' => theme('addressfield_autocomplete_map', $map_variables),
+          '#weight' => 11,
+        ),
+      ),
+    );
+
+    if (!$settings['reveal']) {
+      $element[$element['#field_name']]['widget']['#attributes']['class'] = array('element-invisible');
+    }
+
+    if ($instance['required'] && $delta == 0 && !$form_ui) {
+      $element[$element['#field_name']]['#element_validate'][] = '_addressfield_autocomplete_widget_validate';
+    }
+
+    $element[$element['#field_name']]['widget'] += $address_field;
+  }
+
+  return $element;
+}
+
+/**
+ * Implements hook_theme().
+ */
+function addressfield_autocomplete_theme() {
+  return array(
+    'addressfield_autocomplete_map' => array(
+      'variables' => array(
+        'attributes' => array(
+          'class' => array('autocomplete-map', 'clearfix'),
+        ),
+      ),
+    ),
+  );
+}
+
+/**
+ * Render a container for a set of address fields.
+ */
+function theme_addressfield_autocomplete_map($variables) {
+  $attributes = $variables['attributes'];
+  $attributes['class'][] = 'autocomplete-map';
+  $attributes['class'][] = 'clearfix';
+  return '<div' . drupal_attributes($attributes) . '></div>';
+}
+
+/**
+ * Implements hook_field_attach_presave().
+ *
+ * Attaching the latitude and longitude values for geofield is done here.
+ */
+function addressfield_autocomplete_field_attach_presave($entity_type, $entity) {
+  // Loop over any geofield using our geocode widget
+  $entity_info = entity_get_info($entity_type);
+  $bundle_name = empty($entity_info['entity keys']['bundle']) ? $entity_type : $entity->{$entity_info['entity keys']['bundle']};
+  foreach (field_info_instances($entity_type, $bundle_name) as $instance) {
+    if ($instance['widget']['type'] === 'addressfield_autocomplete_latlng') {
+      $values = _addressfield_autocomplete_widget_get_field_value($entity_type, $entity, $instance);
+      if ($values) {
+        $entity->{$instance['field_name']} = $values;
+      }
+    }
+  }
+}
+
+/**
+ * Addressfield autocomplete transform.
+ *
+ * Transforms data into the structure accepted by addressfield.
+ */
+function _addressfield_autocomplete_widget_transform($element, &$form_state, $form) {
+  $parents = $element['#parents'];
+  $values = drupal_array_get_nested_value($form_state['values'], $parents);
+  $data = $address = array();
+
+  if (!empty($values['autocomplete'])) {
+    $data['latitude'] = $values['widget']['latitude'];
+    $data['longitude'] = $values['widget']['longitude'];
+    $data['zoom'] = $values['widget']['zoom'];
+    $data['formatted_address'] = $values['autocomplete'];
+    foreach (array('latitude', 'longitude', 'zoom') as $key) {
+      unset($values['widget'][$key]);
+    }
+    $address = $values['widget'];
+    $address['data'] = serialize($data);
+  }
+  else {
+    $address = array();
+  }
+
+  array_pop($parents);
+  drupal_array_set_nested_value($form_state['values'], $parents, $address);
+  /*
+   * From addressfield 7.x-1.0-rc1 we also need to set the input to the value
+   * of the widget. Otherwise the form does not appear.
+   */
+  drupal_array_set_nested_value($form_state['input'], $parents, $address);
+}
+
+/**
+ * Address autocomplete widget validation function.
+ *
+ * Validate to see if lat and lng have been added for addresses which
+ * do not reveal the widget.
+ */
+function _addressfield_autocomplete_widget_validate($element, &$form_state, $form) {
+  $parents = $element['#parents'];
+  array_pop($parents);
+  $values = drupal_array_get_nested_value($form_state['values'], $parents);
+
+  if (isset($values['data'])) {
+    $data = unserialize($values['data']);
+    if (empty($data['latitude']) && empty($data['latitude'])) {
+      form_error($element, t('This address is invalid please try again.'));
+    }
+  }
+}
+
+/**
+ * Adds the states and JS settings to the correct form element by name.
+ *
+ * @param $form_element
+ *   The form element containing the parents array.
+ */
+function _addressfield_autocomplete_widget_after_build($form_element) {
+  $parents = $form_element['#parents'];
+  $name = array_shift($parents) . '[' . implode('][', $parents) . ']';
+
+  // Update fields in JS settings with complete field name from parents.
+  $attached_js_fields = &$form_element['#attached']['js'][0]['data']['addressfield_autocomplete']['fields'];
+  $renamed_field_settings = array();
+  foreach($attached_js_fields as $key => $settings) {
+    $renamed_field_settings[$name] = $settings;
+  }
+  $attached_js_fields = $renamed_field_settings;
+
+  $form_element['autocomplete']['#states'] = array(
+    'visible' => array(
+      ':input[name="' . $name . '[reveal]"]' => array('value' => '0'),
+    ),
+  );
+  $form_element['link_container']['#states'] = array(
+    'visible' => array(
+      ':input[name="' . $name . '[reveal]"]' => array('value' => '0'),
+    ),
+  );
+  $form_element['widget']['#states'] = array(
+    'visible' => array(
+      ':input[name="' . $name . '[reveal]"]' => array('value' => '1'),
+    ),
+  );
+
+  return $form_element;
+}
+
+/**
+ * Function to get the geofield information from the autocomplete.
+ */
+function _addressfield_autocomplete_widget_get_field_value($entity_type, $entity, $instance) {
+  if (isset($instance['widget']['settings']['addressfield_autocomplete_field'])) {
+
+    $values = $field_values = $geometries = array();
+    $field_name = $instance['widget']['settings']['addressfield_autocomplete_field'];
+    $field_instance = field_info_instance($entity_type, $field_name, $entity->type);
+
+    if ($field_instance['widget']['type'] == 'addressfield_autocomplete') {
+      $delta_hanlding = $instance['widget']['settings']['delta_handling'];
+      $target_info = field_info_field($instance['field_name']);
+      $target_type = $target_info['type'];
+      $field_values = field_get_items($entity_type, $entity, $field_name, isset($entity->language) ? $entity->language : NULL);
+
+      if ($field_values) {
+        geophp_load();
+
+        foreach ($field_values as $delta => $item) {
+          $data = unserialize($item['data']);
+          $geometry = array();
+          if (isset($data['latitude']) && isset($data['longitude'])) {
+            $geometry = new Point($data['longitude'], $data['latitude']);
+          }
+          $geometries[$delta] = $geometry;
+        }
+      }
+
+      if ($geometries) {
+        $values = _addressfield_autocomplete_widget_resolve_deltas($geometries, $target_type, $delta_hanlding);
+      }
+    }
+
+    return $values;
+  }
+}
+
+/**
+ * Address autocomplete resolve deltas for handling geofield.
+ *
+ * Given a list of geometries, and user configuration on how to handle deltas,
+ * we created a list of items to be inserted into the fields.
+ */
+function _addressfield_autocomplete_widget_resolve_deltas($geometries, $field_type, $delta_handling = 'default') {
+  $values = array();
+  // Default delta handling: just pass one delta to the next
+  if ($delta_handling == 'default') {
+    foreach ($geometries as $geometry) {
+      $values[] = _addressfield_autocomplete_widget_values_from_geometry($geometry, $field_type);
+    }
+  }
+  // For multiple-to-single handling, run it though geometryReduce
+  if ($delta_handling == 'm_to_s') {
+    $reduced_geom = geoPHP::geometryReduce($geometries);
+    $values[] = _addressfield_autocomplete_widget_values_from_geometry($reduced_geom, $field_type);
+  }
+  // Set the values - geofields do not support languages
+  return array(LANGUAGE_NONE => $values);
+}
+
+/**
+ * Address autocomplete get field values from geometry.
+ *
+ * Given a geometry and the field type, return back a values array for that
+ * field.
+ */
+function _addressfield_autocomplete_widget_values_from_geometry($geometry, $field_type) {
+  if ($field_type == 'geofield')
+    return geofield_get_values_from_geometry($geometry);
+  if ($field_type == 'geolocation_latlng') {
+    $centroid = $geometry->centroid();
+    $lat = $centroid->y();
+    $lng = $centroid->x();
+
+    return array(
+      'lat' => $lat,
+      'lng' => $lng,
+      'lat_sin' => sin(deg2rad($lat)),
+      'lat_cos' => cos(deg2rad($lat)),
+      'lng_rad' => deg2rad($lng),
+    );
+  }
+  if ($field_type == 'location') {
+    $centroid = $geometry->centroid();
+    return array(
+      'latitude' => $centroid->y(),
+      'longitude' => $centroid->x(),
+      'source' => 2,
+    );
+  }
+}
+
+/**
+ * Submit function for after widget is saved.
+ *
+ * Tried to use hook_field_update_instance to fix bugs when update the instance
+ * widget. This did not work so it was changed to an extra submission function.
+ */
+function _addressfield_autocomplete_field_ui_widget_type_form_submit($form, &$form_state) {
+  $bundle = $form['#bundle'];
+  $entity_type = $form['#entity_type'];
+  $field_name = $form['#field_name'];
+
+  // Retrieve the stored instance settings to merge with the incoming values.
+  $instance = field_read_instance($entity_type, $field_name, $bundle);
+  $widget = $instance['widget'];
+  if (!isset($instance['default_value'][0]) && in_array($widget['type'], array('addressfield_autocomplete', 'addressfield_standard'))) {
+    $instance['default_value'][0] = array();
+    field_update_instance($instance);
+  }
+
+  if ($widget['type'] == 'addressfield_autocomplete_latlng') {
+    $admin_path = _field_ui_bundle_admin_path($entity_type, $bundle);
+    $form_state['redirect'] = $admin_path . '/fields/' . $field_name;
+  }
+}

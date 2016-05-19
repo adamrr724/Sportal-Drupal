@@ -1,0 +1,75 @@
+Installation
+------------
+
+* Copy the module into your sites/all/modules directory.
+* Go to admin/modules and enable the weather module.
+
+Notes on upgrade from 7.x-1.x version
+-------------------------------------
+
+If you've installed the 7.x-1.x version of the weather module, you
+can easily upgrade to the new 7.x-2.x version. Most of your custom
+configuration will be saved and migrated to the 7.x-2.x version.
+
+Please make a backup of your database in case something goes wrong!
+
+* Make sure you've installed the latest version of the 7.x-1.x
+  branch of the module. Upgrades are only supported from that version.
+* Enable maintenance mode for your website.
+* Make a backup of your database.
+* Completely remove the directory "weather" under the directory
+  "sites/all/modules".
+* Copy the newly downloaded 7.x-2.x version of weather to your
+  directory "sites/all/modules".
+* Run update.php.
+* Check that all weather module settings have been migrated as
+  expected.
+* Check the names of automatically migrated new locations.
+* Disable maintenance mode for your website.
+
+Some things have changed between 7.x-1.x and 7.x-2.x versions of the
+weather module. Here is a short list for your convenience:
+
+* Instead of about 4500 locations, the module now includes more than
+  14.000 locations worldwide.
+* The option to display a "compact weather block" has been removed,
+  as it made no longer sense. Now the weather block shows a compact
+  forecast for a place with a link to a page with the detailed forecast.
+* The permission "access weather page" has been renamed to
+  "access weather search page". The new permission gets updated on
+  all roles which previously had the old permission if you perform
+  the upgrade from 7.x-1.x.
+* The previously configured locations in all weather displays are
+  migrated to new locations during the upgrade from 7.x-1.x.
+  Note that this might not be the desired new location, because
+  the module simply searches for the nearest new location.
+  Therefore, you need to check all locations yourself after the
+  upgrade. For example, the location "Hamburg-Fuhlsbüttel" becomes
+  "Norderstedt (7.5 km from Hamburg-Fuhlsbüttel)" after the upgrade.
+
+Notes on upgrade from 6.x-5.x version
+-------------------------------------
+
+Direct upgrades from 6.x-5.x versions of the weather module to
+7.x-2.x versions are not supported and will not work. You need to
+upgrade to 7.x-1.x first.
+
+Configuration
+-------------
+
+* If you want to have a system-wide weather block (i.e. the same
+  location for every user), go to Administer->Configuration->Weather
+  and add a display. Afterwards, you can add as much locations
+  as you like to that display. Go to Administer->Structure->Blocks
+  and enable the "Weather: system-wide display (#1)" block.
+* If you want to allow users to configure their own custom weather
+  blocks, go to Administer->Structure->Blocks and enable the
+  "Weather: custom user" block. You might want to change the
+  "Visibility settings" in the configuration page of the block to
+  "Customizable, hidden by default." in the "User" tab.
+  Afterwards, go to Administer->People and switch to the "Permission"
+  tab. Set the "Administer custom weather block" permission for the
+  appropriate role.
+* If you want visitors of your site to have the possibility of searching
+  for weather reports, you can set the "Access weather search page"
+  permission for the appropriate roles.

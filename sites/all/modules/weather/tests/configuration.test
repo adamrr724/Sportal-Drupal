@@ -1,0 +1,87 @@
+<?php
+
+/**
+ * @file
+ * Test configuration of weather displays.
+ *
+ * Copyright © 2006-2015 Dr. Tobias Quathamer <t.quathamer@mailbox.org>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ */
+
+/**
+ * Test class for configuration.
+ */
+class WeatherConfigurationTestCase extends DrupalWebTestCase {
+  /**
+   * General information.
+   */
+  public static function getInfo() {
+    return array(
+      'name' => 'Configuration',
+      'description' => 'Tests configuration of weather displays.',
+      'group' => 'Weather',
+    );
+  }
+
+  /**
+   * Set up testing environment
+   */
+  public function setUp() {
+    parent::setUp('weather', 'block');
+  }
+
+  /**
+   * Tests configuration of weather block.
+   */
+  public function testConfiguration() {
+    // Set a fixed time for testing to 2013-10-07 20:00:00 UTC
+    variable_set('weather_time_for_testing', 1381176000);
+    // This user may setup a system-wide weather block.
+    $admin_user = $this->drupalCreateUser(array(
+      'access content', 'administer custom weather block',
+      'administer site configuration', 'administer blocks'
+    ));
+    // Test with admin user
+    $this->drupalLogin($admin_user);
+    // Enable a system-wide weather block
+    $this->drupalPost('admin/config/user-interface/weather/system-wide/add', array(), t('Save'));
+    // Configure the default place
+    $this->drupalPost('admin/config/user-interface/weather/system-wide/1/add', array(), t('Save'));
+    // Enable block
+    $edit = array('blocks[weather_system_1][region]' => 'sidebar_second');
+    $this->drupalPost('admin/structure/block', $edit, t('Save blocks'));
+    // Make sure that the weather block is displayed with correct test forecast data
+    $this->drupalGet('node');
+    $this->assertRaw('<div class="weather">');
+    $this->assertLink('Hamburg');
+    $this->assertLinkByHref('weather/Germany/Hamburg/Hamburg/1');
+    $this->assertText('23:00-00:00');
+    $this->assertText(t('Clear sky'));
+    $this->assertRaw('9&thinsp;°C');
+    $this->assertText('12:00-18:00');
+    $this->assertText(t('Fair'));
+    $this->assertRaw('13&thinsp;°C');
+    // Change temperature units to Fahrenheit.
+    $edit = array('config[temperature]' => 'fahrenheit');
+    $this->drupalPost('admin/config/user-interface/weather/system-wide/1', $edit, t('Save'));
+    // Make sure that the weather block now shows different temperatures.
+    $this->drupalGet('node');
+    $this->assertRaw('48&thinsp;°F');
+    $this->assertRaw('55&thinsp;°F');
+    // Logout current user
+    $this->drupalLogout();
+  }
+}

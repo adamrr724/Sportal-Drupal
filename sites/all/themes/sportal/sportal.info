@@ -1,0 +1,44 @@
+name = Sportal Theme
+description = Sportal Theme is built for the Sportal website and is based on Nexus Theme by <a href="http://www.devsaran.com">Devsaran.com</a>.
+core = 7.x
+engine = phptemplate
+
+stylesheets[all][] = css/vendor/bootstrap.min.css
+stylesheets[all][] = css/vendor/flexslider.css
+stylesheets[all][] = css/style.css
+
+scripts[] = js/bootstrap.min.js
+scripts[] = js/superfish.js
+scripts[] = js/mobilemenu.js
+scripts[] = js/custom.js
+
+regions[sidebar_first]  = First Sidebar
+regions[mainsearch]     = Main Search
+regions[header]         = Header
+regions[preface_first]  = Preface First
+regions[preface_middle] = Preface Middle
+regions[preface_last]   = Preface Last
+regions[content_top]    = Content Top
+regions[content]        = Content
+regions[help]           = Help
+regions[footer]         = Footer
+regions[footer_first]   = First Bottom
+regions[footer_second]  = Second Bottom
+regions[footer_third]   = Third Bottom
+regions[footer_fourth]  = Fourth Bottom
+
+features[] = logo
+features[] = name
+features[] = slogan
+features[] = node_user_picture
+features[] = comment_user_picture
+features[] = comment_user_verification
+features[] = favicon
+features[] = main_menu
+features[] = secondary_menu
+
+settings[slideshow_display]  = 1
+settings[breadcrumbs]  = 1
+settings[slide1_head]  = "Sample product"
+settings[slide1_desc]  = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt elit, sed do eiusmod tempor..."
+settings[slide1_url]  = "node/1"

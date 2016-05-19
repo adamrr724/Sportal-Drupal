@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Runs and Races feature.
+ */
+
+include_once 'runs_and_races.features.inc';
