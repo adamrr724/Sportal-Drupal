@@ -18,7 +18,7 @@ function pickup_field_default_field_instances() {
     'description' => 'Please write a brief description about your game.',
     'display' => array(
       'default' => array(
-        'label' => 'hidden',
+        'label' => 'above',
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
@@ -130,13 +130,13 @@ function pickup_field_default_field_instances() {
           'format_type' => 'long',
           'fromto' => 'both',
           'multiple_from' => '',
-          'multiple_number' => '',
+          'multiple_number' => 0,
           'multiple_to' => '',
-          'show_remaining_days' => 1,
+          'show_remaining_days' => 0,
           'show_repeat_rule' => 'show',
         ),
         'type' => 'date_default',
-        'weight' => 1,
+        'weight' => 2,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -145,9 +145,9 @@ function pickup_field_default_field_instances() {
           'format_type' => 'long',
           'fromto' => 'both',
           'multiple_from' => '',
-          'multiple_number' => 1,
+          'multiple_number' => 0,
           'multiple_to' => '',
-          'show_remaining_days' => 1,
+          'show_remaining_days' => 0,
           'show_repeat_rule' => 'show',
         ),
         'type' => 'date_default',
@@ -245,7 +245,7 @@ function pickup_field_default_field_instances() {
         'module' => 'list',
         'settings' => array(),
         'type' => 'list_default',
-        'weight' => 2,
+        'weight' => 1,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -278,7 +278,7 @@ function pickup_field_default_field_instances() {
     'description' => '',
     'display' => array(
       'default' => array(
-        'label' => 'above',
+        'label' => 'hidden',
         'module' => 'geofield_map',
         'settings' => array(
           'geofield_map_baselayers_hybrid' => 1,

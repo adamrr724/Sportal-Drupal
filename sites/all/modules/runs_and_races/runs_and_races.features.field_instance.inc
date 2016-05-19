@@ -361,7 +361,7 @@ function runs_and_races_field_default_field_instances() {
     'description' => '',
     'display' => array(
       'default' => array(
-        'label' => 'above',
+        'label' => 'hidden',
         'module' => 'geofield_map',
         'settings' => array(
           'geofield_map_baselayers_hybrid' => 1,
