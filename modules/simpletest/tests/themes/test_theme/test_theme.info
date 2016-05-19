@@ -16,9 +16,3 @@ hidden = TRUE
 stylesheets[all][] = system.base.css
 
 settings[theme_test_setting] = default value
-
-; Information added by Drupal.org packaging script on 2016-02-24
-version = "7.43"
-project = "drupal"
-datestamp = "1456343506"
-

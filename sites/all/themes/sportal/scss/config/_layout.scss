@@ -6,3 +6,32 @@
 #main-content {
   padding-top: 15px;
 }
+
+#edit-zip {
+  border-radius: 5px;
+}
+.field-label-above {
+  margin-bottom: 10px;
+}
+
+.flag-my-games {
+  // float: right;
+}
+
+footer ul.links.inline
+{
+  align-items: baseline;
+  display: flex;
+  flex-wrap: wrap;
+
+}
+
+footer ul.links.inline li:nth-child(3) {
+  margin-left: auto;
+}
+
+.node {
+    padding: 10px 20px 5px 20px;
+    margin: 15px 0 10px 0;
+    box-shadow: 0 1px 3px;
+}

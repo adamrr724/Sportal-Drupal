@@ -8,6 +8,25 @@
 #main-content {
   padding-top: 15px; }
 
+#edit-zip {
+  border-radius: 5px; }
+
+.field-label-above {
+  margin-bottom: 10px; }
+
+footer ul.links.inline {
+  align-items: baseline;
+  display: flex;
+  flex-wrap: wrap; }
+
+footer ul.links.inline li:nth-child(3) {
+  margin-left: auto; }
+
+.node {
+  padding: 10px 20px 5px 20px;
+  margin: 15px 0 10px 0;
+  box-shadow: 0 1px 3px; }
+
 .content p a {
   color: #85AC20; }
 
@@ -18,7 +37,7 @@ a {
   color: #1BA7CE; }
 
 a:visited {
-  color: #147d9a; }
+  color: #1BA7CE; }
 
 a:hover,
 a:focus,
@@ -27,16 +46,30 @@ a:active {
   text-decoration: none; }
 
 .links li a {
-  background-color: #E7E5E3;
-  color: #100100;
-  padding: 4px 5px;
+  display: inline-block;
   border-radius: 4px;
-  text-shadow: 1px 1px #fff;
-  font-weight: normal; }
+  background-color: #1BA7CE;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 12px;
+  padding: 8px;
+  transition: all 0.2s;
+  cursor: pointer;
+  margin: 5px;
+  box-shadow: 0 1px 3px; }
 
 .links li a:hover {
-  background-color: #D7D5D3;
-  color: #100101; }
+  background-color: #85AC20;
+  box-shadow: 0 1px 3px #888; }
+
+.links li .unflag-action {
+  font-size: 2em;
+  box-shadow: 0 1px 3px; }
+
+.links li .flag-action {
+  font-size: 2em;
+  box-shadow: 0 1px 3px; }
 
 @media screen and (min-width: 769px) {
   .mobilenavi {
@@ -92,7 +125,7 @@ img.grayscale {
 
 .flex-caption h2 {
   text-transform: uppercase;
-  font-size: 4vw;
+  font-size: 2vw;
   color: #fff; }
 
 .flex-caption h2 a:link, .flex-caption h2 a:visited {
@@ -240,7 +273,7 @@ pre {
   word-wrap: break-word; }
 
 ul, ol {
-  margin: 0 0 1em 1.5em; }
+  padding-left: 0 !important; }
 
 ul {
   list-style: disc; }
@@ -350,8 +383,7 @@ input[type="button"] {
   text-align: center;
   font-size: 12px;
   padding: 8px;
-  width: 60px;
-  transition: all 0.5s;
+  transition: all 0.2s;
   cursor: pointer;
   margin: 5px; }
 
@@ -368,31 +400,8 @@ button:hover,
 input[type="submit"]:hover,
 input[type="reset"]:hover,
 input[type="button"]:hover {
-  /* IE10 */
-  background-image: -ms-linear-gradient(top, #1BA7CE 0%, #1BA7CE 100%);
-  /* Mozilla Firefox */
-  background-image: -moz-linear-gradient(top, #1BA7CE 0%, #1BA7CE 100%);
-  /* Opera */
-  background-image: -o-linear-gradient(top, #1BA7CE 0%, #1BA7CE 100%);
-  /* Webkit (Safari/Chrome 10) */
-  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #1BA7CE), color-stop(1, #1BA7CE));
-  /* Webkit (Chrome 11+) */
-  background-image: -webkit-linear-gradient(top, #1BA7CE 0%, #1BA7CE 100%);
-  /* Proposed W3C Markup */
-  background-image: linear-gradient(top, #1BA7CE 0%, #1BA7CE 100%);
-  /* IE6-9 */
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#1BA7CE', endColorstr='#1BA7CE');
-  -moz-border-radius: 6px;
-  -webkit-border-radius: 6px;
-  -o-border-radius: 6px;
-  -ms-border-radius: 6px;
-  -khtml-border-radius: 6px;
-  border-radius: 6px;
-  -moz-box-shadow: inset 0 1px 0 0 black;
-  -webkit-box-shadow: inset 0 1px 0 0 black;
-  -o-box-shadow: inset 0 1px 0 0 black;
-  box-shadow: inset 0 1px 0 0 black;
-  cursor: pointer; }
+  box-shadow: 0 1px 3px #888;
+  background-color: #85AC20; }
 
 .comment h2.title {
   margin-bottom: 1em; }
@@ -535,7 +544,7 @@ input[type="button"]:hover {
   margin-top: 10px; }
 
 #content .node-teaser {
-  padding-bottom: 30px;
+  padding-bottom: 20px;
   border-bottom: 1px solid #DDDDDD;
   margin-bottom: 15px; }
 
@@ -556,6 +565,20 @@ input[type="button"]:hover {
 
 .region-content-top {
   margin-bottom: 20px; }
+
+div.content span a {
+  margin-bottom: 10px;
+  margin-top: 10px; }
+
+.node-teaser > div.content {
+  display: flex;
+  flex-wrap: wrap; }
+
+div.field.field-name-field-pickup-skill-level.field-type-list-text.field-label-above, div.field.field-name-field-sport.field-type-list-text.field-label-above {
+  margin-right: 2em; }
+
+div.field.field-name-field-date.field-type-datetime.field-label-above {
+  margin-right: 5em; }
 
 fieldset {
   background: #ffffff;
@@ -682,6 +705,12 @@ input.form-text, textarea.form-textarea, select.form-select {
 .form-actions {
   padding-top: 10px; }
 
+#edit-field-geofield-distance-distance {
+  max-width: 40px; }
+
+#edit-field-geofield-distance-origin {
+  max-width: 80px; }
+
 .field-name-taxonomy-forums div {
   display: inline;
   margin-top: 4px; }
@@ -737,8 +766,8 @@ input.form-text, textarea.form-textarea, select.form-select {
   margin: 0; }
 
 .form-item label {
-  font-size: 13px;
-  font-weight: bold; }
+  font-size: 16px;
+  font-weight: normal; }
 
 .profile {
   margin: 1.5385em 0; }
@@ -783,6 +812,9 @@ input.form-text, textarea.form-textarea, select.form-select {
 .field-name-field-tags div {
   display: inline; }
 
+ul > li {
+  list-style: none !important; }
+
 .tabs-wrapper {
   border-bottom: 1px solid #b7b7b7;
   margin: 0 0 5px 0; }
@@ -804,9 +836,9 @@ ul.primary li a {
   margin-right: 5px; }
 
 ul.primary li a:hover, ul.primary li a.active {
-  background: #666;
+  background: #1BA7CE;
   border: none;
-  color: #fff; }
+  color: #fff !important; }
 
 ul.primary li a:hover {
   background: #888;
@@ -891,6 +923,18 @@ h1#site-title a:link, h1#site-title a:visited {
   align-items: center;
   flex-wrap: wrap; }
 
+div > #edit-field-geofield-distance {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap; }
+
+div > .views-exposed-widgets {
+  display: flex;
+  flex-direction: column; }
+
+div.form-item.form-type-textfield.form-item-zip > input {
+  width: 90px; }
+
 .menutoggle {
   width: 36px;
   height: 36px;
@@ -937,7 +981,7 @@ h1#site-title a:link, h1#site-title a:visited {
   position: relative; }
 
 #main-menu li a:hover, #main-menu li a:active, #main-menu a.active, #main-menu > ul > li > a.active-trail {
-  color: #ed564b; }
+  color: #1BA7CE; }
 
 #main-menu li a.sf-with-ul {
   padding-right: 10px; }
@@ -957,7 +1001,7 @@ h1#site-title a:link, h1#site-title a:visited {
   border-top: none; }
 
 #main-menu li ul li a:hover, #main-menu li ul li ul li a:hover, #main-menu li ul li ul li ul li a:hover {
-  color: #ed564b; }
+  color: #1BA7CE; }
 
 #main-menu li ul {
   font-size: 12px;
@@ -1011,7 +1055,7 @@ h3 {
 h4 {
   font-size: 18px; }
 
-h5 {
+h5, .field-label {
   font-size: 16px; }
 
 h6 {

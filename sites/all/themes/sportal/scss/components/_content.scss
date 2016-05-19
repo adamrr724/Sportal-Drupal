@@ -14,7 +14,7 @@
 }
 
 #content .node-teaser {
-  padding-bottom:30px;
+  padding-bottom:20px;
   border-bottom:1px solid #DDDDDD;
   margin-bottom: 15px;
 }
@@ -37,4 +37,32 @@
 
 .region-content-top {
   margin-bottom: 20px;
+}
+
+// looking at a2a_kit
+div.content span a {
+    // display: flex;
+    // flex-direction: column;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+
+
+.node-teaser > div.content {
+    display: flex;
+    flex-wrap: wrap;
+}
+div.field.field-name-field-pickup-skill-level.field-type-list-text.field-label-above, div.field.field-name-field-sport.field-type-list-text.field-label-above {
+    margin-right: 2em;
+}
+
+div.field.field-name-field-date.field-type-datetime.field-label-above {
+    margin-right: 5em;
+}
+
+#block-system-main > div > div.content {
+    // border: 1px solid red;
+    // display: flex;
+    // flex-wrap: wrap;
 }

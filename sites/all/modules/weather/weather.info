@@ -1,0 +1,38 @@
+name = Weather
+description = Displays current weather and forecasts
+core = 7.x
+dependencies[] = block
+configure = admin/config/user-interface/weather
+files[] = weather.module
+files[] = weather.install
+files[] = weather.common.inc
+files[] = weather.forms.inc
+files[] = weather_parser.inc
+files[] = weather_theme.inc
+files[] = weather.views.inc
+files[] = weather_data.txt
+files[] = weather.tpl.php
+files[] = weather_detailed_forecast.tpl.php
+files[] = tests/configuration.test
+files[] = tests/functions.test
+files[] = tests/parser.test
+files[] = tests/permissions.test
+files[] = tests/data/geonames_2911298.xml
+
+; Views handlers
+files[] = views_handlers/weather_handler_condition.inc
+files[] = views_handlers/weather_handler_date.inc
+files[] = views_handlers/weather_handler_precipitation.inc
+files[] = views_handlers/weather_handler_pressure.inc
+files[] = views_handlers/weather_handler_temperature.inc
+files[] = views_handlers/weather_handler_utc_offset.inc
+files[] = views_handlers/weather_handler_wind.inc
+files[] = views_handlers/weather_handler_wind_direction.inc
+files[] = views_handlers/weather_handler_wind_speed.inc
+
+; Information added by Drupal.org packaging script on 2015-12-11
+version = "7.x-2.14"
+core = "7.x"
+project = "weather"
+datestamp = "1449842053"
+
