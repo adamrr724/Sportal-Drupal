@@ -2,7 +2,7 @@
 
 ##### Epicodus Group Week Project
 
-#### By Adam Ross Russell, Ryan Brown, Joe Karasek, Alex Fallenstedt, Aundra Miller, and Blake Scott
+#### By [Adam Ross Russell](https://github.com/adamrr724), [Ryan Brown](https://github.com/browneryan), [Joe Karasek](https://github.com/joekarasek), [Alex Fallenstedt](https://github.com/Fallenstedt), [Aundra Miller](https://github.com/milleraundra), and [Blake Scott](https://github.com/blakerscott)
 
 ## Description
 
@@ -14,15 +14,17 @@ You will need the following things properly installed on your computer.
 
 * MAMP
 * Apache
-* 
+
 ## Setup
 
 * Clone this repository
 * Set document root to the top level directory of the repository
 * Import the database, called "sportal", found in `sites/db-backup`
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 * Create a user for the database: username = "admin", password = "epicodus"
 * Point browser to localhost
 * Site maintenance account info: username = "admin", password = "epicodus"
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 
 ## Running / Development
