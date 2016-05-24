@@ -20,11 +20,6 @@ You will need the following things properly installed on your computer.
 * Clone this repository
 * Set document root to the top level directory of the repository
 * Import the database, called "sportal", found in `sites/db-backup`
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-* Create a user for the database: username = "admin", password = "epicodus"
-* Point browser to localhost
-* Site maintenance account info: username = "admin", password = "epicodus"
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 
 ## Running / Development
