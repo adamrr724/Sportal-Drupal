@@ -219,8 +219,8 @@ $databases = array (
     array (
       'prefix' => 'dr_',
       'database' => 'sportal',
-      'username' => 'admin',
-      'password' => 'epicodus',
+      'username' => 'sportaladmin',
+      'password' => 'S16!ARR724',
       'host' => '127.0.0.1',
       'port' => '8889',
       'driver' => 'mysql',
