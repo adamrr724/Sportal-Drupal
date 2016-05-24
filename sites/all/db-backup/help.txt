@@ -8,10 +8,6 @@ USE sportal;
 
 SOURCE sportal.sql;
 
-DROP USER 'admin'@'localhost' IDENTIFIED BY 'epicodus';
-
-CREATE USER 'admin'@'localhost' IDENTIFIED BY 'epicodus';
-
-GRANT ALL PRIVILEGES ON * . * TO 'admin'@'localhost';
+GRANT ALL PRIVILEGES ON * . * TO 'sportaladmin'@'localhost';
 
 exit
