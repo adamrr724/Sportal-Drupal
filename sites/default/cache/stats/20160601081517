@@ -1,0 +1,324 @@
+Caught SIGUSR2. Printing status.
+___ Begin jemalloc statistics ___
+Version: 3.6.0-0-g46c0af68bd248b04df75e4f92d5fb804c3d75340
+Assertions disabled
+Run-time option settings:
+  opt.abort: false
+  opt.lg_chunk: 22
+  opt.dss: "secondary"
+  opt.narenas: 32
+  opt.lg_dirty_mult: 3
+  opt.stats_print: false
+  opt.junk: false
+  opt.quarantine: 0
+  opt.redzone: false
+  opt.zero: false
+  opt.valgrind: false
+  opt.tcache: true
+  opt.lg_tcache_max: 15
+CPUs: 8
+Arenas: 32
+Pointer size: 8
+Quantum size: 16
+Page size: 4096
+Min active:dirty page ratio per arena: 8:1
+Maximum thread-cached size class: 32768
+Chunk size: 4194304 (2^22)
+Allocated: 1314992, active: 1380352, mapped: 20971520
+Current active ceiling: 29360128
+chunks: nchunks   highchunks    curchunks
+              5            5            5
+huge: nmalloc      ndalloc    allocated
+            0            0            0
+Merged arenas stats:
+assigned threads: 2
+dss allocation precedence: N/A
+dirty pages: 337:0 active:dirty, 8 sweeps, 9 madvises, 121 purged
+            allocated      nmalloc      ndalloc    nrequests
+small:         958640         6535          665         3975
+large:         356352           20            9           20
+total:        1314992         6555          674         3995
+active:       1380352
+mapped:      16777216
+bins:     bin  size regs pgs    allocated      nmalloc      ndalloc    nrequests       nfills     nflushes      newruns       reruns      curruns
+            0     8  501   1         1600          200            0            0            2            2            2            0            2
+            1    16  252   1         4800          300            0          126            3            2            2            0            2
+            2    32  126   1       112000         3700          200         3836           37            4           29            3           28
+            3    48   84   1         8112          336          167            3            4            2            4            0            3
+            4    64   63   1         8064          126            0            0            2            2            2            0            2
+            5    80   50   1         8000          100            0            0            2            2            2            0            2
+            6    96   84   2        16128          168            0            0            2            2            2            0            2
+            7   112   72   2        16128          144            0            0            2            2            2            0            2
+            8   128   63   2         8064          189          126            5            3            2            3            0            1
+            9   160   51   2        16320          102            0            0            2            2            2            0            2
+           10   192   63   3        12096           63            0            0            1            2            1            0            1
+           11   224   72   4        32256          144            0            0            2            2            2            0            2
+           12   256   63   4        16128          189          126            4            3            2            3            0            1
+           13   320   63   5        40320          126            0            0            2            2            2            0            2
+           14   384   63   6        24192           63            0            0            1            2            1            0            1
+           15   448   63   7        28224           63            0            0            1            2            1            0            1
+           16   512   63   8        32256           63            0            0            1            2            1            0            1
+           17   640   51   8        32640           51            0            0            1            2            1            0            1
+           18   768   47   9        36864           94           46            1            2            2            2            0            2
+           19   896   45  10        40320           45            0            0            1            2            1            0            1
+           20  1024   63  16        64512           63            0            0            1            2            1            0            1
+           21  1280   51  16        65280           51            0            0            1            2            1            0            1
+[22]
+           23  1792   38  17        68096           38            0            0            1            2            1            0            1
+           24  2048   65  33       133120           65            0            0            1            2            1            0            1
+           25  2560   52  33       133120           52            0            0            1            2            1            0            1
+[26..27]
+large:   size pages      nmalloc      ndalloc    nrequests      curruns
+         4096     1            1            0            1            1
+         8192     2            2            0            2            2
+[1]
+        16384     4            2            0            2            2
+[3]
+        32768     8            5            2            5            3
+        36864     9            4            4            4            0
+[6]
+        65536    16            3            1            3            2
+[1]
+        73728    18            1            0            1            1
+[14]
+       135168    33            2            2            2            0
+[985]
+arenas[0]:
+assigned threads: 1
+dss allocation precedence: disabled
+dirty pages: 296:0 active:dirty, 1 sweep, 1 madvise, 42 purged
+            allocated      nmalloc      ndalloc    nrequests
+small:         879584         5229          200         3962
+large:         315392           14            5           14
+total:        1194976         5243          205         3976
+active:       1212416
+mapped:       4194304
+bins:     bin  size regs pgs    allocated      nmalloc      ndalloc    nrequests       nfills     nflushes      newruns       reruns      curruns
+            0     8  501   1          800          100            0            0            1            0            1            0            1
+            1    16  252   1         3200          200            0          126            2            0            1            0            1
+            2    32  126   1       108800         3600          200         3836           36            2           28            3           27
+            3    48   84   1         4032           84            0            0            1            0            1            0            1
+            4    64   63   1         4032           63            0            0            1            0            1            0            1
+            5    80   50   1         4000           50            0            0            1            0            1            0            1
+            6    96   84   2         8064           84            0            0            1            0            1            0            1
+            7   112   72   2         8064           72            0            0            1            0            1            0            1
+            8   128   63   2         8064           63            0            0            1            0            1            0            1
+            9   160   51   2         8160           51            0            0            1            0            1            0            1
+           10   192   63   3        12096           63            0            0            1            0            1            0            1
+           11   224   72   4        16128           72            0            0            1            0            1            0            1
+           12   256   63   4        16128           63            0            0            1            0            1            0            1
+           13   320   63   5        20160           63            0            0            1            0            1            0            1
+           14   384   63   6        24192           63            0            0            1            0            1            0            1
+           15   448   63   7        28224           63            0            0            1            0            1            0            1
+           16   512   63   8        32256           63            0            0            1            0            1            0            1
+           17   640   51   8        32640           51            0            0            1            0            1            0            1
+           18   768   47   9        36096           47            0            0            1            0            1            0            1
+           19   896   45  10        40320           45            0            0            1            0            1            0            1
+           20  1024   63  16        64512           63            0            0            1            0            1            0            1
+           21  1280   51  16        65280           51            0            0            1            0            1            0            1
+[22]
+           23  1792   38  17        68096           38            0            0            1            0            1            0            1
+           24  2048   65  33       133120           65            0            0            1            0            1            0            1
+           25  2560   52  33       133120           52            0            0            1            0            1            0            1
+[26..27]
+large:   size pages      nmalloc      ndalloc    nrequests      curruns
+         4096     1            1            0            1            1
+         8192     2            1            0            1            1
+[1]
+        16384     4            2            0            2            2
+[3]
+        32768     8            2            0            2            2
+        36864     9            3            3            3            0
+[6]
+        65536    16            3            1            3            2
+[1]
+        73728    18            1            0            1            1
+[14]
+       135168    33            1            1            1            0
+[985]
+arenas[1]:
+assigned threads: 1
+dss allocation precedence: disabled
+dirty pages: 31:0 active:dirty, 1 sweep, 1 madvise, 9 purged
+            allocated      nmalloc      ndalloc    nrequests
+small:          78240          839            0            0
+large:          40960            3            1            3
+total:         119200          842            1            3
+active:        126976
+mapped:       4194304
+bins:     bin  size regs pgs    allocated      nmalloc      ndalloc    nrequests       nfills     nflushes      newruns       reruns      curruns
+            0     8  501   1          800          100            0            0            1            0            1            0            1
+            1    16  252   1         1600          100            0            0            1            0            1            0            1
+            2    32  126   1         3200          100            0            0            1            0            1            0            1
+            3    48   84   1         4032           84            0            0            1            0            1            0            1
+            4    64   63   1         4032           63            0            0            1            0            1            0            1
+            5    80   50   1         4000           50            0            0            1            0            1            0            1
+            6    96   84   2         8064           84            0            0            1            0            1            0            1
+            7   112   72   2         8064           72            0            0            1            0            1            0            1
+[8]
+            9   160   51   2         8160           51            0            0            1            0            1            0            1
+[10]
+           11   224   72   4        16128           72            0            0            1            0            1            0            1
+[12]
+           13   320   63   5        20160           63            0            0            1            0            1            0            1
+[14..27]
+large:   size pages      nmalloc      ndalloc    nrequests      curruns
+[1]
+         8192     2            1            0            1            1
+[5]
+        32768     8            1            0            1            1
+        36864     9            1            1            1            0
+[1009]
+arenas[2]:
+assigned threads: 0
+dss allocation precedence: disabled
+dirty pages: 10:0 active:dirty, 2 sweeps, 3 madvises, 55 purged
+            allocated      nmalloc      ndalloc    nrequests
+small:            816          257          255            8
+large:              0            2            2            2
+total:            816          259          257           10
+active:         40960
+mapped:       4194304
+bins:     bin  size regs pgs    allocated      nmalloc      ndalloc    nrequests       nfills     nflushes      newruns       reruns      curruns
+[0..2]
+            3    48   84   1           48           84           83            2            1            1            1            0            1
+[4..7]
+            8   128   63   2            0           63           63            3            1            1            1            0            0
+[9..11]
+           12   256   63   4            0           63           63            2            1            1            1            0            0
+[13..17]
+           18   768   47   9          768           47           46            1            1            1            1            0            1
+[19..27]
+large:   size pages      nmalloc      ndalloc    nrequests      curruns
+[7]
+        32768     8            1            1            1            0
+[24]
+       135168    33            1            1            1            0
+[985]
+arenas[3]:
+assigned threads: 0
+dss allocation precedence: disabled
+dirty pages: 0:0 active:dirty, 4 sweeps, 4 madvises, 15 purged
+            allocated      nmalloc      ndalloc    nrequests
+small:              0          210          210            5
+large:              0            1            1            1
+total:              0          211          211            6
+active:             0
+mapped:       4194304
+bins:     bin  size regs pgs    allocated      nmalloc      ndalloc    nrequests       nfills     nflushes      newruns       reruns      curruns
+[0..2]
+            3    48   84   1            0           84           84            1            1            1            1            0            0
+[4..7]
+            8   128   63   2            0           63           63            2            1            1            1            0            0
+[9..11]
+           12   256   63   4            0           63           63            2            1            1            1            0            0
+[13..27]
+large:   size pages      nmalloc      ndalloc    nrequests      curruns
+[7]
+        32768     8            1            1            1            0
+[1010]
+--- End jemalloc statistics ---
+Operations:
+  chmod:            0
+  chown:            0
+  create:           0
+  fsync:            0
+  flush:            0
+  ftruncate:        0
+  fgetattr:         0
+  getattr:          1
+  mkdir:            0
+  mknod:            0
+  open:             0
+  read:             0
+  readdir:          0
+  release:          0
+  rename:           0
+  rmdir:            0
+  unlink:           0
+  utimens:          0
+  write:            0
+  cprop:            0
+  pprop:            0
+  nprop:            0
+  cache_file:       0
+  pdata_set:        0
+  create_file:      0
+  pdata_get:        0
+  fresh_fd:         0
+  open:             0
+  read:             0
+  write:            0
+  close:            0
+  return_etag:      0
+  sync:             0
+  truncate:         0
+  delete:           0
+  pdata_move:       0
+  orphans:          1
+  cleanup:          1
+  get_fd:           0
+  set_error:        0
+  forensic:         0
+  init:             1
+  path2key:         0
+  key2path:         0
+  get_304_count:     0
+  get_304_timing:    0
+  get_304_avelat:    0
+  get_xxsm_count:     0
+  get_xxsm_timing:    0
+  get_xxsm_avelat:    0
+  get_xsm_count:     0
+  get_xsm_timing:    0
+  get_xsm_avelat:    0
+  get_sm_count:     0
+  get_sm_timing:    0
+  get_sm_avelat:    0
+  get_med_count:     0
+  get_med_timing:    0
+  get_med_avelat:    0
+  get_lg_count:     0
+  get_lg_timing:    0
+  get_lg_avelat:    0
+  get_xlg_count:     0
+  get_xlg_timing:    0
+  get_xlg_avelat:    0
+  put_xxsm_count:     0
+  put_xxsm_timing:    0
+  put_xxsm_avelat:    0
+  put_xsm_count:     0
+  put_xsm_timing:    0
+  put_xsm_avelat:    0
+  put_sm_count:     0
+  put_sm_timing:    0
+  put_sm_avelat:    0
+  put_med_count:     0
+  put_med_timing:    0
+  put_med_avelat:    0
+  put_lg_count:     0
+  put_lg_timing:    0
+  put_lg_avelat:    0
+  put_xlg_count:     0
+  put_xlg_timing:    0
+  put_xlg_avelat:    0
+Stat Cache Operations:
+  local_gen:        0
+  path2key:         0
+  key2path:         0
+  open:             1
+  close:            0
+  value_get:        0
+  updated_ch:       0
+  read_updated:     0
+  value_set:        0
+  delete:           0
+  del_parent:       0
+  iter_free:        0
+  iter_init:        0
+  iter_current:     0
+  iter_next:        0
+  enumerate:        0
+  has_child:        0
+  delete_older:     0
+  prune:            1
